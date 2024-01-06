@@ -1,3 +1,6 @@
+// npm i @mui/icons-material
+// npm install @mui/material @emotion/react @emotion/styled for stylign
+
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";

@@ -1,12 +1,10 @@
-import SignInSide from "./SignInSide";
+import Navbar from "./components/Navbar";
+
 
 export default function Home() {
   return (
-    <div className="bg-slate-800">
-      <SignInSide />
-      <div>رمز</div>
-      <div className="bg-slate-900 p-5">ایمیل</div>;
-      <div className="bg-slate-900 p-5 font-IranSansWeb">ورود</div>;
-    </div>
+    <>
+      <Navbar/>
+    </>
   );
 }

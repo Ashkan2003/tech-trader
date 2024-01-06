@@ -17,4 +17,6 @@
 body {
   /* font-family: IranSansWeb; */
   color: rgb(var(--foreground-rgb));
+  margin: 0;
+  padding: 0;
 }
