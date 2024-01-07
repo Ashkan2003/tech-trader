@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";
 import localFont from "next/font/local";
+import CustomThemeProvider from "./MaterialUiThemeProvider";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +30,12 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/trade-logo-brad.png" />
       </head>
-      {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
-      <MaterialRTLProvider>
-        <body className={IranSansWeb.variable}>{children}</body>
-      </MaterialRTLProvider>
+      <CustomThemeProvider>
+        {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
+        <MaterialRTLProvider>
+          <body className={IranSansWeb.variable}>{children}</body>
+        </MaterialRTLProvider>
+      </CustomThemeProvider>
     </html>
   );
 }
