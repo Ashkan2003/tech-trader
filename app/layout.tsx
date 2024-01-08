@@ -1,11 +1,13 @@
 // npm i @mui/icons-material
 // npm install @mui/material @emotion/react @emotion/styled for stylign
-
+// npm i react-redux @reduxjs/toolkit
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";
 import localFont from "next/font/local";
 import CustomThemeProvider from "./MaterialUiThemeProvider";
+import StoreProvider from "./StoreProvider";
+import { ReduxProvider } from "./GlobalRedux/provider";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +35,10 @@ export default function RootLayout({
       <CustomThemeProvider>
         {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
         <MaterialRTLProvider>
-          <body className={IranSansWeb.variable}>{children}</body>
+          <body className={IranSansWeb.variable}>
+            {/* this Providers is a provider of redux-toolkit */}
+            <ReduxProvider>{children}</ReduxProvider>
+          </body>
         </MaterialRTLProvider>
       </CustomThemeProvider>
     </html>
