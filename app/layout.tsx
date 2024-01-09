@@ -32,15 +32,15 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/trade-logo-brad.png" />
       </head>
-      <CustomThemeProvider>
-        {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
-        <MaterialRTLProvider>
-          <body className={IranSansWeb.variable}>
-            {/* this Providers is a provider of redux-toolkit */}
-            <ReduxProvider>{children}</ReduxProvider>
-          </body>
-        </MaterialRTLProvider>
-      </CustomThemeProvider>
+      {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
+      <MaterialRTLProvider>
+        <body className={IranSansWeb.variable}>
+          {/* this Providers is a provider of redux-toolkit */}
+          <ReduxProvider>
+            <CustomThemeProvider>{children}</CustomThemeProvider>
+          </ReduxProvider>
+        </body>
+      </MaterialRTLProvider>
     </html>
   );
 }

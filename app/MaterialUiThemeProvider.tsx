@@ -1,23 +1,28 @@
 "use client";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import * as React from "react";
+import { useAppSelectore } from "./GlobalRedux/store";
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
 
-// this is a context api for providing DarkMode and direction: "rtl" and fontFamily: "var(--font-IranSansWeb)",
+// this is a provider for providing DarkMode and direction: "rtl" and fontFamily: "var(--font-IranSansWeb)",
 export default function CustomThemeProvider(props: any) {
-  const [mode, setMode] = React.useState<"light" | "dark">("dark");
 
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
+  const thememode = useAppSelectore((state) => state.darkModeReducer.mode);
+
+
+  // const colorMode = React.useMemo(
+  //   () => ({
+  //     toggleColorMode: () => {
+  //       setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  //     },
+  //   }),
+  //   []
+  // );
+
+  // console.log(colorMode,"ggggg")
 
   const theme = React.useMemo(
     () =>
@@ -27,15 +32,13 @@ export default function CustomThemeProvider(props: any) {
           fontFamily: "var(--font-IranSansWeb)",
         },
         palette: {
-          mode,
+          mode: thememode,
         },
       }),
-    [mode]
+    [thememode]
   );
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-    </ColorModeContext.Provider>
+    <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
   );
 }

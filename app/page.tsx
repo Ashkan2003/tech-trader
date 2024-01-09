@@ -7,7 +7,8 @@ import { useAppSelectore } from "./GlobalRedux/store";
 
 export default function Home() {
   const username = useAppSelectore((state) => state.authReducer.value.username);
-
+  const mode = useAppSelectore((state) => state.darkModeReducer.mode);
+  console.log(mode,"ffffff")
   return (
     <>
       <Navbar />

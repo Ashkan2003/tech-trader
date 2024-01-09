@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { logIn, logOut } from "./GlobalRedux/Features/auth-slice";
+import { logIn, logOut } from "./GlobalRedux/Features/auth/auth-slice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./GlobalRedux/store";
 
@@ -11,14 +11,14 @@ export default function LogIn() {
   const dispatch = useDispatch<AppDispatch>();
 
   const onClickLogIn = () => {
-    dispatch(logIn(username))
+    dispatch(logIn(username));
   };
 
-  const onClickToggle = () => {
-    dispatch(logOut())
-  };
+  const onClickToggle = () => {};
 
-  const onClickLogOut = () => {};
+  const onClickLogOut = () => {
+    dispatch(logOut());
+  };
 
   return (
     <div>

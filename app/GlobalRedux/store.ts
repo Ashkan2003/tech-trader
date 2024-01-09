@@ -1,12 +1,14 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./Features/auth-slice";
+import authReducer from "./Features/auth/auth-slice";
+import darkModeReducer from "./Features/darkMode/darkMode-slice"
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     authReducer,
+    darkModeReducer
   },
 });
 
