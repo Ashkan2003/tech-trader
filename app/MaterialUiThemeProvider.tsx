@@ -9,20 +9,7 @@ export const ColorModeContext = React.createContext({
 
 // this is a provider for providing DarkMode and direction: "rtl" and fontFamily: "var(--font-IranSansWeb)",
 export default function CustomThemeProvider(props: any) {
-
   const thememode = useAppSelectore((state) => state.darkModeReducer.mode);
-
-
-  // const colorMode = React.useMemo(
-  //   () => ({
-  //     toggleColorMode: () => {
-  //       setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-  //     },
-  //   }),
-  //   []
-  // );
-
-  // console.log(colorMode,"ggggg")
 
   const theme = React.useMemo(
     () =>
@@ -33,12 +20,11 @@ export default function CustomThemeProvider(props: any) {
         },
         palette: {
           mode: thememode,
+          
         },
       }),
     [thememode]
   );
 
-  return (
-    <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>;
 }
