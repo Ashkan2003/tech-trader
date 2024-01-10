@@ -6,7 +6,6 @@ import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";
 import localFont from "next/font/local";
 import CustomThemeProvider from "./MaterialUiThemeProvider";
-import StoreProvider from "./StoreProvider";
 import { ReduxProvider } from "./GlobalRedux/provider";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -37,6 +36,7 @@ export default function RootLayout({
         <body className={IranSansWeb.variable}>
           {/* this Providers is a provider of redux-toolkit */}
           <ReduxProvider>
+            {/* this CustomThemeProvider is a provider of material ui for the app theme */}
             <CustomThemeProvider>{children}</CustomThemeProvider>
           </ReduxProvider>
         </body>

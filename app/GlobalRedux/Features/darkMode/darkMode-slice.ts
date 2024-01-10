@@ -5,7 +5,7 @@ interface InitialState { // we need to define the types of our initialStates
 }
 
 const initialState: InitialState = {
-  mode: "dark",
+  mode: "light",
 };
 
 export const darkMode = createSlice({

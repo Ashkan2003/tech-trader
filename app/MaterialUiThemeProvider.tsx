@@ -20,7 +20,22 @@ export default function CustomThemeProvider(props: any) {
         },
         palette: {
           mode: thememode,
-          
+          ...(thememode === "light"
+            ? {
+                // palette value for light mode
+                primary: {
+                  main: "#5D6E88",
+                },
+                secondary: {
+                  main: "#D8E4F0",
+                },
+              }
+            : {
+                // palette value for dark mode
+                primary: {
+                  main: "#2D3E4A",
+                },
+              }),
         },
       }),
     [thememode]
@@ -28,3 +43,10 @@ export default function CustomThemeProvider(props: any) {
 
   return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>;
 }
+
+// primary:{
+//   main:"#5D6E88"
+// },
+// secondary:{
+//   main:"#46566E"
+// }
