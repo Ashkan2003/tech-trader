@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -76,8 +77,8 @@ export default function Menu() {
     <div>
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <IconButton size="small" onClick={toggleDrawer(anchor, true)} color="secondary" aria-label="add an alarm">
-            <MenuIcon  />
+          <IconButton size="large" onClick={toggleDrawer(anchor, true)} color="secondary" aria-label="add an alarm">
+            <MenuIcon  fontSize="inherit"/>
           </IconButton>
           
           <Drawer

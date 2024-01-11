@@ -1,15 +1,12 @@
 "use client";
 import { IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { current } from "@reduxjs/toolkit";
+import LaptopTwoToneIcon from "@mui/icons-material/LaptopTwoTone";
+
 const NavClock = () => {
   const [hour, setHour] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
-  //   const hour = currentDate.getHours();
-  //   const minuets = currentDate.getMinutes();
-  //   const seconds = currentDate.getSeconds();
 
   useEffect(() => {
     setInterval(() => {
@@ -21,13 +18,13 @@ const NavClock = () => {
   }, []);
 
   return (
-    <div className="flex items-center" suppressHydrationWarning>
+    <div className="flex items-center ps-3">
       <Typography fontWeight="bold" color="white">
-        {hour}:{minutes}:{seconds}
+        {hour <= 9 ? "0" + hour : hour}:{minutes <= 9 ? "0" + minutes : minutes}
+        :{seconds <= 9 ? "0" + seconds : seconds}
       </Typography>
-
-      <IconButton>
-        <AccessTimeIcon color="secondary" />
+      <IconButton size="large">
+        <LaptopTwoToneIcon fontSize="inherit" color="secondary" />
       </IconButton>
     </div>
   );
