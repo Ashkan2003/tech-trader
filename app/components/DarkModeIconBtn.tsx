@@ -34,7 +34,6 @@ const DarkModeIconBtn = () => {
   return (
     <IconButton
       color="secondary"
-      aria-label="add to shopping cart"
       onClick={onClickToggle}
     >
       {thememode === "light" ? <WbSunnyIcon /> : <NightsStayIcon />}
