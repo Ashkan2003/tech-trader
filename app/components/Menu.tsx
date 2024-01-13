@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -40,7 +40,9 @@ export default function Menu() {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+      }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -77,11 +79,20 @@ export default function Menu() {
     <div>
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <IconButton size="large" onClick={toggleDrawer(anchor, true)} color="secondary" aria-label="add an alarm">
-            <MenuIcon  fontSize="inherit"/>
+          <IconButton
+            size="large"
+            onClick={toggleDrawer(anchor, true)}
+            color="secondary"
+            aria-label="add an alarm"
+          >
+            <MenuIcon fontSize="inherit" />
           </IconButton>
-          
+
           <Drawer
+            PaperProps={{
+              sx: { bgcolor: "yellow" },
+            }}
+            BackdropProps={{ invisible: true }}
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}

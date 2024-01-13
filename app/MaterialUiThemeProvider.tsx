@@ -29,11 +29,15 @@ export default function CustomThemeProvider(props: any) {
                 secondary: {
                   main: "#D8E4F0",
                 },
+                success:{
+                  main:"#46566E"
+                }
               }
             : {
                 // palette value for dark mode
                 primary: {
                   main: "#2D3E4A",
+                  
                 },
               }),
         },
