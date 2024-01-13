@@ -12,9 +12,20 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
-
+import { IconButton, Typography } from "@mui/material";
+import GridOnIcon from "@mui/icons-material/GridOn";
 type Anchor = "top" | "left" | "bottom" | "right";
+
+const menuListArray: { title: string; icon: any }[] = [
+  {
+    title: "دیده بان کلاسیک",
+    icon: <GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {title:"دیده بان تکنیکال" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
+  {title:"نقشه بازار" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
+  {title:"اوراق بدهی" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
+  {title:"پیام ها" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
+];
 
 export default function Menu() {
   const [state, setState] = React.useState({
@@ -40,6 +51,7 @@ export default function Menu() {
 
   const list = (anchor: Anchor) => (
     <Box
+      color="white"
       sx={{
         width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
       }}
@@ -47,24 +59,25 @@ export default function Menu() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <Typography color="#CCEA8E">دیده بان بازار</Typography>
+      <Divider variant="middle" sx={{ bgcolor: "#CCEA8E" }} />
+
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {menuListArray.map((item) => (
+          <ListItem key={item.title} sx={{ padding: 0 }} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon sx={{ minWidth: "30px" }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <Divider />
+      <Divider variant="middle" sx={{ bgcolor: "#CCEA8E" }} />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon sx={{ padding: 0 }}>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
@@ -90,7 +103,7 @@ export default function Menu() {
 
           <Drawer
             PaperProps={{
-              sx: { bgcolor: "yellow" },
+              sx: { bgcolor: "#46566E" },
             }}
             BackdropProps={{ invisible: true }}
             anchor={anchor}
