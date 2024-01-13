@@ -8,6 +8,8 @@ import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import NavClock from "./NavClock";
 import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
 import PowerSettingsNewRoundedIcon from "@mui/icons-material/PowerSettingsNewRounded";
+import Badge from "./Badge";
+import Link from "next/link";
 export default function Navbar() {
   return (
     <header className="bg-[#5D6E88] dark:bg-[#2D3E4A] h-13">
@@ -16,7 +18,7 @@ export default function Navbar() {
           <div className="flex items-center   pe-3 ">
             <Image src="/Trade-brand.png" alt="brand" width="50" height="30" />
             <Menu />
-            <DarkModeIconBtn />
+            <Typography color="white">منو-دیده بان کلاسیک</Typography>
           </div>
           <Divider orientation="vertical" flexItem />
 
@@ -27,7 +29,7 @@ export default function Navbar() {
             </Typography>
           </div>
           <Divider orientation="vertical" flexItem />
-          <Box  sx={{px:"14px", display: { xs:"none",lg:"flex" } }}>
+          <Box sx={{ px: "14px", display: { xs: "none", lg: "flex" } }}>
             <div className="flex items-center">
               <Typography className="text-white">شاخص: </Typography>
               <Typography className="text-yellow-300 ps-1">
@@ -35,23 +37,14 @@ export default function Navbar() {
               </Typography>
             </div>
             <div className="flex flex-col space-y-1 ps-1">
-              <Chip
-                label="14,545.46"
-                sx={{ height: "20px", width: "max-content", fontSize: "small" }}
-                color="success"
-              />
-              <Chip
-                label="0.67%"
-                sx={{ height: "20px", width: "max-content", fontSize: "small" }}
-                size="small"
-                color="success"
-              />
+              <Badge>456.37</Badge>
+              <Badge>0.67</Badge>
             </div>
           </Box>
           <Divider orientation="vertical" flexItem />
         </div>
         <div className="flex ">
-          <Box sx={{ display: { xs:"none",lg:"flex" } }}>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
             <Divider orientation="vertical" flexItem />
             <IconButton size="large">
               <HelpOutlineTwoToneIcon fontSize="inherit" color="secondary" />
@@ -61,6 +54,8 @@ export default function Navbar() {
               <GridViewOutlinedIcon fontSize="inherit" color="secondary" />
             </IconButton>
           </Box>
+          <Divider orientation="vertical" flexItem />
+          <DarkModeIconBtn />
           <Divider orientation="vertical" flexItem />
           <NavClock />
           <Divider orientation="vertical" flexItem />
@@ -76,12 +71,14 @@ export default function Navbar() {
             </IconButton>
           </div>
           <Divider orientation="vertical" flexItem />
-          <IconButton size="large">
-            <PowerSettingsNewRoundedIcon
-              fontSize="inherit"
-              sx={{ color: "yellow" }}
-            ></PowerSettingsNewRoundedIcon>
-          </IconButton>
+          <Link href="/signin">
+            <IconButton size="large">
+              <PowerSettingsNewRoundedIcon
+                fontSize="inherit"
+                sx={{ color: "yellow" }}
+              ></PowerSettingsNewRoundedIcon>
+            </IconButton>
+          </Link>
         </div>
       </nav>
     </header>
