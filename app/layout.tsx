@@ -1,6 +1,7 @@
 // npm i @mui/icons-material
 // npm install @mui/material @emotion/react @emotion/styled for stylign
 // npm i react-redux @reduxjs/toolkit
+// npm install @mui/x-data-grid for data-grid-tables
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";

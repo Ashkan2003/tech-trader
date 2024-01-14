@@ -25,53 +25,56 @@ import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 const menuListArray: { title: string; icon: any }[] = [
   {
     title: "شاخص",
-    icon: <AddchartIcon fontSize="medium" sx={{ color: "#D8E4F0" }} />,
+
+    icon: <AddchartIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
   {
     title: "پیام ها",
-    icon: <NotificationsIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: <NotificationsIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
   {
     title: "وضعیت مالی مشتری",
-    icon: <PaidIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: <PaidIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
   {
     title: "جزعیات نماد",
-    icon: <AccountTreeIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: <AccountTreeIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
   {
     title: "باشگاه",
-    icon: <SatelliteIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: <SatelliteIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
   {
     title: "صندوق",
     icon: (
-      <AccountBalanceSharpIcon fontSize="medium" sx={{ color: "#677790" }} />
+      <AccountBalanceSharpIcon color="secondary" sx={{ fontSize: "28px" }} />
     ),
   },
   {
     title: "ثبت تیکت پشتیبانی",
-    icon: <ConfirmationNumberIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: (
+      <ConfirmationNumberIcon color="secondary" sx={{ fontSize: "28px" }} />
+    ),
   },
   {
     title: "اطلاعیه های کدال",
-    icon: <InfoIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: <InfoIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
   {
     title: "agah TV",
-    icon: <DonutSmallIcon fontSize="medium" sx={{ color: "#677790" }} />,
+    icon: <DonutSmallIcon color="secondary" sx={{ fontSize: "28px" }} />,
   },
 ];
 
 const DashbordVerticalList = () => {
   return (
-    <Box className="bg-[#46566E]">
+    <Box className="bg-[#46566E] dark:bg-[#243740]">
       <nav>
-        <List>
+        <List sx={{padding:"0"}}>
           {menuListArray.map((item) => (
             <React.Fragment key={item.title}>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton >
                   <ListItemIcon sx={{ minWidth: "0" }}>
                     <Tooltip title={item.title} placement="right" arrow>
                       {item.icon}
@@ -79,7 +82,11 @@ const DashbordVerticalList = () => {
                   </ListItemIcon>
                 </ListItemButton>
               </ListItem>
-              <Divider sx={{bgcolor:"#7f858a"}}  component="li" />
+              <Divider
+                variant="fullWidth"
+                sx={{ bgcolor: "#577a90" }}
+                component="aside"
+              />
             </React.Fragment>
           ))}
         </List>
