@@ -37,8 +37,8 @@ export default function Navbar() {
               </Typography>
             </div>
             <div className="flex flex-col space-y-1 ps-1">
-              <Badge>456.37</Badge>
-              <Badge>0.67</Badge>
+              <Badge title="456.37" color="primary" />
+              <Badge title="0.47" color="primary" />
             </div>
           </Box>
           <Divider orientation="vertical" flexItem />

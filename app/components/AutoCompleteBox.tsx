@@ -7,12 +7,13 @@ export default function AutoCompleteBox() {
   return (
     <div className="w-[300px]">
       <Autocomplete
-        className="p-5 "
+        className="px-1 py-2 "
         disablePortal
         id="combo-box-demo"
+        
         options={top100Films}
-        //   sx={{ width: 00 }}
-        renderInput={(params) => <TextField {...params} label="Movie" />}
+          sx={{ width: 500 }}
+        renderInput={(params) => <TextField {...params} label="جستجوی نماد" />}
       />
     </div>
   );
