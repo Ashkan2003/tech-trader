@@ -20,8 +20,10 @@ export default function CustomThemeProvider(props: any) {
         },
         palette: {
           mode: thememode,
+          
           ...(thememode === "light"
             ? {
+            
                 // palette value for light mode
                 primary: {
                   main: "#5D6E88",

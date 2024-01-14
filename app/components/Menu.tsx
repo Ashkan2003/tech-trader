@@ -14,6 +14,15 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Typography } from "@mui/material";
 import GridOnIcon from "@mui/icons-material/GridOn";
+import TableChartIcon from '@mui/icons-material/TableChart';
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import NewspaperOutlinedIcon from '@mui/icons-material/NewspaperOutlined';
+import PriceChangeOutlinedIcon from '@mui/icons-material/PriceChangeOutlined';
+import PieChartOutlinedIcon from '@mui/icons-material/PieChartOutlined';
+import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 type Anchor = "top" | "left" | "bottom" | "right";
 
 const menuListArray: { title: string; icon: any }[] = [
@@ -21,10 +30,46 @@ const menuListArray: { title: string; icon: any }[] = [
     title: "دیده بان کلاسیک",
     icon: <GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
   },
-  {title:"دیده بان تکنیکال" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
-  {title:"نقشه بازار" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
-  {title:"اوراق بدهی" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
-  {title:"پیام ها" , icon:<GridOnIcon fontSize="small" sx={{ color: "#CCEA8E" }} />},
+  {
+    title: "دیده بان تکنیکال",
+    icon: <TableChartIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "نقشه بازار",
+    icon: <MapOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "اوراق بدهی",
+    icon: <LocalAtmOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "پیام ها",
+    icon: <EmailOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+];
+
+
+const secondMenuListArray: { title: string; icon: any }[] = [
+  {
+    title: "سبد سهام",
+    icon: <ShoppingBasketOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "عملکر سبد سهام",
+    icon: <NewspaperOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "افزایش سرمایه",
+    icon: <PriceChangeOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "سودهای تقسیمی من",
+    icon: <PieChartOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
+  {
+    title: "تراکنش های دستی",
+    icon: <AccountTreeOutlinedIcon fontSize="small" sx={{ color: "#CCEA8E" }} />,
+  },
 ];
 
 export default function Menu() {
@@ -59,10 +104,11 @@ export default function Menu() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <Typography color="#CCEA8E">دیده بان بازار</Typography>
-      <Divider variant="middle" sx={{ bgcolor: "#CCEA8E" }} />
-
       <List>
+        <ListItem>
+          <Typography color="#CCEA8E">دیده بان بازار</Typography>
+        </ListItem>
+        <Divider variant="middle" sx={{ bgcolor: "#CCEA8E" }} />
         {menuListArray.map((item) => (
           <ListItem key={item.title} sx={{ padding: 0 }} disablePadding>
             <ListItemButton>
@@ -72,19 +118,21 @@ export default function Menu() {
           </ListItem>
         ))}
       </List>
-      <Divider variant="middle" sx={{ bgcolor: "#CCEA8E" }} />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        <ListItem>
+          <Typography color="#CCEA8E">مدیریت سبد دارایی</Typography>
+        </ListItem>
+        <Divider variant="middle" sx={{ bgcolor: "#CCEA8E" }} />
+        {secondMenuListArray.map((item) => (
+          <ListItem key={item.title} sx={{ padding: 0 }} disablePadding>
             <ListItemButton>
-              <ListItemIcon sx={{ padding: 0 }}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon sx={{ minWidth: "30px" }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
+     
     </Box>
   );
 
