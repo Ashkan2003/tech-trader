@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 export default function AutoCompleteBox() {
   return (
-    <div className="ps-4 w-1 ">
+    <div className="ps-4 ">
       <Autocomplete
         
         className="bg-[#ffff] dark:bg-[#39566b]"
