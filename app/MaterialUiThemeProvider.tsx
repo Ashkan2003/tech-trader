@@ -33,6 +33,7 @@ export default function CustomThemeProvider(props: any) {
                 success: {
                   main: "#5b7397",
                 },
+              
               }
             : {
               
