@@ -5,7 +5,7 @@ import { Button, Typography } from "@mui/material";
 import Badge from "./Badge";
 const MainCol = () => {
   return (
-    <div className="flex items-center justify-between bg-[#D3D9DF] ">
+    <div className="flex items-center justify-between bg-[#D3D9DF] dark:bg-[#324045] ">
       <AutoCompleteBox />
       <div className="pe-4 flex items-center">
         <div className="flex ">
@@ -13,7 +13,7 @@ const MainCol = () => {
             <Badge title="4,709" color="secondary" />
             <Badge title="0.97%" color="secondary" />
           </div>
-          <Typography color="primary" fontSize="26px">
+          <Typography className="text-gray-600 dark:text-[#CE93D8]" fontSize="26px">
             4,709
           </Typography>
         </div>
@@ -21,12 +21,13 @@ const MainCol = () => {
           sx={{ margin: "0.5rem" }}
           size="large"
           variant="outlined"
-          className=""
+          color="success"
           startIcon={<ShoppingCartIcon className="text-green-600" />}
         >
           <Typography className="text-green-600">خرید</Typography>
         </Button>
         <Button
+          color="success"
           variant="outlined"
           size="large"
           startIcon={<ShoppingCartIcon className="text-red-600" />}

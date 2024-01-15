@@ -12,7 +12,7 @@ import Badge from "./Badge";
 import Link from "next/link";
 export default function Navbar() {
   return (
-    <header className="bg-[#5D6E88] dark:bg-[#2D3E4A] h-13">
+    <header className="bg-[#5D6E88] dark:bg-[#2D3E4A]  h-13">
       <nav className="flex  items-center justify-between  ">
         <div className="flex  items-center">
           <div className="flex items-center   pe-3 ">
@@ -81,6 +81,8 @@ export default function Navbar() {
           </Link>
         </div>
       </nav>
+      <Divider  flexItem />
+      
     </header>
   );
 }

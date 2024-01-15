@@ -5,14 +5,15 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 export default function AutoCompleteBox() {
   return (
-    <div className="w-[300px]">
+    <div className="ps-4 w-1 ">
       <Autocomplete
-        className="px-1 py-2 "
+        
+        className="bg-[#ffff] dark:bg-[#39566b]"
         disablePortal
         id="combo-box-demo"
-        
+        size="small"
         options={top100Films}
-          sx={{ width: 500 }}
+        sx={{ width: 500, color:"secondary", bgcolor: "",borderRadius: '5px' }}
         renderInput={(params) => <TextField {...params} label="جستجوی نماد" />}
       />
     </div>
