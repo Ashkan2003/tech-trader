@@ -189,7 +189,7 @@ const rows = [
 
 export default function MainTable() {
   return (
-    <Box sx={{ height: 455, width:"68.3rem" }}>
+    <Box sx={{ height: 455, width:"67.6rem",bgcolor:"ternery.main" }}>
       <DataGrid
       scrollbarSize={200}
         sx={{}}

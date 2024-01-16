@@ -31,12 +31,16 @@ export default function CustomThemeProvider(props: any) {
                   main: "#D8E4F0",
                 },
                 success: {
-                  main: "#5b7397",
+                  main: "#ffffff",
                 },
-              
+                ternery: {
+                  main: "#F2F2F2",
+                },
+                lemon:{
+                  main:"#ffffff"
+                }
               }
             : {
-              
                 // palette value for dark mode
                 primary: {
                   main: "#2D3E4A",
@@ -45,8 +49,15 @@ export default function CustomThemeProvider(props: any) {
                   main: "#CE93D8",
                 },
                 success: {
-                  main: "#cfd9e8",
+                  main: "#39566b",
                 },
+               
+                ternery: {
+                  main: "#324045",
+                },
+                lemon:{
+                 main:"#042431"
+                }
               }),
         },
       }),
