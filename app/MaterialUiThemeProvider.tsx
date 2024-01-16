@@ -27,6 +27,7 @@ export default function CustomThemeProvider(props: any) {
                 primary: {
                   main: "#5D6E88",
                 },
+
                 secondary: {
                   main: "#D8E4F0",
                 },
@@ -36,9 +37,12 @@ export default function CustomThemeProvider(props: any) {
                 ternery: {
                   main: "#F2F2F2",
                 },
-                lemon:{
-                  main:"#ffffff"
-                }
+                lemon: {
+                  main: "#ffffff",
+                },
+                textPallet: {
+                  main: "#000000",
+                },
               }
             : {
                 // palette value for dark mode
@@ -51,13 +55,16 @@ export default function CustomThemeProvider(props: any) {
                 success: {
                   main: "#39566b",
                 },
-               
+
                 ternery: {
                   main: "#324045",
                 },
-                lemon:{
-                 main:"#042431"
-                }
+                lemon: {
+                  main: "#042431",
+                },
+                textPallet: {
+                  main: "#d5afdc",
+                },
               }),
         },
       }),

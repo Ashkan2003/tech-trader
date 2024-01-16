@@ -12,7 +12,7 @@ export default function Home() {
       <Box bgcolor="lemon.main" className="flex">
         <div className="grid flex-grow grid-cols-12 grid-rows-4 grid-flow-col h-[92vh] gap-2 mt-2 me-2 ms-2">
           <div className="col-span-3 row-span-4">
-            <WatchTabs/>
+            <WatchTabs />
           </div>
           <div className="col-span-9 row-span-3">
             <MainCol />

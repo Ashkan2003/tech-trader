@@ -4,9 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
-import { Divider, IconButton, InputBase, Paper } from "@mui/material";
-import { GridMenuIcon } from "@mui/x-data-grid";
+
 import WatchTabsList from "./WatchTabsList";
 
 interface TabPanelProps {
@@ -44,58 +42,42 @@ export default function WatchTabs() {
   };
 
   return (
-    <Box sx={{ bgcolor: "ternery.main", height: "100vh" }}>
+    <Box
+      sx={{
+        bgcolor: "ternery.main",
+        height: "100vh",
+        color: "textPallet.main",
+      }}
+    >
       <Box sx={{ borderColor: "divider" }}>
         <Tabs
-          sx={{ ".MuiTabs-indicator": { top: "0", bgcolor: "ternary.light" } }}
+          sx={{
+            ".MuiTabs-indicator": { top: "0", bgcolor: "ternary.light" },
+            color: "textPallet.main",
+          }}
           variant="fullWidth"
           value={value}
           onChange={handleChange}
-          textColor="inherit"
+          // textColor=""
           indicatorColor="primary"
           centered
         >
           <Tab
-            sx={{ "Mui-selected": {} }}
+            // sx={{".muirtl-1fqhah3-MuiButtonBase-root-MuiTab-root.Mui-selected":{bgcolor:"red"}}}
+            // color="text.pallet.main"
             className=" !border-solid !border-t-2 !border-r-2 !border-l-2 !border-[#E0E5E8] dark:!border-[#62737c]"
             label="دیده بان من"
             {...a11yProps(0)}
           />
           <Tab
-            className=" !border-solid !border-t-2 !border-r-2 !border-l-2 !border-[#E0E5E8]"
+            className=" !border-solid !border-t-2 !border-r-2 !border-l-2 !border-[#E0E5E8] dark:!border-[#62737c]"
             label="دیده بان تک تریدر"
             {...a11yProps(1)}
           />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className="flex flex-col p">
-          <Paper
-            component="form"
-            sx={{
-              bgcolor: "success.main",
-              mt: "10px",
-              display: "flex",
-              alignItems: "center",
-              width: "22rem",
-              height: "3rem",
-              borderRadius: "12px",
-              boxShadow: "0",
-              border: "1px solid",
-              borderColor: "secondary.main",
-            }}
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="افزودن دیده بان جدید"
-            />
-            <Divider sx={{ height: 28 }} orientation="vertical" />
-            <IconButton size="large" sx={{ p: "10px" }}>
-              <AddTwoToneIcon className="text-green-600" fontSize="large" />
-            </IconButton>
-          </Paper>
-          <WatchTabsList />
-        </div>
+        <WatchTabsList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
