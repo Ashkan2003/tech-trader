@@ -4,6 +4,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import { Divider, IconButton, InputBase, Paper } from "@mui/material";
+import { GridMenuIcon } from "@mui/x-data-grid";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -21,8 +24,8 @@ function CustomTabPanel(props: TabPanelProps) {
       id={`simple-tabpanel-${index}`}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", px: "0.5rem" }}>
+          {children}
         </Box>
       )}
     </div>
@@ -44,7 +47,7 @@ export default function WatchTabs() {
   };
 
   return (
-    <Box sx={{ width: "19rem" }}>
+    <Box className="bg-[#F2F2F2]" sx={{}}>
       <Box sx={{ borderColor: "divider" }}>
         <Tabs
           sx={{ ".MuiTabs-indicator": { top: "0" } }}
@@ -56,7 +59,6 @@ export default function WatchTabs() {
           centered
         >
           <Tab
-            sx={{}}
             className="!bg-[#F2F2F2] !border-solid !border-t-2 !border-r-2 !border-l-2 !border-[#E0E5E8]"
             label="دیده بان من"
             {...a11yProps(0)}
@@ -69,7 +71,29 @@ export default function WatchTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <Paper
+          component="form"
+          className="!bg-[#F1F2F4]"
+          sx={{
+            mt: "10px",
+            display: "flex",
+            alignItems: "center",
+            width: "22rem",
+            height: "3rem",
+            borderRadius: "12px",
+            boxShadow: "0",
+            border: "1px solid #cbc1c1",
+          }}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="افزودن دیده بان جدید"
+          />
+          <Divider sx={{ height: 28 }} orientation="vertical" />
+          <IconButton size="large" sx={{ p: "10px" }}>
+            <AddTwoToneIcon className="text-green-600" fontSize="large" />
+          </IconButton>
+        </Paper>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
