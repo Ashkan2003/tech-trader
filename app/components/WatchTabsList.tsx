@@ -5,6 +5,7 @@ import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import {
+  Autocomplete,
   Button,
   Dialog,
   DialogActions,
@@ -54,19 +55,19 @@ export default function WatchTabsList() {
 
   // this function is for updating the selected watch
   const handleUpdateWatchBtn = (currentId: number, newTitle: string) => {
-    console.log(currentId, newTitle, "ddd");
     const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
-    let find = copyWatchListArray.map((watch) => {
+    let updatedWatchList = copyWatchListArray.map((watch) => {
+      // map throug the watchListArray
       if (watch.id == currentId) {
+        //find the watch we want to update and return it with the newValeu
         return { id: currentId, title: newTitle };
       } else {
+        // then return the outher watchs
         return watch;
       }
     });
-    // console.log(find, "dd");
-    setWatchListArray(find);
+    setWatchListArray(updatedWatchList); // then put the new array to the watchListArray
   };
-  // console.log(watchListArray, "dggd");
 
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
@@ -154,7 +155,7 @@ export default function WatchTabsList() {
     </div>
   );
 }
-
+////////////////////////////FormDialog-component//////////////////////////////////////////////
 interface Props {
   watch: { id: number; title: string };
   handleUpdateWatchBtn: any;
@@ -196,8 +197,8 @@ function FormDialog({ watch, handleUpdateWatchBtn }: Props) {
       >
         <DialogTitle>ویرایش دیده بان {watch.title}</DialogTitle>
         <Divider />
-        <DialogContent>
-          <div className="flex items-center justify-between">
+        <DialogContent sx={{bgcolor:"ternery.main",py:"2rem"}}>
+          <div className="flex items-center justify-between mb-16">
             <Typography>نام دیده بان:</Typography>
             <TextField
               value={inputValue}
@@ -205,6 +206,25 @@ function FormDialog({ watch, handleUpdateWatchBtn }: Props) {
               id="outlined-basic"
               label="نام دیده جدید دیدبان"
               variant="outlined"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Typography>افزودن نماد به دیده بان:</Typography>
+            <Autocomplete
+              sx={{minWidth:"350px"}}
+              multiple
+              id="tags-outlined"
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              defaultValue={[top100Films[2]]}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="لیست نماد های انتخاب شده"
+                  placeholder="نماد جدید"
+                />
+              )}
             />
           </div>
         </DialogContent>
@@ -234,3 +254,13 @@ function FormDialog({ watch, handleUpdateWatchBtn }: Props) {
     </React.Fragment>
   );
 }
+
+const top100Films = [
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+  { title: "The Godfather: Part II", year: 1974 },
+  { title: "The Dark Knight", year: 2008 },
+  { title: "12 Angry Men", year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+  { title: "Pulp Fiction", year: 1994 },
+];
