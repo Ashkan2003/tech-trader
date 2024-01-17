@@ -3,15 +3,29 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import { Divider, IconButton, InputBase, Paper } from "@mui/material";
+import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  InputBase,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { useState } from "react";
+import { time } from "console";
+import React, { useState } from "react";
 
-// this component is for adding, deleting,and updating a watch 
+// this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
   const watchList: { id: number; title: string }[] = [
     { id: 1, title: "سهام اصلی" },
@@ -27,17 +41,32 @@ export default function WatchTabsList() {
       ...ListArray,
       { id: Math.random(), title: watchName },
     ]);
-    console.log(watchListArray, "ddd");
   };
 
   // this function is for deleting the selected watch from the watchList by its id
   const handleListDeleteBtn = (currentId: number) => {
-    setWatchListArray((ListArray) =>
-      ListArray.filter((item) => {
+    setWatchListArray((listArray) =>
+      listArray.filter((item) => {
         return item.id !== currentId;
       })
     );
   };
+
+  // this function is for updating the selected watch
+  const handleUpdateWatchBtn = (currentId: number, newTitle: string) => {
+    console.log(currentId, newTitle, "ddd");
+    const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
+    let find = copyWatchListArray.map((watch) => {
+      if (watch.id == currentId) {
+        return { id: currentId, title: newTitle };
+      } else {
+        return watch;
+      }
+    });
+    // console.log(find, "dd");
+    setWatchListArray(find);
+  };
+  // console.log(watchListArray, "dggd");
 
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
@@ -91,19 +120,26 @@ export default function WatchTabsList() {
       >
         <List component="nav">
           {watchListArray.map((item, index) => (
-            <ListItemButton
+            <div
+              className={`flex ${
+                selectedIndex === index && "bg-[#e6e8ea] dark:bg-[#212121]"
+              }`}
               key={item.id}
-              selected={selectedIndex === index}
-              onClick={(event) => handleListItemClick(event, index)}
             >
-              <ListItemIcon>
-                <AccountTreeIcon color="info" />
-              </ListItemIcon>
-              <ListItemText primary={item.title} />
-              <div>
-                <IconButton size="medium">
-                  <EditCalendarOutlinedIcon fontSize="inherit" color="info" />
-                </IconButton>
+              <ListItemButton
+                // selected={selectedIndex === index}
+                onClick={(event) => handleListItemClick(event, index)}
+              >
+                <ListItemIcon>
+                  <AccountTreeIcon color="info" />
+                </ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+              <div className="flex">
+                <FormDialog
+                  watch={item}
+                  handleUpdateWatchBtn={handleUpdateWatchBtn}
+                />
                 <IconButton
                   onClick={() => handleListDeleteBtn(item.id)}
                   size="medium"
@@ -111,10 +147,90 @@ export default function WatchTabsList() {
                   <HighlightOffRoundedIcon fontSize="inherit" color="warning" />
                 </IconButton>
               </div>
-            </ListItemButton>
+            </div>
           ))}
         </List>
       </Box>
     </div>
+  );
+}
+
+interface Props {
+  watch: { id: number; title: string };
+  handleUpdateWatchBtn: any;
+}
+
+function FormDialog({ watch, handleUpdateWatchBtn }: Props) {
+  const [open, setOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  // console.log(inputValue,"ssssss")
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <IconButton onClick={handleClickOpen} size="medium">
+        <EditCalendarOutlinedIcon fontSize="inherit" color="info" />
+      </IconButton>
+      <Dialog
+        maxWidth="sm"
+        fullWidth
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: "form",
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries((formData as any).entries());
+            const email = formJson.email;
+            console.log(email);
+            handleClose();
+          },
+        }}
+      >
+        <DialogTitle>ویرایش دیده بان {watch.title}</DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className="flex items-center justify-between">
+            <Typography>نام دیده بان:</Typography>
+            <TextField
+              value={inputValue}
+              onChange={(event) => setInputValue(event.target.value)}
+              id="outlined-basic"
+              label="نام دیده جدید دیدبان"
+              variant="outlined"
+            />
+          </div>
+        </DialogContent>
+
+        <DialogActions>
+          <Button
+            variant="contained"
+            onClick={handleClose}
+            startIcon={
+              <HighlightOffRoundedIcon fontSize="inherit" color="warning" />
+            }
+          >
+            بستن
+          </Button>
+          <Button
+            onClick={() => {
+              handleUpdateWatchBtn(watch.id, inputValue); // update the watch
+              handleClose(); // then close the modal
+            }}
+            variant="contained"
+            startIcon={<SaveAsRoundedIcon color="secondary" />}
+          >
+            ذخیره
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }
