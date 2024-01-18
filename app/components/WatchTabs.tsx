@@ -2,10 +2,10 @@
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import WatchTabsList from "./WatchTabsList";
+import TechWatchTabList from "./TechWatchTabList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,20 +51,14 @@ export default function WatchTabs() {
     >
       <Box sx={{ borderColor: "divider" }}>
         <Tabs
-          sx={{
-            ".MuiTabs-indicator": { top: "0", bgcolor: "ternary.light" },
-            color: "textPallet.main",
-          }}
           variant="fullWidth"
           value={value}
           onChange={handleChange}
-          // textColor=""
-          indicatorColor="primary"
+          textColor="inherit"
+          indicatorColor="secondary"
           centered
         >
           <Tab
-            // sx={{".muirtl-1fqhah3-MuiButtonBase-root-MuiTab-root.Mui-selected":{bgcolor:"red"}}}
-            // color="text.pallet.main"
             className=" !border-solid !border-t-2 !border-r-2 !border-l-2 !border-[#E0E5E8] dark:!border-[#62737c]"
             label="دیده بان من"
             {...a11yProps(0)}
@@ -80,7 +74,7 @@ export default function WatchTabs() {
         <WatchTabsList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <TechWatchTabList/>
       </CustomTabPanel>
     </Box>
   );

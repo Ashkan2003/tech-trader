@@ -82,16 +82,18 @@ export default function WatchTabsList() {
   };
 
   return (
-    <div className="flex flex-col p">
+    <div className="flex items-center flex-col ">
       {/* the input fied */}
       <Paper
         component="form"
+        
         sx={{
           bgcolor: "success.main",
           mt: "10px",
           display: "flex",
           alignItems: "center",
-          width: "22rem",
+          width:"21.5rem",
+          
           height: "3rem",
           borderRadius: "12px",
           boxShadow: "0",
@@ -100,7 +102,7 @@ export default function WatchTabsList() {
         }}
       >
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 1,flex:1 }}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
           placeholder="افزودن دیده بان جدید"
@@ -159,6 +161,7 @@ export default function WatchTabsList() {
     </div>
   );
 }
+
 ////////////////////////////FormDialog-component//////////////////////////////////////////////
 interface Props {
   watch: { id: number; title: string; symbols: string[] };
