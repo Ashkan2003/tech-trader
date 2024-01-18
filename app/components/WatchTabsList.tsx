@@ -30,7 +30,7 @@ import React, { useState } from "react";
 // this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
   const watchList: { id: number; title: string; symbols: string[] }[] = [
-    { id: 1, title: "سهام اصلی", symbols: ["شیران", "دماوند"] },
+    { id: 1, title: "سهام اصلی", symbols: [] },
     { id: 2, title: "سهام ایبیی", symbols: [] },
   ];
   const [watchListArray, setWatchListArray] = useState(watchList); // the  array of watchList
@@ -56,34 +56,15 @@ export default function WatchTabsList() {
     );
   };
 
-  // this function is for updating the selected watch title
-  const handleUpdateWatchTitle = (currentId: number, newTitle: string) => {
-    const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
-    let updatedWatchList = copyWatchListArray.map((watch) => {
-      // map throug the watchListArray
-      if (watch.id == currentId) {
-        //find the watch we want to update and return it with the newValeu
-        return { ...watch, title: newTitle };
-      } else {
-        // then return the outher watchs
-        return watch;
-      }
-    });
-    setWatchListArray(updatedWatchList); // then put the new array to the watchListArray
-  };
-
-  // this function is for updating the selected watch symbols array
-  const handleUpdateWatchSymbols = (
-    currentId: number,
-    newSymbols: string[]
-  ) => {
+  // this function is for updating the selected watch symbols and title
+  const handleUpdateWatch = (currentId: number, currentTitle: string, newSymbols: string[]) => {
     const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
     let updatedWatchList = copyWatchListArray.map((watch) => {
       // map throug the watchListArray
       if (watch.id == currentId) {
         //find the watch we want to update its symbols-array by its id and return it with the newValeu
         // set the unUsed propertis like(title,id) by spreading the watch-obj
-        return { ...watch, symbols: [...newSymbols] };
+        return { ...watch, title: currentTitle, symbols: [...newSymbols] };
       } else {
         // then return the outher watchs
         return watch;
@@ -103,9 +84,6 @@ export default function WatchTabsList() {
   return (
     <div className="flex flex-col p">
       {/* the input fied */}
-      <Button onClick={() => handleUpdateWatchSymbols(2, ["gfg", "dfdf"])}>
-        ff
-      </Button>
       <Paper
         component="form"
         sx={{
@@ -165,8 +143,7 @@ export default function WatchTabsList() {
               <div className="flex">
                 <FormDialog
                   watch={item}
-                  handleUpdateWatchTitle={handleUpdateWatchTitle}
-                  handleUpdateWatchSymbols={handleUpdateWatchSymbols}
+                  handleUpdateWatch={handleUpdateWatch}
                 />
                 <IconButton
                   onClick={() => handleListDeleteBtn(item.id)}
@@ -185,18 +162,13 @@ export default function WatchTabsList() {
 ////////////////////////////FormDialog-component//////////////////////////////////////////////
 interface Props {
   watch: { id: number; title: string; symbols: string[] };
-  handleUpdateWatchTitle: any;
-  handleUpdateWatchSymbols: any;
+  handleUpdateWatch: any;
 }
 
-function FormDialog({
-  watch,
-  handleUpdateWatchTitle,
-  handleUpdateWatchSymbols,
-}: Props) {
+function FormDialog({ watch, handleUpdateWatch }: Props) {
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [newSymbols, setNewSymbols] = useState([]);
+  const [inputValue, setInputValue] = useState(watch.title);
+  const [newSymbols, setNewSymbols] = useState(watch.symbols);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -206,19 +178,9 @@ function FormDialog({
     setOpen(false);
   };
 
-  // when the user click on svae-btn then render these
   const handleSaveBtn = () => {
-    console.log(inputValue, newSymbols, "fff");
-    //for better performance//if the inputValue for the new-title of watch is not empty ,then run this
-
-    handleUpdateWatchTitle(watch.id, inputValue); // update the watch title
-    // setInputValue("");
-
-    //for better performance//if the user selected at least one option from the auto-CompleteBox, run this
-    if (newSymbols.length > 0) {
-      console.log(inputValue, "aaaa");
-      handleUpdateWatchSymbols(watch.id, newSymbols);
-    }
+    // when the user click on svae-btn then update the current watch
+    handleUpdateWatch(watch.id, inputValue, newSymbols);
     //in the end close the dialog
     handleClose();
   };
@@ -228,26 +190,7 @@ function FormDialog({
       <IconButton onClick={handleClickOpen} size="medium">
         <EditCalendarOutlinedIcon fontSize="inherit" color="info" />
       </IconButton>
-      <Dialog
-        maxWidth="sm"
-        fullWidth
-        open={open}
-        onClose={handleClose}
-        // PaperProps={{
-        //   component: "form",
-        //   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-        //     event.preventDefault();
-        //     handleUpdateWatchTitle(watch.id, inputValue); // update the watch title
-        //     setInputValue("");
-
-        //     //for better performance//if the user selected at least one option from the auto-CompleteBox, run this
-        //     if (newSymbols.length > 0) {
-        //       handleUpdateWatchSymbols(watch.id, newSymbols);
-        //     }
-        //     handleClose();
-        //   },
-        // }}
-      >
+      <Dialog maxWidth="sm" fullWidth open={open} onClose={handleClose}>
         <DialogTitle>ویرایش دیده بان {watch.title}</DialogTitle>
         <Divider />
         <DialogContent sx={{ bgcolor: "ternery.main", py: "2rem" }}>
