@@ -23,10 +23,10 @@ export default function SignIn() {
         <Box
           sx={{
             my: 8,
-            mx: 4,
+            mx: 7,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            // alignItems: "center",
           }}
         >
           <SignLogo />

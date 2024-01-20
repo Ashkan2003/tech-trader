@@ -71,7 +71,7 @@ export default function Navbar() {
             </IconButton>
           </div>
           <Divider orientation="vertical" flexItem />
-          <Link href="/signin">
+          <Link href="/api/auth/signin">
             <IconButton size="large">
               <PowerSettingsNewRoundedIcon
                 fontSize="inherit"
