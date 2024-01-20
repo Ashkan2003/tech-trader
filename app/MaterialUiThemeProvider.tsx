@@ -9,6 +9,7 @@ export const ColorModeContext = React.createContext({
 
 // this is a provider for providing DarkMode and direction: "rtl" and fontFamily: "var(--font-IranSansWeb)",
 export default function CustomThemeProvider(props: any) {
+  // get the thememode from redux-toolkit-store
   const thememode = useAppSelectore((state) => state.darkModeReducer.mode);
 
   const theme = React.useMemo(
@@ -27,7 +28,6 @@ export default function CustomThemeProvider(props: any) {
                 primary: {
                   main: "#5D6E88",
                 },
-
                 secondary: {
                   main: "#D8E4F0",
                 },
@@ -39,6 +39,9 @@ export default function CustomThemeProvider(props: any) {
                 },
                 lemon: {
                   main: "#ffffff",
+                },
+                cusBlue:{
+                  main:"#1976D2"
                 },
                 textPallet: {
                   main: "#000000",
@@ -55,12 +58,14 @@ export default function CustomThemeProvider(props: any) {
                 success: {
                   main: "#39566b",
                 },
-
                 ternery: {
                   main: "#324045",
                 },
                 lemon: {
                   main: "#042431",
+                },
+                cusBlue:{
+                  main:"#1976D2"
                 },
                 textPallet: {
                   main: "#d5afdc",

@@ -37,7 +37,6 @@ export default function WatchTabsList() {
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
 
-  console.log(watchListArray, "s");
   // this funcrion is for add a new watch to the watchList
   const handleInputAddBtn = (watchName: string) => {
     setWatchListArray((ListArray) => [

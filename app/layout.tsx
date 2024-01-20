@@ -34,7 +34,7 @@ export default function RootLayout({
       </head>
       {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
       <MaterialRTLProvider>
-        <body className={IranSansWeb.variable}>
+        <body className={`${IranSansWeb.variable} dark:bg-slate-900`}>
           {/* this Providers is a provider of redux-toolkit */}
           <ReduxProvider>
             {/* this CustomThemeProvider is a provider of material ui for the app theme */}
