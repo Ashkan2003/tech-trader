@@ -2,6 +2,7 @@
 // npm install @mui/material @emotion/react @emotion/styled for stylign
 // npm i react-redux @reduxjs/toolkit
 // npm install @mui/x-data-grid for data-grid-tables
+// npm install prisma --save-dev // npx prisma init for the first-time
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";
