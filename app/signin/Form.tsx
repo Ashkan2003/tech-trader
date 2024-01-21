@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   Grid,
   TextField,
@@ -102,14 +103,14 @@ export default function Form() {
         label="مرا به خاطر بسپار"
       />
       <Button
-        disabled={loading}
         type="submit"
         color="info"
         fullWidth
         variant="contained"
+        disabled={loading}
         sx={{ mt: 2, mb: 2 }}
       >
-        ورود
+        {loading ? <CircularProgress size={25} color="info" /> : "ورود"}
       </Button>
 
       <Grid container>

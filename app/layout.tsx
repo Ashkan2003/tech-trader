@@ -11,6 +11,7 @@
 // npm i zod
 // npm i @hookform/resolvers
 // npm i react-hot-toast
+// npm i axios
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";
