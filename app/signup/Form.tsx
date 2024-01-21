@@ -17,6 +17,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 interface FormData {
   name: string;
@@ -40,12 +41,14 @@ const Form = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  // the resolver is a convectore thats convert the zod-schema to the useForm
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  // when the user click on the submit-btn then send these information to the db
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setLoading(true);
 
@@ -61,13 +64,25 @@ const Form = () => {
         },
       });
 
+      // if success return this
       if (res.status == 200) {
+        await signIn("credentials", { redirect: false });
+        // i fix signup issue by adding this line of code
+        await signIn("credentials", {
+          redirect: false,
+          name: data.name,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+        });
+        // redirect the user to the dashboard
         router.push("/");
         toast.success("ثبت نام با موفقیت انجام شد.");
       }
     } catch (error: any) {
       setLoading(false);
       toast.error("ثبت نام ناموفق بود.");
+      // error code 409 that we gave to the next-response in the signupApi. it mean a conflict(user already exists)
       if (error.response.status == 409)
         toast.error("این آدرس ایمیل قبلا استفاده شده است.");
     }

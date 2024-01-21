@@ -1,16 +1,15 @@
 import Image from "next/image";
 
-import Menu from "./Menu";
-import { Box, Chip, Divider, IconButton, Typography } from "@mui/material";
-import DarkModeIconBtn from "./DarkModeIconBtn";
-import HelpOutlineTwoToneIcon from "@mui/icons-material/HelpOutlineTwoTone";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-import NavClock from "./NavClock";
-import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined";
-import PowerSettingsNewRoundedIcon from "@mui/icons-material/PowerSettingsNewRounded";
+import HelpOutlineTwoToneIcon from "@mui/icons-material/HelpOutlineTwoTone";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import Badge from "./Badge";
-import Link from "next/link";
+import DarkModeIconBtn from "./DarkModeIconBtn";
+import Menu from "./Menu";
+import NavClock from "./NavClock";
+import NavAuthState from "./NavAuthState";
 export default function Navbar() {
+  
   return (
     <header className="bg-[#5D6E88] dark:bg-[#2D3E4A]  h-13">
       <nav className="flex  items-center justify-between  ">
@@ -59,30 +58,10 @@ export default function Navbar() {
           <Divider orientation="vertical" flexItem />
           <NavClock />
           <Divider orientation="vertical" flexItem />
-          <div className="flex items-center ps-3">
-            <Typography color="white" className="hidden sm:block">
-              میلاد جهانی
-            </Typography>
-            <IconButton size="large">
-              <SettingsSuggestOutlinedIcon
-                fontSize="inherit"
-                color="secondary"
-              ></SettingsSuggestOutlinedIcon>
-            </IconButton>
-          </div>
-          <Divider orientation="vertical" flexItem />
-          <Link href="/api/auth/signin">
-            <IconButton size="large">
-              <PowerSettingsNewRoundedIcon
-                fontSize="inherit"
-                sx={{ color: "yellow" }}
-              ></PowerSettingsNewRoundedIcon>
-            </IconButton>
-          </Link>
+          <NavAuthState/>
         </div>
       </nav>
-      <Divider  flexItem />
-      
+      <Divider flexItem />
     </header>
   );
 }

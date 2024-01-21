@@ -39,7 +39,7 @@ export default function Form() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
@@ -53,14 +53,16 @@ export default function Form() {
 
       setLoading(false);
 
-      console.log(res);
       if (!res?.error) {
+        toast.success("ورود با موفقیت انجام شد.");
         router.push("/");
-      } else {
-        toast.success("ثبت نام با موفقیت انجام شد.");
+      } else if (res.status == 401) {
+        toast.error("نام کاربری یا رمز عبور اشتباه");
       }
     } catch (error: any) {
       setLoading(false);
+      toast.error("ورود ناموفق");
+      console.log(error);
     }
   };
 
