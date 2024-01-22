@@ -28,14 +28,13 @@ export async function POST(request: NextRequest) {
       // set these new datas in the user-table
       data: {
         name: body.name,
+        lastName:body.lastName,
         email: body.email,
         hashedPassword: hashedPassword,
       },
     });
 
     return NextResponse.json({ email: newUser.email });
-
-
   } catch (error: any) {
     JSON.stringify({
       status: "error",
