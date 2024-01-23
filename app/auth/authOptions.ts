@@ -13,7 +13,7 @@ const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24,//one-day // per-second
+    maxAge: 60 * 60,//one-day // per-second
   },
   pages: {
     //Specify URLs to be used if you want to create custom sign in, sign out and error pages. Pages specified will override the corresponding built-in page.

@@ -5,7 +5,9 @@ import MainTable from "./components/MainTable";
 import Navbar from "./components/Navbar";
 import WatchTabs from "./components/WatchTabs";
 
-export default function Home() {
+
+export default async function Home() {
+
   return (
     <>
       <Navbar />
@@ -16,7 +18,7 @@ export default function Home() {
           </div>
           <div className="col-span-9 row-span-3">
             <MainCol />
-            <MainTable />
+            <MainTable/>
           </div>
           <div className="col-span-9 row-span-1 bg-gray-400">
             <div className="!w-[50px]">03</div>

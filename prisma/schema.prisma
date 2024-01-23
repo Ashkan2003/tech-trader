@@ -13,6 +13,30 @@ datasource db {
   //  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shadow
 }
 
+enum Status {
+  ALLOWED
+  NOTALLOWED
+}
+
+model Symbols {
+  id                  Int    @id @default(autoincrement())
+  symbolName          String @unique
+  volume              Int
+  lastDeal            Int
+  lastDealPercentage  Float
+  lastPrice           Int
+  lastPricePercentage Int
+  theFirst            Int
+  theLeast            Int
+  theMost             Int
+  demandVolume        Int
+  demandPrice         Int
+  offerPrice          Int
+  offerVolume         Int
+  state               Status @default(NOTALLOWED)
+}
+
+
 model Account {
   id                String  @id @default(cuid())
   userId            String

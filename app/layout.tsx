@@ -12,6 +12,8 @@
 // npm i @hookform/resolvers
 // npm i react-hot-toast
 // npm i axios
+// npm i @tanstack/react-query
+// npm i @tanstack/react-query-devtools
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";
@@ -20,7 +22,8 @@ import CustomThemeProvider from "./MaterialUiThemeProvider";
 import { ReduxProvider } from "./GlobalRedux/provider";
 import AuthProvider from "./auth/Provider";
 import { Toaster } from "react-hot-toast";
-
+import QueryClientProvider from "./QueryClientProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // const inter = Inter({ subsets: ["latin"] });
 
 // this is the way of importing a local font
@@ -47,41 +50,46 @@ export default function RootLayout({
       {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
       <MaterialRTLProvider>
         <body className={`${IranSansWeb.variable} dark:bg-slate-900`}>
-          {/* this is the provider of the next-Auth */}
-          <AuthProvider>
-            {/* this Providers is a provider of redux-toolkit */}
-            <ReduxProvider>
-              {/* this CustomThemeProvider is a provider of material ui for the app theme */}
-              <CustomThemeProvider>{children}</CustomThemeProvider>
-            </ReduxProvider>
-          </AuthProvider>
-          <Toaster // react-hot-toast
-            position="top-center"
-            gutter={12}
-            containerStyle={{ margin: "8px" }}
-            toastOptions={{
-              success: {
-                duration: 3000,
-                style: {
-                  fontSize: "16px",
-                  maxWidth: "500px",
-                  padding: "10px 24px",
-                  backgroundColor: "#46dc5c",
-                  color: "#000000",
+          {/* this is the provider of the react-query */}
+          <QueryClientProvider>
+            {/* this is the provider of the next-Auth */}
+            <AuthProvider>
+              {/* this Providers is a provider of redux-toolkit */}
+              <ReduxProvider>
+                {/* this CustomThemeProvider is a provider of material ui for the app theme */}
+                <CustomThemeProvider>{children}</CustomThemeProvider>
+              </ReduxProvider>
+            </AuthProvider>
+            <Toaster // react-hot-toast
+              position="top-center"
+              gutter={12}
+              containerStyle={{ margin: "8px" }}
+              toastOptions={{
+                success: {
+                  duration: 3000,
+                  style: {
+                    fontSize: "16px",
+                    maxWidth: "500px",
+                    padding: "10px 24px",
+                    backgroundColor: "#46dc5c",
+                    color: "#000000",
+                  },
                 },
-              },
-              error: {
-                duration: 5000,
-                style: {
-                  fontSize: "16px",
-                  maxWidth: "500px",
-                  padding: "10px 24px",
-                  backgroundColor: "#cc2525",
-                  color: "#000000",
+                error: {
+                  duration: 5000,
+                  style: {
+                    fontSize: "16px",
+                    maxWidth: "500px",
+                    padding: "10px 24px",
+                    backgroundColor: "#cc2525",
+                    color: "#000000",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+            {/* this is not the part of app,its the react-query-dev-tools */}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
         </body>
       </MaterialRTLProvider>
     </html>

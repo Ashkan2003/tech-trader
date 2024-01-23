@@ -1,11 +1,18 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import prisma from "@/prisma/db";
+import { Symbols } from "@prisma/client";
+import axios from "axios";
+import { useSymbols } from "../features/useSymbols";
+import { Skeleton, Stack, Typography } from "@mui/material";
+import toast from "react-hot-toast";
+// import useSymbols from "../features/useSymbols";
 
 const columns: GridColDef[] = [
   {
-    field: "symbol",
+    field: "symbolName",
     // headerClassName: 'text-[#185875] bg-[#b1b6be] dark:bg-[#1f2739]',
     headerName: "نماد",
     // width: 80,
@@ -116,95 +123,63 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    symbol: "ثاخت",
-    volume: "82.09M",
-    lastDeal: "1.68%",
-    lastDealPercentage: 144,
-    lastPrice: 22.3,
-    lastPricePercentage: "0.89%",
-    theFirst: 22.2,
-    theLeast: 21.8,
-    theMost: 22.75,
-    demandVolume: 440,
-    demandPrice: 21.9,
-    offerPrice: 22.15,
-    offerVolume: 2.516,
-    state: "مجاز",
-  },
-  {
-    id: 2,
-    symbol: "ثاخت",
-    volume: "82.09M",
-    lastDeal: "1.68%",
-    lastDealPercentage: 144,
-    lastPrice: 22.3,
-    lastPricePercentage: "0.89%",
-    theFirst: 22.2,
-    theLeast: 21.8,
-    theMost: 22.75,
-    demandVolume: 440,
-    demandPrice: 21.9,
-    offerPrice: 22.15,
-    offerVolume: 2.516,
-    state: "مجاز",
-  },
-  {
-    id: 3,
-    symbol: "ثاخت",
-    volume: "82.09M",
-    lastDeal: "1.68%",
-    lastDealPercentage: 144,
-    lastPrice: 22.3,
-    lastPricePercentage: "0.89%",
-    theFirst: 22.2,
-    theLeast: 21.8,
-    theMost: 22.75,
-    demandVolume: 440,
-    demandPrice: 21.9,
-    offerPrice: 22.15,
-    offerVolume: 2.516,
-    state: "مجاز",
-  },
-  {
-    id: 4,
-    symbol: "ثاخت",
-    volume: "82.09M",
-    lastDeal: "1.68%",
-    lastDealPercentage: 144,
-    lastPrice: 22.3,
-    lastPricePercentage: "0.89%",
-    theFirst: 22.2,
-    theLeast: 21.8,
-    theMost: 22.75,
-    demandVolume: 440,
-    demandPrice: 21.9,
-    offerPrice: 22.15,
-    offerVolume: 2.516,
-    state: "مجاز",
-  },
-];
-
 export default function MainTable() {
+  const { isLoading, sybmols, error } = useSymbols();
+
+  // if is loading return a skeleton
+  if (isLoading)
+    return (
+      <Stack paddingTop={1} spacing={1}>
+        <Skeleton animation="wave" variant="rounded" width="full" height={40} />
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          width="full"
+          height={400}
+        />
+      </Stack>
+    );
+
+  // if there was an error then retune a toast
+  if (error) return toast.error("اخطار.لطفا اتصال اینترنت خود را چک کنید.");
+
+  const rows = sybmols?.map((symbol) => {
+    return {
+      id: symbol.id,
+      symbolName: symbol.symbolName,
+      volume: `${symbol.volume}M`,
+      lastDeal: `${symbol.lastDeal}%`,
+      lastDealPercentage: symbol.lastDealPercentage,
+      lastPrice: symbol.lastPrice,
+      lastPricePercentage: `${symbol.lastPricePercentage}%`,
+      theFirst: symbol.theFirst,
+      theLeast: symbol.theLeast,
+      theMost: symbol.theMost,
+      demandVolume: symbol.demandVolume,
+      demandPrice: symbol.demandPrice,
+      offerPrice: symbol.offerPrice,
+      offerVolume: symbol.offerVolume,
+      state: symbol.state,
+    };
+  });
+
   return (
-    <Box sx={{ height: 455, width:"67.6rem",bgcolor:"ternery.main" }}>
+    <Box sx={{ height: 455, bgcolor: "ternery.main" }}>
       <DataGrid
-      scrollbarSize={200}
-        sx={{}}
+        loading={isLoading}
+        scrollbarSize={200}
         columnHeaderHeight={40}
         rowHeight={35}
-        rows={rows}
+        rows={rows!}
         columns={columns}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize: 15,
             },
           },
         }}
-        pageSizeOptions={[10]}
+        pageSizeOptions={[15]}
         // checkboxSelection
         // disableRowSelectionOnClick
       />
