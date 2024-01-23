@@ -29,6 +29,8 @@ import React, { useState } from "react";
 
 // this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
+
+
   const watchList: { id: number; title: string; symbols: string[] }[] = [
     { id: 1, title: "سهام اصلی", symbols: [] },
     { id: 2, title: "سهام ایبیی", symbols: [] },
@@ -56,7 +58,11 @@ export default function WatchTabsList() {
   };
 
   // this function is for updating the selected watch symbols and title
-  const handleUpdateWatch = (currentId: number, currentTitle: string, newSymbols: string[]) => {
+  const handleUpdateWatch = (
+    currentId: number,
+    currentTitle: string,
+    newSymbols: string[]
+  ) => {
     const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
     let updatedWatchList = copyWatchListArray.map((watch) => {
       // map throug the watchListArray
@@ -85,14 +91,12 @@ export default function WatchTabsList() {
       {/* the input fied */}
       <Paper
         component="form"
-        
         sx={{
           bgcolor: "success.main",
           mt: "10px",
           display: "flex",
           alignItems: "center",
-          width:"21.5rem",
-          
+          width: "21.5rem",
           height: "3rem",
           borderRadius: "12px",
           boxShadow: "0",
@@ -101,7 +105,7 @@ export default function WatchTabsList() {
         }}
       >
         <InputBase
-          sx={{ ml: 1,flex:1 }}
+          sx={{ ml: 1, flex: 1 }}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
           placeholder="افزودن دیده بان جدید"
@@ -142,11 +146,11 @@ export default function WatchTabsList() {
                 <ListItemText primary={item.title} />
               </ListItemButton>
               <div className="flex">
-                <FormDialog
+                <FormDialog // this is the dialog-btn
                   watch={item}
                   handleUpdateWatch={handleUpdateWatch}
                 />
-                <IconButton
+                <IconButton // this is the delete-btn
                   onClick={() => handleListDeleteBtn(item.id)}
                   size="medium"
                 >

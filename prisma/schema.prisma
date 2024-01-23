@@ -36,7 +36,6 @@ model Symbols {
   state               Status @default(NOTALLOWED)
 }
 
-
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -64,16 +63,28 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model WatchList {
+  id      Int    @id @default(autoincrement())
+  title   String
+  symbols String
+
+  //these fiels are for making relating with the User-model
+  relatedUser User?   @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+// the relation bettven User and WatchList is 1 to many, becus 1 user can have many watchList
 model User {
-  id             String    @id @default(cuid())
+  id             String      @id @default(cuid())
   name           String?
   lastName       String?
-  email          String?   @unique
+  email          String?     @unique
   emailVerified  DateTime?
   hashedPassword String?
   image          String?
   accounts       Account[]
   sessions       Session[]
+  watchLists     WatchList[]
 }
 
 model VerificationToken {

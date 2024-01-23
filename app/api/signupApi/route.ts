@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 import bcrypt from "bcrypt";
+import { create } from "domain";
 
 // this post-resquet is for sign up the user
 export async function POST(request: NextRequest) {
@@ -25,12 +26,18 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
     const newUser = await prisma.user.create({
+      // one user can have many watchList
       // set these new datas in the user-table
       data: {
+        // these are the User-model informations
         name: body.name,
-        lastName:body.lastName,
+        lastName: body.lastName,
         email: body.email,
         hashedPassword: hashedPassword,
+        // these are the WatchList-model information that have a relation with the user
+        watchLists: {
+          create: [{ title: "دارایی های من", symbols: "" }],
+        },
       },
     });
 
