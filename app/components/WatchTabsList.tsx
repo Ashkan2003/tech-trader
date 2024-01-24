@@ -1,5 +1,4 @@
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
@@ -13,10 +12,8 @@ import {
   DialogTitle,
   Divider,
   IconButton,
-  InputBase,
-  Paper,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -25,9 +22,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
 import { useUserWatchLists } from "../features/useUserWatchLists";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useCreateWatchLists } from "../features/useCreateWatchLists";
+import WatchTabInput from "./WatchTabInput";
 
 // this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
@@ -39,19 +34,9 @@ export default function WatchTabsList() {
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
   const { error, isLoading, watchLists } = useUserWatchLists();
-  const { mutate } = useCreateWatchLists();
   if (isLoading) return null;
-  console.log(watchLists, "sssdd");
 
-  // this funcrion is for add a new watch to the watchList
-  const handleInputAddBtn = async (watchName: string) => {
-    // if the input value was empty dont do any thing
-    if (watchName == "") return null;
-    // send these information to useCreateWatchLists to create a new watchList
-    mutate(watchName);
-    // when the work finished,empty the input
-    setInputValue("");
-  };
+  
 
   
   // // this function is for deleting the selected watch from the watchList by its id
@@ -95,36 +80,7 @@ export default function WatchTabsList() {
   return (
     <div className="flex items-center flex-col ">
       {/* the input fied */}
-      <Paper
-        component="form"
-        sx={{
-          bgcolor: "success.main",
-          mt: "10px",
-          display: "flex",
-          alignItems: "center",
-          width: "21.5rem",
-          height: "3rem",
-          borderRadius: "12px",
-          boxShadow: "0",
-          border: "1px solid",
-          borderColor: "secondary.main",
-        }}
-      >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-          placeholder="افزودن دیده بان جدید"
-        />
-        <Divider sx={{ height: 28 }} orientation="vertical" />
-        <IconButton
-          onClick={() => handleInputAddBtn(inputValue)}
-          size="large"
-          sx={{ p: "10px" }}
-        >
-          <AddTwoToneIcon className="text-green-600" fontSize="large" />
-        </IconButton>
-      </Paper>
+      <WatchTabInput inputValue={inputValue} setInputValue={setInputValue}/>
       {/* the list */}
       <Box
         sx={{
