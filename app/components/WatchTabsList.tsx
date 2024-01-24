@@ -24,59 +24,65 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { time } from "console";
 import React, { useState } from "react";
+import prisma from "@/prisma/db";
+import { useUserWatchLists } from "../features/useUserWatchLists";
 
 // this component is for adding, deleting,and updating a watch
-export default function WatchTabsList() {
+export default  function WatchTabsList() {
 
-
-  const watchList: { id: number; title: string; symbols: string[] }[] = [
-    { id: 1, title: "سهام اصلی", symbols: [] },
-    { id: 2, title: "سهام ایبیی", symbols: [] },
-  ];
-  const [watchListArray, setWatchListArray] = useState(watchList); // the  array of watchList
+  // const watchList: { id: number; title: string; symbols: string[] }[] = [
+  //   { id: 1, title: "سهام اصلی", symbols: [] },
+  //   { id: 2, title: "سهام ایبیی", symbols: [] },
+  // ];
+  // const [watchListArray, setWatchListArray] = useState(watchList); // the  array of watchList
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
 
-  // this funcrion is for add a new watch to the watchList
-  const handleInputAddBtn = (watchName: string) => {
-    setWatchListArray((ListArray) => [
-      ...ListArray,
-      { id: Math.random(), title: watchName, symbols: [] },
-    ]);
-    setInputValue(""); // when the work finished,empty the input
-  };
+  const {error,isLoading,watchLists} = useUserWatchLists()
 
-  // this function is for deleting the selected watch from the watchList by its id
-  const handleListDeleteBtn = (currentId: number) => {
-    setWatchListArray((listArray) =>
-      listArray.filter((item) => {
-        return item.id !== currentId;
-      })
-    );
-  };
+  if(isLoading) return null
+  console.log(watchLists,"sssdd")
 
-  // this function is for updating the selected watch symbols and title
-  const handleUpdateWatch = (
-    currentId: number,
-    currentTitle: string,
-    newSymbols: string[]
-  ) => {
-    const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
-    let updatedWatchList = copyWatchListArray.map((watch) => {
-      // map throug the watchListArray
-      if (watch.id == currentId) {
-        //find the watch we want to update its symbols-array by its id and return it with the newValeu
-        // set the unUsed propertis like(title,id) by spreading the watch-obj
-        return { ...watch, title: currentTitle, symbols: [...newSymbols] };
-      } else {
-        // then return the outher watchs
-        return watch;
-      }
-    });
-    setWatchListArray(updatedWatchList); // then put the new array to the watchListArray
-  };
+
+  // // this funcrion is for add a new watch to the watchList
+  // const handleInputAddBtn = (watchName: string) => {
+  //   setWatchListArray((ListArray) => [
+  //     ...ListArray,
+  //     { id: Math.random(), title: watchName, symbols: [] },
+  //   ]);
+  //   setInputValue(""); // when the work finished,empty the input
+  // };
+
+  // // this function is for deleting the selected watch from the watchList by its id
+  // const handleListDeleteBtn = (currentId: number) => {
+  //   setWatchListArray((listArray) =>
+  //     listArray.filter((item) => {
+  //       return item.id !== currentId;
+  //     })
+  //   );
+  // };
+
+  // // this function is for updating the selected watch symbols and title
+  // const handleUpdateWatch = (
+  //   currentId: number,
+  //   currentTitle: string,
+  //   newSymbols: string[]
+  // ) => {
+  //   const copyWatchListArray = [...watchListArray]; // we do this to perevent the aaray confilict in memory
+  //   let updatedWatchList = copyWatchListArray.map((watch) => {
+  //     // map throug the watchListArray
+  //     if (watch.id == currentId) {
+  //       //find the watch we want to update its symbols-array by its id and return it with the newValeu
+  //       // set the unUsed propertis like(title,id) by spreading the watch-obj
+  //       return { ...watch, title: currentTitle, symbols: [...newSymbols] };
+  //     } else {
+  //       // then return the outher watchs
+  //       return watch;
+  //     }
+  //   });
+  //   setWatchListArray(updatedWatchList); // then put the new array to the watchListArray
+  // };
 
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
@@ -112,7 +118,7 @@ export default function WatchTabsList() {
         />
         <Divider sx={{ height: 28 }} orientation="vertical" />
         <IconButton
-          onClick={() => handleInputAddBtn(inputValue)}
+          // onClick={() => handleInputAddBtn(inputValue)}
           size="large"
           sx={{ p: "10px" }}
         >
@@ -129,7 +135,7 @@ export default function WatchTabsList() {
         }}
       >
         <List component="nav">
-          {watchListArray.map((item, index) => (
+          {watchLists!.map((item, index) => (
             <div
               className={`flex ${
                 selectedIndex === index && "bg-[#e6e8ea] dark:bg-[#212121]"
@@ -146,16 +152,16 @@ export default function WatchTabsList() {
                 <ListItemText primary={item.title} />
               </ListItemButton>
               <div className="flex">
-                <FormDialog // this is the dialog-btn
+                {/* <FormDialog // this is the dialog-btn
                   watch={item}
-                  handleUpdateWatch={handleUpdateWatch}
+                  // handleUpdateWatch={handleUpdateWatch}
                 />
                 <IconButton // this is the delete-btn
-                  onClick={() => handleListDeleteBtn(item.id)}
+                  // onClick={() => handleListDeleteBtn(item.id)}
                   size="medium"
                 >
                   <HighlightOffRoundedIcon fontSize="inherit" color="warning" />
-                </IconButton>
+                </IconButton> */}
               </div>
             </div>
           ))}
