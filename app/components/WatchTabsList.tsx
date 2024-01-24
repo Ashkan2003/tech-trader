@@ -1,4 +1,3 @@
-"use client";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
@@ -25,12 +24,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
-import prisma from "@/prisma/db";
 import { useUserWatchLists } from "../features/useUserWatchLists";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useCreateWatchLists } from "../features/useCreateWatchLists";
 
 // this component is for adding, deleting,and updating a watch
-export default  function WatchTabsList() {
-
+export default function WatchTabsList() {
   // const watchList: { id: number; title: string; symbols: string[] }[] = [
   //   { id: 1, title: "سهام اصلی", symbols: [] },
   //   { id: 2, title: "سهام ایبیی", symbols: [] },
@@ -38,22 +38,22 @@ export default  function WatchTabsList() {
   // const [watchListArray, setWatchListArray] = useState(watchList); // the  array of watchList
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
+  const { error, isLoading, watchLists } = useUserWatchLists();
+  const { mutate } = useCreateWatchLists();
+  if (isLoading) return null;
+  console.log(watchLists, "sssdd");
 
-  const {error,isLoading,watchLists} = useUserWatchLists()
+  // this funcrion is for add a new watch to the watchList
+  const handleInputAddBtn = async (watchName: string) => {
+    // if the input value was empty dont do any thing
+    if (watchName == "") return null;
+    // send these information to useCreateWatchLists to create a new watchList
+    mutate(watchName);
+    // when the work finished,empty the input
+    setInputValue("");
+  };
 
-  if(isLoading) return null
-  console.log(watchLists,"sssdd")
-
-
-  // // this funcrion is for add a new watch to the watchList
-  // const handleInputAddBtn = (watchName: string) => {
-  //   setWatchListArray((ListArray) => [
-  //     ...ListArray,
-  //     { id: Math.random(), title: watchName, symbols: [] },
-  //   ]);
-  //   setInputValue(""); // when the work finished,empty the input
-  // };
-
+  
   // // this function is for deleting the selected watch from the watchList by its id
   // const handleListDeleteBtn = (currentId: number) => {
   //   setWatchListArray((listArray) =>
@@ -118,7 +118,7 @@ export default  function WatchTabsList() {
         />
         <Divider sx={{ height: 28 }} orientation="vertical" />
         <IconButton
-          // onClick={() => handleInputAddBtn(inputValue)}
+          onClick={() => handleInputAddBtn(inputValue)}
           size="large"
           sx={{ p: "10px" }}
         >
