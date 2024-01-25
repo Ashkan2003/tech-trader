@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+// this is a custom-hook for setting up react-query for deleting a single-watchList
 export const useDeleteWatchList = () => {
   const queryClient = useQueryClient();
 

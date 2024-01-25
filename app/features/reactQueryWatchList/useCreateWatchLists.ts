@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+// this is a custom-hook for setting up react-query for creating a single-watchList
 export const useCreateWatchList = () => {
 
   const queryClient = useQueryClient();

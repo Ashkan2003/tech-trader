@@ -1,22 +1,5 @@
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
-import {
-  Autocomplete,
-  Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  Skeleton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -24,20 +7,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
 import { useUserWatchLists } from "../features/reactQueryWatchList/useUserWatchLists";
+import WatchListDeleteBtn from "./WatchListDeleteBtn";
 import WatchTabInput from "./WatchTabInput";
-import { useDeleteWatchList } from "../features/reactQueryWatchList/useDeleteWatchList";
 
 // this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
-  // const watchList: { id: number; title: string; symbols: string[] }[] = [
-  //   { id: 1, title: "سهام اصلی", symbols: [] },
-  //   { id: 2, title: "سهام ایبیی", symbols: [] },
-  // ];
-  // const [watchListArray, setWatchListArray] = useState(watchList); // the  array of watchList
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
-  const { error, isLoading, watchLists } = useUserWatchLists();
-  const {mutate}=useDeleteWatchList()
+  const { isLoading, watchLists } = useUserWatchLists();
   // if is loading return a skeleton
   if (isLoading)
     return (
@@ -60,11 +37,6 @@ export default function WatchTabsList() {
       </Stack>
     );
 
-  // this function is for deleting the selected watch from the watchList by its id
-  const handleListDeleteBtn = (currentId: number) => {
-    mutate(currentId)
-  };
-
   // // this function is for updating the selected watch symbols and title
   // const handleUpdateWatch = (
   //   currentId: number,
@@ -85,7 +57,6 @@ export default function WatchTabsList() {
   //   });
   //   setWatchListArray(updatedWatchList); // then put the new array to the watchListArray
   // };
-
 
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
@@ -131,15 +102,8 @@ export default function WatchTabsList() {
                   // watch={item}
                   // handleUpdateWatch={handleUpdateWatch}
                   />
-                  <IconButton // this is the delete-btn
-                    onClick={() => handleListDeleteBtn(item.id)}
-                    size="medium"
-                  >
-                    <HighlightOffRoundedIcon
-                      fontSize="inherit"
-                      color="warning"
-                    />
-                  </IconButton>
+                  {/*  this is the watch-list delete-btn */}
+                  <WatchListDeleteBtn itemId={item.id} />
                 </div>
               )}
             </div>
@@ -262,10 +226,3 @@ function FormDialog() {
   // );
   return <div></div>;
 }
-
-const top100Films = [
-  "The Sh",
-  "The God",
-  "The Godfather: Part II",
-  "The Dark Knight",
-];
