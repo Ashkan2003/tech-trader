@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
+import { json } from "stream/consumers";
+import axios from "axios";
 
-// this is a get api to get the current-user-watchLists
+// this is a get-request to get the current-user-watchLists
 export async function GET(request: NextRequest) {
   //this is the way of geetting the user authState in server components
   const session = await getServerSession(authOptions);
@@ -21,7 +23,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(currentUserWatchLists);
 }
 
-// this is a post-api to create a new watchList for the current-user
+// this is a post-request to create a new watchList for the current-user
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
@@ -40,4 +42,15 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json(res);
+}
+
+// this is a delete-request to delete a watchList from the db
+export async function DELETE(request: NextRequest) {
+  // get the id from the request
+  const currentId = await request.json();
+
+  const res = await prisma.watchList.delete({
+    where: { id: currentId },
+  });
+  return NextResponse.json(res)
 }

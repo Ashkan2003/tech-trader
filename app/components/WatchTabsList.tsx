@@ -12,8 +12,10 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  Skeleton,
+  Stack,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -21,8 +23,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
-import { useUserWatchLists } from "../features/useUserWatchLists";
+import { useUserWatchLists } from "../features/reactQueryWatchList/useUserWatchLists";
 import WatchTabInput from "./WatchTabInput";
+import { useDeleteWatchList } from "../features/reactQueryWatchList/useDeleteWatchList";
 
 // this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
@@ -34,19 +37,33 @@ export default function WatchTabsList() {
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
   const { error, isLoading, watchLists } = useUserWatchLists();
-  if (isLoading) return null;
+  const {mutate}=useDeleteWatchList()
+  // if is loading return a skeleton
+  if (isLoading)
+    return (
+      <Stack paddingTop={2} paddingX={1} spacing={1}>
+        <Stack gap={1} flexDirection="row">
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            width={300}
+            height={50}
+          />
+          <Skeleton animation="wave" variant="rounded" width={70} height={50} />
+        </Stack>
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+      </Stack>
+    );
 
-  
-
-  
-  // // this function is for deleting the selected watch from the watchList by its id
-  // const handleListDeleteBtn = (currentId: number) => {
-  //   setWatchListArray((listArray) =>
-  //     listArray.filter((item) => {
-  //       return item.id !== currentId;
-  //     })
-  //   );
-  // };
+  // this function is for deleting the selected watch from the watchList by its id
+  const handleListDeleteBtn = (currentId: number) => {
+    mutate(currentId)
+  };
 
   // // this function is for updating the selected watch symbols and title
   // const handleUpdateWatch = (
@@ -69,6 +86,7 @@ export default function WatchTabsList() {
   //   setWatchListArray(updatedWatchList); // then put the new array to the watchListArray
   // };
 
+
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -80,7 +98,7 @@ export default function WatchTabsList() {
   return (
     <div className="flex items-center flex-col ">
       {/* the input fied */}
-      <WatchTabInput inputValue={inputValue} setInputValue={setInputValue}/>
+      <WatchTabInput inputValue={inputValue} setInputValue={setInputValue} />
       {/* the list */}
       <Box
         sx={{
@@ -107,18 +125,23 @@ export default function WatchTabsList() {
                 </ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
-              <div className="flex">
-                {/* <FormDialog // this is the dialog-btn
-                  watch={item}
+              {index == 0 || ( // with this code i said that dont render(map) the first item so the user canot delete or edit the first-watch-List
+                <div className="flex">
+                  <FormDialog // this is the dialog-btn
+                  // watch={item}
                   // handleUpdateWatch={handleUpdateWatch}
-                />
-                <IconButton // this is the delete-btn
-                  // onClick={() => handleListDeleteBtn(item.id)}
-                  size="medium"
-                >
-                  <HighlightOffRoundedIcon fontSize="inherit" color="warning" />
-                </IconButton> */}
-              </div>
+                  />
+                  <IconButton // this is the delete-btn
+                    onClick={() => handleListDeleteBtn(item.id)}
+                    size="medium"
+                  >
+                    <HighlightOffRoundedIcon
+                      fontSize="inherit"
+                      color="warning"
+                    />
+                  </IconButton>
+                </div>
+              )}
             </div>
           ))}
         </List>
@@ -133,110 +156,111 @@ interface Props {
   handleUpdateWatch: any;
 }
 
-function FormDialog({ watch, handleUpdateWatch }: Props) {
-  const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(watch.title);
-  const [newSymbols, setNewSymbols] = useState(watch.symbols);
+function FormDialog() {
+  // const [open, setOpen] = useState(false);
+  // const [inputValue, setInputValue] = useState(watch.title);
+  // const [newSymbols, setNewSymbols] = useState(watch.symbols);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
-  const handleSaveBtn = () => {
-    // when the user click on svae-btn then update the current watch
-    handleUpdateWatch(watch.id, inputValue, newSymbols);
-    //in the end close the dialog
-    handleClose();
-  };
+  // const handleSaveBtn = () => {
+  //   // when the user click on svae-btn then update the current watch
+  //   handleUpdateWatch(watch.id, inputValue, newSymbols);
+  //   //in the end close the dialog
+  //   handleClose();
+  // };
 
-  return (
-    <React.Fragment>
-      <IconButton onClick={handleClickOpen} size="medium">
-        <EditCalendarOutlinedIcon fontSize="inherit" color="info" />
-      </IconButton>
-      <Dialog maxWidth="sm" fullWidth open={open} onClose={handleClose}>
-        <DialogTitle>ویرایش دیده بان {watch.title}</DialogTitle>
-        <Divider />
-        <DialogContent sx={{ bgcolor: "ternery.main", py: "2rem" }}>
-          <div className="flex items-center justify-between mb-16">
-            <Typography>نام دیده بان:</Typography>
-            <TextField
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-              id="outlined-basic"
-              label="نام دیده جدید دیدبان"
-              variant="outlined"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <Typography>افزودن نماد به دیده بان:</Typography>
-            <Autocomplete
-              value={newSymbols}
-              onChange={(event: any, newValue: any) => {
-                setNewSymbols(newValue);
-              }}
-              sx={{ minWidth: "350px" }}
-              multiple
-              id="tags-outlined"
-              options={top100Films}
-              getOptionLabel={(option) => option}
-              defaultValue={watch.symbols}
-              filterSelectedOptions
-              // these two func are the solution of the error
-              renderOption={(props, option) => {
-                return (
-                  <li {...props} key={option}>
-                    {option}
-                  </li>
-                );
-              }}
-              renderTags={(tagValue, getTagProps) => {
-                return tagValue.map((option, index) => (
-                  <Chip
-                    {...getTagProps({ index })}
-                    key={option}
-                    label={option}
-                  />
-                ));
-              }}
-              //////////////////////////////////////////////
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="لیست نماد های انتخاب شده"
-                  placeholder="نماد جدید"
-                />
-              )}
-            />
-          </div>
-        </DialogContent>
+  // return (
+  //   <React.Fragment>
+  //     <IconButton onClick={handleClickOpen} size="medium">
+  //       <EditCalendarOutlinedIcon fontSize="inherit" color="info" />
+  //     </IconButton>
+  //     <Dialog maxWidth="sm" fullWidth open={open} onClose={handleClose}>
+  //       <DialogTitle>ویرایش دیده بان {watch.title}</DialogTitle>
+  //       <Divider />
+  //       <DialogContent sx={{ bgcolor: "ternery.main", py: "2rem" }}>
+  //         <div className="flex items-center justify-between mb-16">
+  //           <Typography>نام دیده بان:</Typography>
+  //           <TextField
+  //             value={inputValue}
+  //             onChange={(event) => setInputValue(event.target.value)}
+  //             id="outlined-basic"
+  //             label="نام دیده جدید دیدبان"
+  //             variant="outlined"
+  //           />
+  //         </div>
+  //         <div className="flex items-center justify-between">
+  //           <Typography>افزودن نماد به دیده بان:</Typography>
+  //           <Autocomplete
+  //             value={newSymbols}
+  //             onChange={(event: any, newValue: any) => {
+  //               setNewSymbols(newValue);
+  //             }}
+  //             sx={{ minWidth: "350px" }}
+  //             multiple
+  //             id="tags-outlined"
+  //             options={top100Films}
+  //             getOptionLabel={(option) => option}
+  //             defaultValue={watch.symbols}
+  //             filterSelectedOptions
+  //             // these two func are the solution of the error
+  //             renderOption={(props, option) => {
+  //               return (
+  //                 <li {...props} key={option}>
+  //                   {option}
+  //                 </li>
+  //               );
+  //             }}
+  //             renderTags={(tagValue, getTagProps) => {
+  //               return tagValue.map((option, index) => (
+  //                 <Chip
+  //                   {...getTagProps({ index })}
+  //                   key={option}
+  //                   label={option}
+  //                 />
+  //               ));
+  //             }}
+  //             //////////////////////////////////////////////
+  //             renderInput={(params) => (
+  //               <TextField
+  //                 {...params}
+  //                 label="لیست نماد های انتخاب شده"
+  //                 placeholder="نماد جدید"
+  //               />
+  //             )}
+  //           />
+  //         </div>
+  //       </DialogContent>
 
-        <DialogActions>
-          <Button
-            variant="contained"
-            onClick={handleClose}
-            startIcon={
-              <HighlightOffRoundedIcon fontSize="inherit" color="warning" />
-            }
-          >
-            بستن
-          </Button>
-          <Button
-            // type="submit"
-            onClick={handleSaveBtn}
-            variant="contained"
-            startIcon={<SaveAsRoundedIcon color="secondary" />}
-          >
-            ذخیره
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
+  //       <DialogActions>
+  //         <Button
+  //           variant="contained"
+  //           onClick={handleClose}
+  //           startIcon={
+  //             <HighlightOffRoundedIcon fontSize="inherit" color="warning" />
+  //           }
+  //         >
+  //           بستن
+  //         </Button>
+  //         <Button
+  //           // type="submit"
+  //           onClick={handleSaveBtn}
+  //           variant="contained"
+  //           startIcon={<SaveAsRoundedIcon color="secondary" />}
+  //         >
+  //           ذخیره
+  //         </Button>
+  //       </DialogActions>
+  //     </Dialog>
+  //   </React.Fragment>
+  // );
+  return <div></div>;
 }
 
 const top100Films = [

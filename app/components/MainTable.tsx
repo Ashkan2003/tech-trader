@@ -1,14 +1,9 @@
 "use client";
-import * as React from "react";
+import { Skeleton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import prisma from "@/prisma/db";
-import { Symbols } from "@prisma/client";
-import axios from "axios";
-import { useSymbols } from "../features/useSymbols";
-import { Skeleton, Stack, Typography } from "@mui/material";
 import toast from "react-hot-toast";
-// import useSymbols from "../features/useSymbols";
+import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
 
 const columns: GridColDef[] = [
   {

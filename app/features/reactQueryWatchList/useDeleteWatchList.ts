@@ -2,17 +2,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export const useCreateWatchLists = () => {
-
+export const useDeleteWatchList = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: (watchTitle: string) => {
-      return axios.post("/api/watchLists", { watchTitle });
+    mutationFn: (currentId: number) => {
+      return axios.delete("/api/watchLists", { data: currentId });
     },
     onSuccess: () => {
-      toast.success("دیده بان جدید با موفقیت ایجاد شد.");
-      queryClient.invalidateQueries({queryKey:["watchLists"]})
+      toast.success("دیده بان مورد نظر حذف گردید.");
+      queryClient.invalidateQueries({ queryKey: ["watchLists"] });
     },
     onError: (error) => {
       toast.error("خطایی رخ داد.");
