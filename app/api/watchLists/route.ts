@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
-import { json } from "stream/consumers";
-import axios from "axios";
 
 // this is a get-request to get the current-user-watchLists
 export async function GET(request: NextRequest) {
@@ -52,5 +50,20 @@ export async function DELETE(request: NextRequest) {
   const res = await prisma.watchList.delete({
     where: { id: currentId },
   });
-  return NextResponse.json(res)
+  return NextResponse.json(res);
+}
+
+// this is a patch-request to update a watchList title and symbols from the db
+export async function PATCH(request: NextRequest) {
+  //
+  const body = await request.json();
+  console.log(body,"ooooooooooooooooo")
+  const res = await prisma.watchList.update({
+    where: { id: body.id },
+    data: {
+      title: body.title,
+      symbols: body.symbols,
+    },
+  });
+  return NextResponse.json(res);
 }

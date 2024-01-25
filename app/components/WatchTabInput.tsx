@@ -1,6 +1,6 @@
 import { Paper, InputBase, Divider, IconButton } from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
-import { useCreateWatchList } from "../features/reactQueryWatchList/useCreateWatchLists";
+import { useCreateWatchList } from "../features/reactQueryWatchList/useCreateWatchList";
 
 interface Props {
   inputValue: string;
