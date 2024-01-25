@@ -5,7 +5,7 @@ import axios from "axios";
 // this is a custom-hook for fetching the symbols from db with reactQuery and axios
 export const useSymbols = () => {
   const {
-    data: sybmols,
+    data: dataBaseSybmols,
     isLoading,
     error,
   } = useQuery<Symbols[]>({
@@ -14,5 +14,5 @@ export const useSymbols = () => {
       await axios.get("/api/symbols").then((res) => res.data), // we pass a function to this to fetch the data
     
   });
-  return { sybmols, isLoading, error };
+  return { dataBaseSybmols, isLoading, error };
 };

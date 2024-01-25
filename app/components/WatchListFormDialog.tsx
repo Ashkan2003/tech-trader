@@ -34,14 +34,14 @@ function WatchListFormDialog({ watchId, watchTitle, watchSymbols }: Props) {
   const [inputValue, setInputValue] = useState(watchTitle);
   const [newSymbols, setNewSymbols] = useState(defaultSymbols);
   // these are from react-query
-  const { sybmols, isLoading } = useSymbols();
+  const { dataBaseSybmols, isLoading } = useSymbols();
   const { mutate } = useUpdateWatchList();
 
   if (isLoading) return null;
 
   // we want the entire symbols-name to give them to the options-prperty of auto-compelte-box to show them to the user
   // the optionSymbols is an array of symbols-name
-  const optionSymbols = sybmols?.map((symbol) => {
+  const optionSymbols = dataBaseSybmols?.map((symbol) => {
     return symbol.symbolName;
   });
 

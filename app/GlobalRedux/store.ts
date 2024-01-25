@@ -3,6 +3,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./Features/auth/auth-slice";
 import darkModeReducer from "./Features/darkMode/darkMode-slice";
+import tableSymbolsReducer from "./Features/tableSymbols/tableSymbols-slice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = () => {
@@ -10,6 +11,7 @@ export const store = () => {
     reducer: {
       authReducer,
       darkModeReducer,
+      tableSymbolsReducer,
     },
   });
 };

@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import toast from "react-hot-toast";
 import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
+import { useAppSelectore } from "../GlobalRedux/store";
 
 const columns: GridColDef[] = [
   {
@@ -119,7 +120,13 @@ const columns: GridColDef[] = [
 ];
 
 export default function MainTable() {
-  const { isLoading, sybmols, error } = useSymbols();
+  // get the entire symbols from the db with react-query
+  const { isLoading, dataBaseSybmols, error } = useSymbols();
+
+  // get the selected-symbols-name that are selected by user from the watchTabsList
+  const reduxSymbols = useAppSelectore(
+    (state) => state.tableSymbolsReducer.reduxSymbols
+  );
 
   // if is loading return a skeleton
   if (isLoading)
@@ -138,7 +145,15 @@ export default function MainTable() {
   // if there was an error then retune a toast
   if (error) return toast.error("اخطار.لطفا اتصال اینترنت خود را چک کنید.");
 
-  const rows = sybmols?.map((symbol) => {
+  // we want to filter throg the entire db-symbols and return the symbols that symbleName in in reduxSymbols
+  // boom. the magic happen here
+  const dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
+    if (reduxSymbols.includes(symbol.symbolName)) {
+      return symbol;
+    }
+  });
+
+  const rows = dataGridSymbols?.map((symbol) => {
     return {
       id: symbol.id,
       symbolName: symbol.symbolName,

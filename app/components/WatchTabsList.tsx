@@ -11,12 +11,18 @@ import WatchListDeleteBtn from "./WatchListDeleteBtn";
 import WatchTabInput from "./WatchTabInput";
 
 import WatchListFormDialog from "./WatchListFormDialog";
+import { AppDispatch } from "../GlobalRedux/store";
+import { useDispatch } from "react-redux";
+import { updateReduxSymbols } from "../GlobalRedux/Features/tableSymbols/tableSymbols-slice";
 
 // this component is for adding, deleting,and updating a watch
 export default function WatchTabsList() {
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
   const { isLoading, watchLists } = useUserWatchLists();
+  
+  const dispatch = useDispatch<AppDispatch>();
+
   // if is loading return a skeleton
   if (isLoading)
     return (
@@ -42,9 +48,12 @@ export default function WatchTabsList() {
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
+    index: number,
+    selectedWatchSymbols: string
   ) => {
     setSelectedIndex(index);
+    dispatch(updateReduxSymbols(selectedWatchSymbols))
+    console.log(selectedWatchSymbols);
   };
 
   return (
@@ -70,7 +79,9 @@ export default function WatchTabsList() {
             >
               <ListItemButton
                 // selected={selectedIndex === index}
-                onClick={(event) => handleListItemClick(event, index)}
+                onClick={(event) =>
+                  handleListItemClick(event, index, item.symbols)
+                }
               >
                 <ListItemIcon>
                   <AccountTreeIcon color="info" />

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface InitialState { // we need to define the types of our initialStates
+interface InitialState {
+  // we need to define the types of our initialStates
   mode: "light" | "dark";
 }
 
@@ -15,7 +16,6 @@ export const darkMode = createSlice({
     toggleDarkMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
     },
-   
   },
 });
 
