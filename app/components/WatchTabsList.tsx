@@ -52,8 +52,8 @@ export default function WatchTabsList() {
     selectedWatchSymbols: string
   ) => {
     setSelectedIndex(index);
+    // every time the user selects a watch then send this watch-symbols to the redux
     dispatch(updateReduxSymbols(selectedWatchSymbols))
-    console.log(selectedWatchSymbols);
   };
 
   return (

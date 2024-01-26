@@ -1,13 +1,16 @@
 "use client";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import {
-    Box,
-    List,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText
+  Box,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../GlobalRedux/store";
+import { updateCurrentShowedMode } from "../GlobalRedux/Features/tableSymbols/tableSymbols-slice";
 
 const TechWatchTabList = () => {
   const watchList: { id: number; title: string; symbols: string[] }[] = [
@@ -16,6 +19,7 @@ const TechWatchTabList = () => {
   ];
 
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
+  const dispatch = useDispatch<AppDispatch>();
 
   // this function is for activating the selected watch by adding some style
   const handleListItemClick = (
@@ -23,6 +27,7 @@ const TechWatchTabList = () => {
     index: number
   ) => {
     setSelectedIndex(index);
+    dispatch(updateCurrentShowedMode("techTraderWatchList"))
   };
 
   return (

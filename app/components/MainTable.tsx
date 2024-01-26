@@ -127,6 +127,10 @@ export default function MainTable() {
   const reduxSymbols = useAppSelectore(
     (state) => state.tableSymbolsReducer.reduxSymbols
   );
+  // get the current mode of showing whitch-symbols
+  const currentShowMode = useAppSelectore(
+    (state) => state.tableSymbolsReducer.currentShowMode
+  );
 
   // if is loading return a skeleton
   if (isLoading)
@@ -147,11 +151,14 @@ export default function MainTable() {
 
   // we want to filter throg the entire db-symbols and return the symbols that symbleName in in reduxSymbols
   // boom. the magic happen here
-  const dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
-    if (reduxSymbols.includes(symbol.symbolName)) {
-      return symbol;
-    }
-  });
+  const dataGridSymbols =
+    currentShowMode === "techTraderWatchList"
+      ? dataBaseSybmols
+      : dataBaseSybmols?.filter((symbol) => {
+          if (reduxSymbols.includes(symbol.symbolName)) {
+            return symbol;
+          }
+        });
 
   const rows = dataGridSymbols?.map((symbol) => {
     return {
