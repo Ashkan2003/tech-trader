@@ -88,7 +88,7 @@ export default function WatchTabsList() {
                 </ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
-              {index == 0 || ( // with this code i said that dont render(map) the first item so the user canot delete or edit the first-watch-List
+              {item.title === "دارایی های من" || ( // with this code i said that dont render(map) the  "دارایی های من"-watchList so the user canot delete or edit the first-watch-List
                 <div className="flex">
                   {/* this is the dialog-btn */}
                   <WatchListFormDialog
