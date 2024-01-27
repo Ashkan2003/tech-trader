@@ -5,8 +5,6 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import toast from "react-hot-toast";
 import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
 import { useAppSelectore } from "../GlobalRedux/store";
-import { symbol } from "zod";
-import { Symbols } from "@prisma/client";
 
 const columns: GridColDef[] = [
   {
@@ -21,7 +19,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 80,
+    width: 70,
   },
   {
     field: "lastDeal",
@@ -29,7 +27,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "lastDealPercentage",
@@ -37,7 +35,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "lastPrice",
@@ -45,7 +43,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "lastPricePercentage",
@@ -53,7 +51,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "theFirst",
@@ -61,7 +59,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "theLeast",
@@ -69,7 +67,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "theMost",
@@ -77,7 +75,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "demandVolume",
@@ -85,7 +83,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "demandPrice",
@@ -93,7 +91,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "offerPrice",
@@ -101,7 +99,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "offerVolume",
@@ -109,7 +107,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
   {
     field: "state",
@@ -117,7 +115,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    // width: 70,
+    width: 70,
   },
 ];
 
@@ -194,7 +192,7 @@ export default function MainTable() {
       demandPrice: symbol.demandPrice,
       offerPrice: symbol.offerPrice,
       offerVolume: symbol.offerVolume,
-      state: symbol.state,
+      state: symbol.state === "ALLOWED" ? "مجاز" : "ممنوع",
     };
   });
 
