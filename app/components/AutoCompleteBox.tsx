@@ -37,10 +37,10 @@ export default function AutoCompleteBox() {
         size="small"
         options={optionSymbols!}
         sx={{
-          width: 500,
           color: "secondary",
-          bgcolor: "",
           borderRadius: "5px",
+          width: {   md: "230px", lg: "400px" },
+          display:{xs:"none",md:"block"}
         }}
         renderInput={(params) => <TextField {...params} label="جستجوی نماد" />}
       />

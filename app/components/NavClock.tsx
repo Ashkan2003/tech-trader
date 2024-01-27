@@ -18,7 +18,7 @@ const NavClock = () => {
   }, []);
 
   return (
-    <div className="flex items-center ps-3">
+    <div className="hidden sm:flex items-center ps-3">
       <Typography fontWeight="bold" color="white">
         {hour <= 9 ? "0" + hour : hour}:{minutes <= 9 ? "0" + minutes : minutes}
         :{seconds <= 9 ? "0" + seconds : seconds}

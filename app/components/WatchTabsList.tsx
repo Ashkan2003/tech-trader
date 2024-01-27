@@ -20,7 +20,7 @@ export default function WatchTabsList() {
   const [inputValue, setInputValue] = useState(""); // the value of input
   const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
   const { isLoading, watchLists } = useUserWatchLists();
-  
+
   const dispatch = useDispatch<AppDispatch>();
 
   // if is loading return a skeleton
@@ -53,14 +53,11 @@ export default function WatchTabsList() {
   ) => {
     setSelectedIndex(index);
     // every time the user selects a watch then send this watch-symbols to the redux
-    dispatch(updateReduxSymbols(selectedWatchSymbols))
+    dispatch(updateReduxSymbols(selectedWatchSymbols));
   };
 
   return (
     <div className="flex items-center flex-col ">
-      {/* the input fied */}
-      <WatchTabInput inputValue={inputValue} setInputValue={setInputValue} />
-      {/* the list */}
       <Box
         sx={{
           width: "100%",
@@ -69,6 +66,9 @@ export default function WatchTabsList() {
           bgcolor: "ternery.dark",
         }}
       >
+        {/* the input fied */}
+        <WatchTabInput inputValue={inputValue} setInputValue={setInputValue} />
+        {/* the list */}
         <List component="nav">
           {watchLists!.map((item, index) => (
             <div

@@ -13,10 +13,10 @@ export default async function Home() {
       <Navbar />
       <Box bgcolor="lemon.main" className="flex">
         <div className="grid flex-grow grid-cols-12 grid-rows-4 grid-flow-col h-[92vh] gap-2 mt-2 me-2 ms-2">
-          <div className="col-span-3 row-span-4">
+          <div className="hidden sm:block col-span-3 row-span-4">
             <WatchTabs />
           </div>
-          <div className="col-span-9 row-span-3">
+          <div className="col-span-12 sm:col-span-9 row-span-3">
             <MainCol />
             <MainTable/>
           </div>
@@ -24,7 +24,7 @@ export default async function Home() {
             <div className="!w-[50px]">03</div>
           </div>
         </div>
-        <div className="h-[100vh] w-[53px]  bg-[#46566E] dark:bg-[#243740]">
+        <div className="hidden sm:block h-[100vh] w-[53px]  bg-[#46566E] dark:bg-[#243740]">
           <DashbordVerticalList />
         </div>
       </Box>

@@ -25,9 +25,9 @@ const WatchTabInput = ({ inputValue, setInputValue }: Props) => {
       sx={{
         bgcolor: "success.main",
         mt: "10px",
+        mx: "5px",
         display: "flex",
         alignItems: "center",
-        width: "21.5rem",
         height: "3rem",
         borderRadius: "12px",
         boxShadow: "0",
