@@ -5,6 +5,8 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import toast from "react-hot-toast";
 import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
 import { useAppSelectore } from "../GlobalRedux/store";
+import { symbol } from "zod";
+import { Symbols } from "@prisma/client";
 
 const columns: GridColDef[] = [
   {
@@ -127,6 +129,10 @@ export default function MainTable() {
   const reduxSymbols = useAppSelectore(
     (state) => state.tableSymbolsReducer.reduxSymbols
   );
+  // get the mainSearchBarSymbol from redux
+  const mainSearchBarSymbol = useAppSelectore(
+    (state) => state.tableSymbolsReducer.mainSearchBarSymbol
+  );
   // get the current mode of showing whitch-symbols
   const currentShowMode = useAppSelectore(
     (state) => state.tableSymbolsReducer.currentShowMode
@@ -151,14 +157,26 @@ export default function MainTable() {
 
   // we want to filter throg the entire db-symbols and return the symbols that symbleName in in reduxSymbols
   // boom. the magic happen here
-  const dataGridSymbols =
-    currentShowMode === "techTraderWatchList"
-      ? dataBaseSybmols
-      : dataBaseSybmols?.filter((symbol) => {
-          if (reduxSymbols.includes(symbol.symbolName)) {
-            return symbol;
-          }
-        });
+  let dataGridSymbols;
+  switch (currentShowMode) {
+    case "userWatchList":
+      dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
+        if (reduxSymbols.includes(symbol.symbolName)) {
+          return symbol;
+        }
+      });
+      break;
+    case "mainSearchBarSymbol":
+      dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
+        return symbol.symbolName === mainSearchBarSymbol;
+      });
+      break;
+    case "techTraderWatchList":
+      dataGridSymbols = dataBaseSybmols;
+      break;
+    default:
+      break;
+  }
 
   const rows = dataGridSymbols?.map((symbol) => {
     return {
