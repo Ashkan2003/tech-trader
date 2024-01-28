@@ -46,6 +46,7 @@ export default function CustomThemeProvider(props: any) {
                 textPallet: {
                   main: "#000000",
                 },
+                
               }
             : {
                 // palette value for dark mode
