@@ -5,6 +5,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
+import SupplyDemandTab from "./SupplyDemandTab";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,7 +26,7 @@ function CustomTabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -83,7 +84,7 @@ export default function SymbolInfo() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <SupplyDemandTab/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two

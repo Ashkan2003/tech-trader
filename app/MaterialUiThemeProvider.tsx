@@ -65,7 +65,7 @@ export default function CustomThemeProvider(props: any) {
                   main: "#042431",
                 },
                 cusBlue:{
-                  main:"#1976D2"
+                  main:"#3684d2"
                 },
                 textPallet: {
                   main: "#d5afdc",
