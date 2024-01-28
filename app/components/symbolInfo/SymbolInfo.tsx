@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import SupplyDemandTab from "./SupplyDemandTab";
+import SymbolInfoBox from "./SymbolInfoBox";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -87,7 +88,7 @@ export default function SymbolInfo() {
         <SupplyDemandTab/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <SymbolInfoBox/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Item Three

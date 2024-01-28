@@ -25,7 +25,7 @@ const rows = [
 
 const SupplyDemandTab = () => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-5">
       {/* symbol title */}
       <Typography textAlign="center">نام نماد: ساخت</Typography>
       {/* symbol price */}
