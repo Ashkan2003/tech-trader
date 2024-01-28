@@ -4,8 +4,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-import WatchTabsList from "./WatchTabsList";
+import WatchTabsList from "./UserWatchList";
 import TechWatchTabList from "./TechWatchTabList";
+import UserWatchList from "./UserWatchList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -70,10 +71,10 @@ export default function WatchTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <WatchTabsList />
+        <UserWatchList />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <TechWatchTabList/>
+        <TechWatchTabList />
       </CustomTabPanel>
     </Box>
   );

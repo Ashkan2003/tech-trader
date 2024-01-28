@@ -12,8 +12,8 @@ import {
   Button,
 } from "@mui/material";
 import { useState } from "react";
-import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
-import { useUpdateWatchList } from "../features/reactQueryWatchList/useUpdateWatchList";
+import { useSymbols } from "../../features/reactQuerySymbols/useSymbols";
+import { useUpdateWatchList } from "../../features/reactQueryWatchList/useUpdateWatchList";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import HighlightOffRounded from "@mui/icons-material/HighlightOffRounded";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";

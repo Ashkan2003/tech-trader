@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import Copyright from "../components/Copyright";
-import SignLogo from "../components/SignLogo";
+import Copyright from "../ui/Copyright";
+import SignLogo from "../ui/SignLogo";
 import Form from "./Form";
 
 export default function SignUp() {

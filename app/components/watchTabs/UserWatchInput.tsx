@@ -1,13 +1,13 @@
 import { Paper, InputBase, Divider, IconButton } from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
-import { useCreateWatchList } from "../features/reactQueryWatchList/useCreateWatchList";
+import { useCreateWatchList } from "../../features/reactQueryWatchList/useCreateWatchList";
 
 interface Props {
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const WatchTabInput = ({ inputValue, setInputValue }: Props) => {
+const UserWatchInput = ({ inputValue, setInputValue }: Props) => {
   const { mutate } = useCreateWatchList();
 
   // this funcrion is for add a new watch to the watchList
@@ -53,4 +53,4 @@ const WatchTabInput = ({ inputValue, setInputValue }: Props) => {
   );
 };
 
-export default WatchTabInput;
+export default UserWatchInput;

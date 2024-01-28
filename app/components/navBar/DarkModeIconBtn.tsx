@@ -3,8 +3,8 @@ import NightsStayIcon from "@mui/icons-material/NightsStay";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { toggleDarkMode } from "../GlobalRedux/Features/darkMode/darkMode-slice";
-import { AppDispatch, useAppSelectore } from "../GlobalRedux/store";
+import { toggleDarkMode } from "../../GlobalRedux/Features/darkMode/darkMode-slice";
+import { AppDispatch, useAppSelectore } from "../../GlobalRedux/store";
 import { useEffect } from "react";
 
 const DarkModeIconBtn = () => {

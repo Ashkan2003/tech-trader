@@ -3,8 +3,8 @@ import { Skeleton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import toast from "react-hot-toast";
-import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
-import { useAppSelectore } from "../GlobalRedux/store";
+import { useSymbols } from "../../features/reactQuerySymbols/useSymbols";
+import { useAppSelectore } from "../../GlobalRedux/store";
 
 const columns: GridColDef[] = [
   {

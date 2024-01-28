@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-import Copyright from "../components/Copyright";
+import Copyright from "../ui/Copyright";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";

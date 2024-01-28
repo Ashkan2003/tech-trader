@@ -1,15 +1,13 @@
 import Image from "next/image";
-
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import HelpOutlineTwoToneIcon from "@mui/icons-material/HelpOutlineTwoTone";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
-import Badge from "./Badge";
+import Badge from "../../ui/Badge";
 import DarkModeIconBtn from "./DarkModeIconBtn";
 import Menu from "./Menu";
 import NavClock from "./NavClock";
 import NavAuthState from "./NavAuthState";
 export default function Navbar() {
-  
   return (
     <header className="bg-[#5D6E88] dark:bg-[#2D3E4A]  h-13">
       <nav className="flex  items-center justify-between  ">
@@ -58,7 +56,7 @@ export default function Navbar() {
           <Divider orientation="vertical" flexItem />
           <NavClock />
           <Divider orientation="vertical" flexItem />
-          <NavAuthState/>
+          <NavAuthState />
         </div>
       </nav>
       <Divider flexItem />

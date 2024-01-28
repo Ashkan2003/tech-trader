@@ -4,11 +4,11 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Image from "next/image";
 import Form from "./Form";
-import SignLogo from "../components/SignLogo";
+import SignLogo from "../ui/SignLogo";
 
 export default function SignIn() {
   return (
-    <Grid container  component="main" sx={{ height: "100vh" }}>
+    <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
       <Grid
         item

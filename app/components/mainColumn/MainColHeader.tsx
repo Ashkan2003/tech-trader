@@ -2,8 +2,8 @@ import React from "react";
 import AutoCompleteBox from "./AutoCompleteBox";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button, Typography } from "@mui/material";
-import Badge from "./Badge";
-const MainCol = () => {
+import Badge from "../../ui/Badge";
+const MainColHeader = () => {
   return (
     <div className="flex items-center justify-between bg-[#D3D9DF] dark:bg-[#324045] ">
       <AutoCompleteBox />
@@ -42,4 +42,4 @@ const MainCol = () => {
   );
 };
 
-export default MainCol;
+export default MainColHeader;

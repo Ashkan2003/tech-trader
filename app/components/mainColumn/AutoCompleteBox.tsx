@@ -1,12 +1,12 @@
 "use client";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useSymbols } from "../features/reactQuerySymbols/useSymbols";
+import { useSymbols } from "../../features/reactQuerySymbols/useSymbols";
 import { Skeleton, Stack } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../GlobalRedux/store";
-import { updateMainSearchBarSymbol } from "../GlobalRedux/Features/tableSymbols/tableSymbols-slice";
+import { AppDispatch } from "../../GlobalRedux/store";
+import { updateMainSearchBarSymbol } from "../../GlobalRedux/Features/tableSymbols/tableSymbols-slice";
 
 export default function AutoCompleteBox() {
   const { isLoading, dataBaseSybmols } = useSymbols();
@@ -39,10 +39,12 @@ export default function AutoCompleteBox() {
         sx={{
           color: "secondary",
           borderRadius: "5px",
-          width: {   md: "230px", lg: "400px" },
-          display:{xs:"none",md:"block"}
+          width: { md: "230px", lg: "400px" },
+          display: { xs: "none", md: "block" },
         }}
-        renderInput={(params) => <TextField color="info" {...params} label="جستجوی نماد" />}
+        renderInput={(params) => (
+          <TextField color="info" {...params} label="جستجوی نماد" />
+        )}
       />
     </div>
   );

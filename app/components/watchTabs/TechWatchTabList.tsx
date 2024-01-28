@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../GlobalRedux/store";
-import { updateCurrentShowedMode } from "../GlobalRedux/Features/tableSymbols/tableSymbols-slice";
+import { AppDispatch } from "../../GlobalRedux/store";
+import { updateCurrentShowedMode } from "../../GlobalRedux/Features/tableSymbols/tableSymbols-slice";
 
 const TechWatchTabList = () => {
   const watchList: { id: number; title: string; symbols: string[] }[] = [
@@ -27,7 +27,7 @@ const TechWatchTabList = () => {
     index: number
   ) => {
     setSelectedIndex(index);
-    dispatch(updateCurrentShowedMode("techTraderWatchList"))
+    dispatch(updateCurrentShowedMode("techTraderWatchList"));
   };
 
   return (

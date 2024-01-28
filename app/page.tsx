@@ -1,14 +1,13 @@
 import { Box } from "@mui/material";
-import DashbordVerticalList from "./components/DashbordVerticalList";
-import MainCol from "./components/MainCol";
-import MainTable from "./components/MainTable";
-import Navbar from "./components/Navbar";
-import WatchTabs from "./components/WatchTabs";
-import SymbolInfo from "./components/SymbolInfo";
-
+import DashbordVerticalList from "./ui/DashbordVerticalList";
+import MainCol from "./components/mainColumn/MainColHeader";
+import MainTable from "./components/mainColumn/MainTable";
+import Navbar from "./components/navBar/Navbar";
+import WatchTabs from "./components/watchTabs/WatchTabs";
+import SymbolInfo from "./components/symbolInfo/SymbolInfo";
+import MainColHeader from "./components/mainColumn/MainColHeader";
 
 export default async function Home() {
-
   return (
     <>
       <Navbar />
@@ -16,11 +15,11 @@ export default async function Home() {
         <div className="grid flex-grow grid-cols-12 grid-rows-4 grid-flow-col h-[92vh] gap-2 mt-2 me-2 ms-2">
           <div className="hidden  sm:block col-span-3 row-span-4 space-y-2">
             <WatchTabs />
-            <SymbolInfo/>
+            <SymbolInfo />
           </div>
           <div className="col-span-12 sm:col-span-9 row-span-3">
-            <MainCol />
-            <MainTable/>
+            <MainColHeader />
+            <MainTable />
           </div>
           <div className="col-span-9 row-span-1 bg-gray-400">
             <div className="!w-[50px]">03</div>

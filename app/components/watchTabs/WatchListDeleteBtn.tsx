@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import { useDeleteWatchList } from "../features/reactQueryWatchList/useDeleteWatchList";
+import { useDeleteWatchList } from "../../features/reactQueryWatchList/useDeleteWatchList";
 
 interface Props {
   itemId: number;

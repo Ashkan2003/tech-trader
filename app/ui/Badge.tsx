@@ -15,7 +15,7 @@ const Badge = ({title,color}:Props) => {
 
   if (color == "secondary")
     return (
-      <span className="inline-flex font-sans items-center justify-center rounded-md   py-[0.5px] px-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-gray-500/10 dark:bg-gray-600 dark:text-white">
+      <span className="inline-flex font-sans items-center justify-center rounded-md   py-[0.5px] px-1 text-xs font-medium text-green-500 ring-1 ring-inset ring-gray-500/10 dark:bg-gray-600 dark:text-white">
         {title}
       </span>
     );
