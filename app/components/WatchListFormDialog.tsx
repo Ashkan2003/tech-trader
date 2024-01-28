@@ -84,6 +84,7 @@ function WatchListFormDialog({ watchId, watchTitle, watchSymbols }: Props) {
           <div className="flex items-center justify-between mb-16">
             <Typography>نام دیده بان:</Typography>
             <TextField
+              color="info"
               value={inputValue}
               onChange={(event) => setInputValue(event.target.value)}
               id="outlined-basic"
@@ -125,6 +126,7 @@ function WatchListFormDialog({ watchId, watchTitle, watchSymbols }: Props) {
               //////////////////////////////////////////////
               renderInput={(params) => (
                 <TextField
+                  color="info"
                   {...params}
                   label="لیست نماد های انتخاب شده"
                   placeholder="نماد جدید"

@@ -42,7 +42,7 @@ export default function AutoCompleteBox() {
           width: {   md: "230px", lg: "400px" },
           display:{xs:"none",md:"block"}
         }}
-        renderInput={(params) => <TextField {...params} label="جستجوی نماد" />}
+        renderInput={(params) => <TextField color="info" {...params} label="جستجوی نماد" />}
       />
     </div>
   );

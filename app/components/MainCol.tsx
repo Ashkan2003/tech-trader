@@ -13,7 +13,10 @@ const MainCol = () => {
             <Badge title="4,709" color="secondary" />
             <Badge title="0.97%" color="secondary" />
           </div>
-          <Typography className="text-gray-600 dark:text-[#CE93D8]" fontSize="26px">
+          <Typography
+            className="text-gray-600 dark:text-[#CE93D8]"
+            fontSize="26px"
+          >
             4,709
           </Typography>
         </div>
@@ -21,13 +24,13 @@ const MainCol = () => {
           sx={{ margin: "0.5rem" }}
           size="large"
           variant="outlined"
-          color="success"
+          color="warning"
           startIcon={<ShoppingCartIcon className="text-green-600" />}
         >
           <Typography className="text-green-600">خرید</Typography>
         </Button>
         <Button
-          color="success"
+          color="warning"
           variant="outlined"
           size="large"
           startIcon={<ShoppingCartIcon className="text-red-600" />}
