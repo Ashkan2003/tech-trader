@@ -69,7 +69,18 @@ export default function WatchTabsList() {
         {/* the input fied */}
         <WatchTabInput inputValue={inputValue} setInputValue={setInputValue} />
         {/* the list */}
-        <List component="nav">
+        <List
+          component="nav"
+          sx={{
+            width: "100%",
+            maxWidth: 360,
+            bgcolor: "ternery.main",
+            position: "relative",
+            overflow: "auto",
+            maxHeight: 150,
+            // "& ul": { padding: 0 },
+          }}
+        >
           {watchLists!.map((item, index) => (
             <div
               className={`flex ${

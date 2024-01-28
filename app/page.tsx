@@ -4,6 +4,7 @@ import MainCol from "./components/MainCol";
 import MainTable from "./components/MainTable";
 import Navbar from "./components/Navbar";
 import WatchTabs from "./components/WatchTabs";
+import SymbolInfo from "./components/SymbolInfo";
 
 
 export default async function Home() {
@@ -13,8 +14,9 @@ export default async function Home() {
       <Navbar />
       <Box bgcolor="lemon.main" className="flex">
         <div className="grid flex-grow grid-cols-12 grid-rows-4 grid-flow-col h-[92vh] gap-2 mt-2 me-2 ms-2">
-          <div className="hidden sm:block col-span-3 row-span-4">
+          <div className="hidden  sm:block col-span-3 row-span-4 space-y-2">
             <WatchTabs />
+            <SymbolInfo/>
           </div>
           <div className="col-span-12 sm:col-span-9 row-span-3">
             <MainCol />

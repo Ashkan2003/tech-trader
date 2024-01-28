@@ -197,10 +197,10 @@ export default function MainTable() {
   });
 
   return (
-    <Box sx={{ height: 455, bgcolor: "ternery.main" }}>
+    <Box sx={{ height: 455, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
       <DataGrid
         loading={isLoading}
-        scrollbarSize={200}
+        scrollbarSize={10}
         columnHeaderHeight={40}
         rowHeight={35}
         rows={rows!}
