@@ -1,12 +1,13 @@
 "use client";
-
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import SupplyDemandTab from "./SupplyDemandTab";
 import SymbolInfoBox from "./SymbolInfoBox";
+import SymbolChart from "./SymbolChart";
+import { useAppSelectore } from "@/app/GlobalRedux/store";
+import { useSymbols } from "@/app/features/reactQuerySymbols/useSymbols";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,11 +26,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ pt: 2 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ pt: 2 }}>{children}</Box>}
     </div>
   );
 }
@@ -43,7 +40,18 @@ function a11yProps(index: number) {
 
 export default function SymbolInfo() {
   const [value, setValue] = useState(0);
+  const { dataBaseSybmols, isLoading } = useSymbols();
 
+  const currentReduxSymbol = useAppSelectore(
+    (state) => state.tableSymbolsReducer.currentSelectedTableSymbol
+  );
+
+  if (isLoading) return null;
+
+  const currentSymbol =
+    currentReduxSymbol == null ? dataBaseSybmols?.at(0) : currentReduxSymbol;
+
+  //  this function is for the tab-changes
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -85,13 +93,13 @@ export default function SymbolInfo() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <SupplyDemandTab/>
+        <SupplyDemandTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <SymbolInfoBox/>
+        <SymbolInfoBox />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <SymbolChart datax={currentSymbol!.chartNumber}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         Item یب

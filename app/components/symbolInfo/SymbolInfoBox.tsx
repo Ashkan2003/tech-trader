@@ -10,7 +10,7 @@ const SymbolInfoBox = () => {
         {x.map((item, index) => (
           <div
             key={index}
-            className="bg-gray-600 h-11 p-1 ps-2 dark:hover:bg-[#d1bb1597] hover:dark:text-white transition-all cursor-pointer"
+            className="bg-stone-200 hover:bg-yellow-300 h-11 p-1 ps-2 dark:bg-gray-600 dark:hover:bg-[#d1bb1597] hover:dark:text-white transition-all cursor-pointer"
           >
             <Typography>تعداد معاملات</Typography>
             <Typography>138</Typography>

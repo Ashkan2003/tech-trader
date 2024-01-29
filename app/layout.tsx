@@ -14,6 +14,7 @@
 // npm i axios
 // npm i @tanstack/react-query
 // npm i @tanstack/react-query-devtools
+// npm install recharts
 import type { Metadata } from "next";
 import "./globals.css";
 import { MaterialRTLProvider } from "./MaterialUiRTL";

@@ -4,7 +4,10 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import toast from "react-hot-toast";
 import { useSymbols } from "../../features/reactQuerySymbols/useSymbols";
-import { useAppSelectore } from "../../GlobalRedux/store";
+import { AppDispatch, useAppSelectore } from "../../GlobalRedux/store";
+import { Symbols } from "@prisma/client";
+import { useDispatch } from "react-redux";
+import { updateCurrentSelectedTableSymbol } from "@/app/GlobalRedux/Features/tableSymbols/tableSymbols-slice";
 
 const columns: GridColDef[] = [
   {
@@ -120,6 +123,8 @@ const columns: GridColDef[] = [
 ];
 
 export default function MainTable() {
+  const dispatch = useDispatch<AppDispatch>();
+
   // get the entire symbols from the db with react-query
   const { isLoading, dataBaseSybmols, error } = useSymbols();
 
@@ -155,7 +160,7 @@ export default function MainTable() {
 
   // we want to filter throg the entire db-symbols and return the symbols that symbleName in in reduxSymbols
   // boom. the magic happen here
-  let dataGridSymbols;
+  let dataGridSymbols: Symbols[] | undefined;
   switch (currentShowMode) {
     case "userWatchList":
       dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
@@ -196,12 +201,21 @@ export default function MainTable() {
     };
   });
 
+  // this function is for finding the selected symbol and give it to the redux
+  function handleRowSelectionClick(currentSymbolName: string) {
+    // find the current-selected-symbol from the table and return it
+    const currentSelectedTableSymbol = dataGridSymbols?.find((symbol) => {
+      return symbol.symbolName === currentSymbolName;
+    });
+    dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!))
+  }
   return (
     <Box sx={{ height: 455, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
       <DataGrid
         loading={isLoading}
         scrollbarSize={10}
         columnHeaderHeight={40}
+        onRowClick={(event) => handleRowSelectionClick(event.row.symbolName)}
         rowHeight={35}
         rows={rows!}
         columns={columns}
