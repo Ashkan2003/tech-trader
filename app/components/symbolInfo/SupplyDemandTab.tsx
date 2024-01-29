@@ -9,6 +9,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { Symbols } from "@prisma/client";
 import React from "react";
 
 function createData(buyCount: number, buyVolume: number, buyPrice: number) {
@@ -23,11 +24,15 @@ const rows = [
   createData(356, 16.0, 49),
 ];
 
-const SupplyDemandTab = () => {
+interface Props {
+  currentSymbol: Symbols;
+}
+
+const SupplyDemandTab = ({ currentSymbol }: Props) => {
   return (
     <div className="space-y-5">
       {/* symbol title */}
-      <Typography textAlign="center">نام نماد: ساخت</Typography>
+      <Typography textAlign="center">نام نماد: {currentSymbol.symbolName}</Typography>
       {/* symbol price */}
       <div className="flex justify-around">
         <div className="flex flex-col items-center space-y-1">
@@ -35,10 +40,10 @@ const SupplyDemandTab = () => {
             قیمت پایانی
           </Typography>
           <div className="flex items-center">
-            <Typography variant="h5">4,785</Typography>
+            <Typography variant="h5">{currentSymbol.lastPrice}</Typography>
             <div className="flex flex-col space-y-1 ">
-              <Badge title="456.37" color="ternery" />
-              <Badge title="0.47%" color="ternery" />
+              <Badge title={currentSymbol.theFirst.toString()} color="ternery" />
+              <Badge title={`${currentSymbol.lastPricePercentage.toString()}%`} color="ternery" />
             </div>
           </div>
         </div>
@@ -47,10 +52,10 @@ const SupplyDemandTab = () => {
             قیمت آخرین معامله
           </Typography>
           <div className="flex items-center">
-            <Typography variant="h5">4,785</Typography>
+            <Typography variant="h5">{currentSymbol.lastDeal}</Typography>
             <div className="flex flex-col space-y-1 ">
-              <Badge title="456.37" color="ternery" />
-              <Badge title="0.47%" color="ternery" />
+              <Badge title={currentSymbol.theMost.toString()} color="ternery" />
+              <Badge title={`${currentSymbol.lastDealPercentage.toString()}%`} color="ternery" />
             </div>
           </div>
         </div>
@@ -62,7 +67,9 @@ const SupplyDemandTab = () => {
           <Table size="small">
             <TableHead className="bg-[#DADAFC] dark:bg-[#6060dea0]">
               <TableRow>
-                <TableCell className="!ps-1" align="right">تعداد</TableCell>
+                <TableCell className="!ps-1" align="right">
+                  تعداد
+                </TableCell>
                 <TableCell align="right">حجم</TableCell>
                 <TableCell align="right">قیمت</TableCell>
               </TableRow>
@@ -77,7 +84,9 @@ const SupplyDemandTab = () => {
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}
                 >
-                  <TableCell className="!ps-1" align="right">{row.buyCount}</TableCell>
+                  <TableCell className="!ps-1" align="right">
+                    {row.buyCount}
+                  </TableCell>
                   <TableCell align="right">{row.buyVolume}</TableCell>
                   <TableCell align="right">{row.buyPrice}</TableCell>
                 </TableRow>
@@ -86,13 +95,17 @@ const SupplyDemandTab = () => {
           </Table>
         </TableContainer>
         {/* demand-table */}
-        <TableContainer  sx={{ width: "200px" }}>
+        <TableContainer sx={{ width: "200px" }}>
           <Table size="small">
             <TableHead className="bg-[#fcdada] dark:bg-[#d15e5e7c]">
               <TableRow>
-                <TableCell className="!ps-1" align="right">تعداد</TableCell>
+                <TableCell className="!ps-1" align="right">
+                  تعداد
+                </TableCell>
                 <TableCell align="right">حجم</TableCell>
-                <TableCell className="!pe-2" align="right">قیمت</TableCell>
+                <TableCell className="!pe-2" align="right">
+                  قیمت
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="bg-[#f7f8f9] dark:bg-slate-700" sx={{}}>
@@ -105,9 +118,13 @@ const SupplyDemandTab = () => {
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}
                 >
-                  <TableCell className="!ps-1" align="right">{row.buyCount}</TableCell>
+                  <TableCell className="!ps-1" align="right">
+                    {row.buyCount}
+                  </TableCell>
                   <TableCell align="right">{row.buyVolume}</TableCell>
-                  <TableCell className="!pe-2" align="right">{row.buyPrice}</TableCell>
+                  <TableCell className="!pe-2" align="right">
+                    {row.buyPrice}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

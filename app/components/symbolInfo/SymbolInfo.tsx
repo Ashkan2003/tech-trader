@@ -48,6 +48,7 @@ export default function SymbolInfo() {
 
   if (isLoading) return null;
 
+  // in the first enter of user the currentReduxSymbol is null.so render the first item of db
   const currentSymbol =
     currentReduxSymbol == null ? dataBaseSybmols?.at(0) : currentReduxSymbol;
 
@@ -93,13 +94,13 @@ export default function SymbolInfo() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <SupplyDemandTab />
+        <SupplyDemandTab currentSymbol={currentSymbol!}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <SymbolInfoBox />
+        <SymbolInfoBox  currentSymbol={currentSymbol!}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <SymbolChart datax={currentSymbol!.chartNumber}/>
+        <SymbolChart data={currentSymbol!.chartNumber}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         Item یب
