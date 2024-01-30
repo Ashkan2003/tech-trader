@@ -8,6 +8,7 @@ import SymbolInfoBox from "./SymbolInfoBox";
 import SymbolChart from "./SymbolChart";
 import { useAppSelectore } from "@/app/GlobalRedux/store";
 import { useSymbols } from "@/app/features/reactQuerySymbols/useSymbols";
+import SymbolPieChart from "./SymbolPieChart";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -103,7 +104,7 @@ export default function SymbolInfo() {
         <SymbolChart data={currentSymbol!.chartNumber}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Item یب
+        <SymbolPieChart offerVolume={currentSymbol?.offerVolume!} demandVolume={currentSymbol?.demandVolume!}/>
       </CustomTabPanel>
     </Box>
   );
