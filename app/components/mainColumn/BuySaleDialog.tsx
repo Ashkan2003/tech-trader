@@ -2,18 +2,18 @@ import HighlightOffRounded from "@mui/icons-material/HighlightOffRounded";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    Divider,
-    TextField,
-    Typography
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Divider,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { Symbols } from "@prisma/client";
 import { useState } from "react";
 import BuySaleDialogTitle from "./BuySaleDialogTitle";
-
 
 interface Props {
   currentSymbol: Symbols;
@@ -22,7 +22,8 @@ interface Props {
 function BuySaleDialog({ currentSymbol }: Props) {
   // the states
   const [open, setOpen] = useState(false);
-
+  const [groupBtnValue, setGroupBtnValue] = useState(0);
+  const [priceInputValue, setPriceInputValue] = useState(0);
   // if the currentSymbol was null dont render this component
   if (currentSymbol == null) return null;
 
@@ -45,11 +46,20 @@ function BuySaleDialog({ currentSymbol }: Props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSetMaxPrice = () => {
+    setPriceInputValue(currentSymbol.lastPrice);
+  };
+
+  const handleSetLeastPrice = () => {
+    setPriceInputValue(currentSymbol.theLeast);
+  };
+
   return (
     <>
       <Button
-        sx={{ margin: "0.5rem" }}
-        size="large"
+        sx={{ margin: "0.5rem", width: { xs: "80px",md:"100px" } }}
+        // size="large"
         variant="outlined"
         color="warning"
         startIcon={<ShoppingCartIcon className="text-green-600" />}
@@ -60,7 +70,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
       <Button
         color="warning"
         variant="outlined"
-        size="large"
+        sx={{ width: { xs: "80px",md:"100px" } }}
         startIcon={<ShoppingCartIcon className="text-red-600" />}
         onClick={handleClickOpen}
       >
@@ -80,17 +90,41 @@ function BuySaleDialog({ currentSymbol }: Props) {
             <Typography>قیمت:</Typography>
             <TextField
               color="info"
-              //   value={inputValue}
-              //   onChange={(event) => setInputValue(event.target.value)}
+              type="number"
+              sx={{ width: { sm: "30rem" } }}
+              value={priceInputValue}
+              onChange={(event) =>
+                setPriceInputValue(parseInt(event.target.value))
+              }
               id="outlined-basic"
-              label="نام دیده جدید دیدبان"
+              label="قیمت پیشنهادی"
               variant="outlined"
             />
+            <ButtonGroup orientation="vertical">
+              <Button
+                onClick={handleSetMaxPrice}
+                sx={{ height: "28px" }}
+                color="info"
+                key="one"
+              >
+                {currentSymbol.lastPrice}
+              </Button>
+              <Button
+                onClick={handleSetLeastPrice}
+                sx={{ height: "28px" }}
+                color="info"
+                key="two"
+              >
+                {currentSymbol.theLeast}
+              </Button>
+            </ButtonGroup>
           </div>
           <div className="flex items-center justify-between">
             <Typography>قیمت:</Typography>
             <TextField
               color="info"
+              type="number"
+              sx={{ width: { sm: "30rem" } }}
               //   value={inputValue}
               //   onChange={(event) => setInputValue(event.target.value)}
               id="outlined-basic"
@@ -98,7 +132,6 @@ function BuySaleDialog({ currentSymbol }: Props) {
               variant="outlined"
             />
           </div>
-          
         </DialogContent>
 
         <DialogActions>

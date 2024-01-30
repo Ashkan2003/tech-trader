@@ -15,9 +15,9 @@ export default function Navbar() {
           <div className="flex items-center   pe-3 ">
             <Image src="/Trade-brand.png" alt="brand" width="50" height="30" />
             <Menu />
-            <Typography color="white">منو-دیده بان کلاسیک</Typography>
+            <Typography className="hidden md:block" color="white">منو-دیده بان کلاسیک</Typography>
           </div>
-          <Divider orientation="vertical" flexItem />
+          <Divider className="hidden sm:block" orientation="vertical" flexItem />
 
           <div className=" px-4 hidden md:flex">
             <Typography className="text-white">مانده قابل معامله:</Typography>
@@ -25,7 +25,7 @@ export default function Navbar() {
               17,074,601 ریال
             </Typography>
           </div>
-          <Divider orientation="vertical" flexItem />
+          <Divider className="hidden sm:block" orientation="vertical" flexItem />
           <Box sx={{ px: "14px", display: { xs: "none", lg: "flex" } }}>
             <div className="flex items-center">
               <Typography className="text-white">شاخص: </Typography>
@@ -38,11 +38,11 @@ export default function Navbar() {
               <Badge title="0.47" color="primary" />
             </div>
           </Box>
-          <Divider orientation="vertical" flexItem />
+          <Divider className="hidden sm:block" orientation="vertical" flexItem />
         </div>
         <div className="flex ">
           <Box sx={{ display: { xs: "none", lg: "flex" } }}>
-            <Divider orientation="vertical" flexItem />
+            <Divider  orientation="vertical" flexItem />
             <IconButton size="large">
               <HelpOutlineTwoToneIcon fontSize="inherit" color="secondary" />
             </IconButton>
@@ -51,11 +51,11 @@ export default function Navbar() {
               <GridViewOutlinedIcon fontSize="inherit" color="secondary" />
             </IconButton>
           </Box>
-          <Divider orientation="vertical" flexItem />
-          <DarkModeIconBtn />
-          <Divider orientation="vertical" flexItem />
+          <Divider className="hidden sm:block" orientation="vertical" flexItem />
           <NavClock />
-          <Divider orientation="vertical" flexItem />
+          <Divider className="hidden sm:block" orientation="vertical" flexItem />
+          <DarkModeIconBtn />
+          <Divider className="hidden sm:block" orientation="vertical" flexItem />
           <NavAuthState />
         </div>
       </nav>

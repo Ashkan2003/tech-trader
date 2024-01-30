@@ -21,7 +21,7 @@ const BuySaleDialogTitle = ({
   symbolState,
 }: Props) => {
   return (
-    <DialogTitle className="flex items-center justify-between !p-1 !py-3">
+    <DialogTitle className="flex-col sm:flex sm:flex-row  items-center justify-between !p-1 !py-3">
       <div className="flex items-center">
         <IconButton size="large" onClick={handleClose}>
           <CloseIcon fontSize="inherit" />

@@ -38,7 +38,7 @@ const NavAuthState = () => {
 
   return (
     <>
-      <div className="flex items-center ps-3">
+      <div className="flex items-center sm:ps-3">
         <Typography color="white" className="hidden sm:block">
           {session ? session!.user?.name : "name"}
         </Typography>
