@@ -63,13 +63,13 @@ const renderActiveShape = (props: any) => {
       />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        x={ex + (cos >= 0 ? 1 : -1) * 52}
         y={ey}
         textAnchor={textAnchor}
         fill="#a3c10d"
       >{`PV ${value}`}</text>
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 22}
+        x={ex + (cos >= 0 ? 1 : -1) * 52}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
@@ -88,8 +88,8 @@ interface Props {
 
 export default function SymbolPieChart({ demandVolume, offerVolume }: Props) {
   const data = [
-    { name: "حجم تقاظا", value: demandVolume,color:"#19CB8F" },
-    { name: "حجم عرضه", value: offerVolume,color:"#fe514ebb" },
+    { name: "حجم تقاظا", value: demandVolume, color: "#1966cb" },
+    { name: "حجم عرضه", value: offerVolume, color: "#d35452" },
   ];
   const [state, setState] = useState(0);
 
@@ -109,16 +109,13 @@ export default function SymbolPieChart({ demandVolume, offerVolume }: Props) {
             cy="50%"
             innerRadius={50}
             outerRadius={80}
-            fill="#22c013"
-            stroke="#0000000"
+            // fill="#649060"
+            stroke="#5e5252"
             dataKey="value"
             onMouseEnter={onPieEnter}
           >
             {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={entry.color}
-              />
+              <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
           <Legend />
