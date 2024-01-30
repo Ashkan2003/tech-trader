@@ -185,7 +185,7 @@ export default function MainTable() {
     return {
       id: symbol.id,
       symbolName: symbol.symbolName,
-      volume: `${symbol.volume}M`,
+      volume: `${symbol.volume}`,
       lastDeal: symbol.lastDeal,
       lastDealPercentage: `${symbol.lastDealPercentage}%`,
       lastPrice: symbol.lastPrice,
