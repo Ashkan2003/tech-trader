@@ -60,8 +60,8 @@ function BuySaleDialog({ currentSymbol }: Props) {
   };
 
   //
-  const handleSetUserPropertyToVulomeInput = () => {
-    setVolumeInputValue(89898)
+  const handleSetUserPropertyToVulomeInput = (userProperty:number) => {
+    setVolumeInputValue(userProperty)
   };
 
   return (

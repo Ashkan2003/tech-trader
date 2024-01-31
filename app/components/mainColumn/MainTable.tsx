@@ -210,7 +210,7 @@ export default function MainTable() {
     dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!))
   }
   return (
-    <Box sx={{ height:350, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
+    <Box sx={{ height:345, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
       <DataGrid
         loading={isLoading}
         scrollbarSize={10}

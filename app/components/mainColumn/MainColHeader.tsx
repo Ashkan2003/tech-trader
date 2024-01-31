@@ -20,7 +20,7 @@ const MainColHeader = () => {
       : currentReduxSymbol.theFirst.toString();
 
   return (
-    <div className="flex items-center justify-between bg-[#D3D9DF] dark:bg-[#324045] ">
+    <div className="flex h-14 items-center justify-between bg-[#D3D9DF] dark:bg-[#324045] ">
       {/* the main search-bar */}
       <AutoCompleteBox />
       <div className="pe-4 flex items-center">

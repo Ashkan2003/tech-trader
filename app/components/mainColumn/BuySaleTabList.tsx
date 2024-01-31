@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
+import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -36,9 +37,17 @@ function a11yProps(index: number) {
   };
 }
 
+interface Props {
+  handleSetUserPropertyToVulomeInput: any;
+}
+
 export default function BuySaleTabList() {
   const [value, setValue] = useState(0);
+  const { isLoading, userTradeAccount } = useUserTradeAccount();
 
+  if (isLoading) return null;
+  const userPropery = userTradeAccount.at(0).tradeAccount.userProperty;
+  console.log(userPropery, "ddd");
   // get todey-date in farsi-date
   let todayDate = new Date().toLocaleDateString("fa-IR");
 
@@ -72,12 +81,14 @@ export default function BuySaleTabList() {
       <CustomTabPanel value={value} index={0}>
         <div className="flex-col justify-between">
           <div className="grid grid-cols-2 gap-2">
+            {/* user property */}
             <TextField
               focused
               color="info"
               id="filled-read-only-input"
               label="مانده"
-              defaultValue="3434566"
+              value={userPropery}
+              // onClick={}
               InputProps={{
                 readOnly: true,
               }}
