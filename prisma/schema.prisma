@@ -74,9 +74,9 @@ model WatchList {
   userId      String?
 }
 
-model UserBoughtSymbols {
-  id         Int @id @default(autoincrement())
-  symbolName Int
+model UserBoughtSymbol {
+  id         Int    @id @default(autoincrement())
+  symbolName String
   count      Int
 
   //these fields are for making relating with the TradeAccount-model
@@ -86,12 +86,13 @@ model UserBoughtSymbols {
 
 // the relation bettven TradeAccount and UserBoughtSymbols  is 1 to many, becus 1 tradeAccount can have many UserBoughtSymbols
 model TradeAccount {
-  id                Int                 @id @default(autoincrement())
-  userProperty      Int                 @default(4000)
-  userBoughtSymbols UserBoughtSymbols[]
+  id                Int                @id @default(autoincrement())
+  userProperty      Int                @default(4000)
+  userBoughtSymbols UserBoughtSymbol[]
+
   //these fields are for making relating with the User-model
-  relatedUser       User                @relation(fields: [userId], references: [id])
-  userId            String              @unique
+  relatedUser User   @relation(fields: [userId], references: [id])
+  userId      String @unique
 }
 
 // the relation bettven User and WatchList is 1 to many, becus 1 user can have many watchList

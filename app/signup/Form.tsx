@@ -63,7 +63,6 @@ const Form = () => {
           password: data.password,
         },
       });
-
       // if success return this
       if (res.status == 200) {
         await signIn("credentials", { redirect: false });
@@ -80,6 +79,7 @@ const Form = () => {
         toast.success("ثبت نام با موفقیت انجام شد.");
       }
     } catch (error: any) {
+      console.log(error,"aaa")
       setLoading(false);
       toast.error("ثبت نام ناموفق بود.");
       // error code 409 that we gave to the next-response in the signupApi. it mean a conflict(user already exists)

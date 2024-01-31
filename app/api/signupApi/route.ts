@@ -38,8 +38,18 @@ export async function POST(request: NextRequest) {
         watchLists: {
           create: [{ title: "دارایی های من", symbols: "" }],
         },
+        // these are the TradeAccount-mode information
+        tradeAccount: {
+          create: {
+            // these are the UserBoughtSymbol information
+            userBoughtSymbols: {
+              create: [{ symbolName: "تابه",count:6000 }],
+            },
+          },
+        },
       },
     });
+
 
     return NextResponse.json({ email: newUser.email });
   } catch (error: any) {
