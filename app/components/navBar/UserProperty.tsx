@@ -12,7 +12,7 @@ const UserProperty = () => {
   return (
     <div className=" px-4 hidden md:flex">
       <Typography className="text-white">مانده قابل معامله:</Typography>
-      <Typography className="text-yellow-300 ps-1">{userTradeAccount?.userProperty} ریال</Typography>
+      <Typography className="text-yellow-300 ps-1">{userTradeAccount.at(0).tradeAccount.userProperty} ریال</Typography>
     </div>
   );
 };

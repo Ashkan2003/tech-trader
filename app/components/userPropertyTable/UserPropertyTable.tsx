@@ -24,22 +24,7 @@ const columns: GridColDef[] = [
     headerAlign: "left",
     width: 70,
   },
-  {
-    field: "lastDeal",
-    headerName: "آخرین م",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "lastDealPercentage",
-    headerName: "%آخرین م",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
+
   {
     field: "lastPrice",
     headerName: "ق پایانی",
@@ -57,62 +42,6 @@ const columns: GridColDef[] = [
     width: 70,
   },
   {
-    field: "theFirst",
-    headerName: "اولین",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "theLeast",
-    headerName: "کمترین",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "theMost",
-    headerName: "بیشترین",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "demandVolume",
-    headerName: "ح تقاضا",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "demandPrice",
-    headerName: "ق تقاضا",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "offerPrice",
-    headerName: "ق عرضه",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
-    field: "offerVolume",
-    headerName: "ح عرضه",
-    type: "number",
-    align: "left",
-    headerAlign: "left",
-    width: 70,
-  },
-  {
     field: "state",
     headerName: "وضعیت",
     type: "number",
@@ -122,7 +51,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-export default function MainTable() {
+export default function UserPropertyTable() {
   const dispatch = useDispatch<AppDispatch>();
 
   // get the entire symbols from the db with react-query
@@ -186,17 +115,17 @@ export default function MainTable() {
       id: symbol.id,
       symbolName: symbol.symbolName,
       volume: `${symbol.volume}`,
-      lastDeal: symbol.lastDeal,
-      lastDealPercentage: `${symbol.lastDealPercentage}%`,
+      //   lastDeal: symbol.lastDeal,
+    //   lastDealPercentage: `${symbol.lastDealPercentage}%`,
       lastPrice: symbol.lastPrice,
       lastPricePercentage: `${symbol.lastPricePercentage}%`,
-      theFirst: symbol.theFirst,
-      theLeast: symbol.theLeast,
-      theMost: symbol.theMost,
-      demandVolume: symbol.demandVolume,
-      demandPrice: symbol.demandPrice,
-      offerPrice: symbol.offerPrice,
-      offerVolume: symbol.offerVolume,
+    //   theFirst: symbol.theFirst,
+    //   theLeast: symbol.theLeast,
+    //   theMost: symbol.theMost,
+    //   demandVolume: symbol.demandVolume,
+    //   demandPrice: symbol.demandPrice,
+    //   offerPrice: symbol.offerPrice,
+    //   offerVolume: symbol.offerVolume,
       state: symbol.state === "ALLOWED" ? "مجاز" : "ممنوع",
     };
   });
@@ -207,10 +136,10 @@ export default function MainTable() {
     const currentSelectedTableSymbol = dataGridSymbols?.find((symbol) => {
       return symbol.symbolName === currentSymbolName;
     });
-    dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!))
+    dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!));
   }
   return (
-    <Box sx={{ height:350, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
+    <Box sx={{ height: 260, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
       <DataGrid
         loading={isLoading}
         scrollbarSize={10}
