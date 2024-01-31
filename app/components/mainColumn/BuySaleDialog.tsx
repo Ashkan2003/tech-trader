@@ -14,6 +14,7 @@ import {
 import { Symbols } from "@prisma/client";
 import { useState } from "react";
 import BuySaleDialogTitle from "./BuySaleDialogTitle";
+import BuySaleTabList from "./BuySaleTabList";
 
 interface Props {
   currentSymbol: Symbols;
@@ -22,43 +23,51 @@ interface Props {
 function BuySaleDialog({ currentSymbol }: Props) {
   // the states
   const [open, setOpen] = useState(false);
-  const [groupBtnValue, setGroupBtnValue] = useState(0);
   const [priceInputValue, setPriceInputValue] = useState(0);
+  const [volumeInputValue, setVolumeInputValue] = useState(0);
+
   // if the currentSymbol was null dont render this component
   if (currentSymbol == null) return null;
 
-  // this function is for updating the selected watch symbols and title
-  const handleUpdateWatch = (
-    currentId: number,
-    currentTitle: string,
-    newSymbols: string[]
-  ) => {
-    const stringfyNewSymbolsArray = newSymbols.toString();
-
-    //in the end close the dialog
-    handleClose();
-  };
-
+  // this is for opening the dialog
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  // this is for the closing of the dialog
   const handleClose = () => {
     setOpen(false);
   };
 
+  // this is for the set the max-price to the inpit-price
   const handleSetMaxPrice = () => {
     setPriceInputValue(currentSymbol.lastPrice);
   };
 
+  // this is for the set the least-price to the inpit-price
   const handleSetLeastPrice = () => {
     setPriceInputValue(currentSymbol.theLeast);
+  };
+
+  // this is for the set the max-volume to the volume-price
+  const handleSetMaxVolume = () => {
+    setVolumeInputValue(200);
+  };
+
+  // this is for the set the least-volume to the volume-price
+  const handleSetLeastVolume = () => {
+    setVolumeInputValue(100);
+  };
+
+  //
+  const handleSetUserPropertyToVulomeInput = () => {
+    setVolumeInputValue(89898)
   };
 
   return (
     <>
       <Button
-        sx={{ margin: "0.5rem", width: { xs: "80px",md:"100px" } }}
+        sx={{ margin: "0.5rem", width: { xs: "80px", md: "100px" } }}
         // size="large"
         variant="outlined"
         color="warning"
@@ -70,7 +79,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
       <Button
         color="warning"
         variant="outlined"
-        sx={{ width: { xs: "80px",md:"100px" } }}
+        sx={{ width: { xs: "80px", md: "100px" } }}
         startIcon={<ShoppingCartIcon className="text-red-600" />}
         onClick={handleClickOpen}
       >
@@ -85,8 +94,11 @@ function BuySaleDialog({ currentSymbol }: Props) {
         />
         <Divider />
         {/* the dialog content section */}
-        <DialogContent sx={{ bgcolor: "ternery.main", py: "2rem" }}>
-          <div className="flex items-center justify-between mb-6">
+        <DialogContent
+          sx={{ bgcolor: "ternery.main", py: "2rem", px: "0.7rem" }}
+        >
+          {/* price-field */}
+          <div className="flex gap-2 items-center justify-between mb-6">
             <Typography>قیمت:</Typography>
             <TextField
               color="info"
@@ -119,19 +131,43 @@ function BuySaleDialog({ currentSymbol }: Props) {
               </Button>
             </ButtonGroup>
           </div>
-          <div className="flex items-center justify-between">
-            <Typography>قیمت:</Typography>
+          {/* volume-field */}
+          <div className="flex gap-3 items-center justify-between mb-6">
+            <Typography>حجم:</Typography>
             <TextField
               color="info"
               type="number"
               sx={{ width: { sm: "30rem" } }}
-              //   value={inputValue}
-              //   onChange={(event) => setInputValue(event.target.value)}
+              value={volumeInputValue}
+              onChange={(event) =>
+                setVolumeInputValue(parseInt(event.target.value))
+              }
               id="outlined-basic"
-              label="نام دیده جدید دیدبان"
+              label="حجم پیشنهادی"
               variant="outlined"
             />
+            <ButtonGroup orientation="vertical">
+              <Button
+                onClick={handleSetMaxVolume}
+                sx={{ height: "28px" }}
+                color="info"
+                key="one"
+              >
+                200
+              </Button>
+              <Button
+                onClick={handleSetLeastVolume}
+                sx={{ height: "28px" }}
+                color="info"
+                key="two"
+              >
+                100
+              </Button>
+            </ButtonGroup>
           </div>
+          {/* buySale-tabList */}
+          <Divider variant="fullWidth" sx={{ py: "20px" }} />
+          <BuySaleTabList />
         </DialogContent>
 
         <DialogActions>
