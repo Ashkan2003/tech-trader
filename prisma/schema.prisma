@@ -74,18 +74,40 @@ model WatchList {
   userId      String?
 }
 
+model UserBoughtSymbols {
+  id         Int @id @default(autoincrement())
+  symbolName Int
+  count      Int
+
+  //these fields are for making relating with the TradeAccount-model
+  relatedTradeAccount TradeAccount @relation(fields: [tradeAccountId], references: [id])
+  tradeAccountId      Int
+}
+
+// the relation bettven TradeAccount and UserBoughtSymbols  is 1 to many, becus 1 tradeAccount can have many UserBoughtSymbols
+model TradeAccount {
+  id                Int                 @id @default(autoincrement())
+  userProperty      Int                 @default(4000)
+  userBoughtSymbols UserBoughtSymbols[]
+  //these fields are for making relating with the User-model
+  relatedUser       User                @relation(fields: [userId], references: [id])
+  userId            String              @unique
+}
+
 // the relation bettven User and WatchList is 1 to many, becus 1 user can have many watchList
+// the relation bettven User and TradeAccount is 1 to 1, becus 1 user can have 1 tradeAccount
 model User {
-  id             String      @id @default(cuid())
+  id             String        @id @default(cuid())
   name           String?
   lastName       String?
-  email          String?     @unique
+  email          String?       @unique
   emailVerified  DateTime?
   hashedPassword String?
   image          String?
   accounts       Account[]
   sessions       Session[]
   watchLists     WatchList[]
+  tradeAccount   TradeAccount?
 }
 
 model VerificationToken {
