@@ -52,14 +52,27 @@ const columns: GridColDef[] = [
   },
 ];
 
+interface datagridRowType {
+  id: number;
+  symbolName: string;
+  count: number;
+  lastPrice: number;
+  lastPricePercentage: number;
+  state: "ALLOWED" | "NOTALLOWED";
+}
+
 export default function UserPropertyTable() {
   const dispatch = useDispatch<AppDispatch>();
 
+  // fetch all the symbols from the db
+  const { dataBaseSybmols, isLoading } = useSymbols();
+
+  // fetch the userTradeAccount from the db
   const { userTradeAccount, isLoadingTradeAccount, error } =
     useUserTradeAccount();
 
   // if is loading return a skeleton
-  if (isLoadingTradeAccount)
+  if (isLoadingTradeAccount || isLoading)
     return (
       <Stack paddingTop={1} spacing={1}>
         <Skeleton animation="wave" variant="rounded" width="full" height={40} />
@@ -75,25 +88,34 @@ export default function UserPropertyTable() {
   // if there was an error then retune a toast
   if (error) return toast.error("اخطار.لطفا اتصال اینترنت خود را چک کنید.");
 
-  // we want to filter throg the entire db-symbols and return the symbols that symbleName in in reduxSymbols
-  // boom. the magic happen here
+  let dataGridRows: datagridRowType[] = [];
+  // i want more information to put in data-grid-table about a symbol, but i only stored "symbolName" and "count" in the userBoughtSymbol
+  // so i loop throgh the dataBaseSymbols and find the userBoughtSymbols and push a new obj with a combine-information of bgsymbol and userBoughtSymbol
+  userTradeAccount.userBoughtSymbols.map(
+    (boughtSymbol: { id: number; symbolName: string; count: number }) => {
+      dataBaseSybmols?.map((dbSymbol) => {
+        if (dbSymbol.symbolName === boughtSymbol.symbolName) {
+          dataGridRows.push({
+            id: dbSymbol.id,
+            symbolName: dbSymbol.symbolName,
+            lastPrice: dbSymbol.lastPrice,
+            lastPricePercentage: dbSymbol.lastPricePercentage,
+            state: dbSymbol.state,
+            count: boughtSymbol.count,
+          });
+        }
+      });
+    }
+  );
 
-  const rows = userTradeAccount.userBoughtSymbols.map((symbol: any) => {
+
+  const rows = dataGridRows.map((symbol) => {
     return {
       id: symbol.id,
       symbolName: symbol.symbolName,
-      volume: `${symbol.volume}`,
-      //   lastDeal: symbol.lastDeal,
-      //   lastDealPercentage: `${symbol.lastDealPercentage}%`,
+      volume: symbol.count,
       lastPrice: symbol.lastPrice,
       lastPricePercentage: `${symbol.lastPricePercentage}%`,
-      //   theFirst: symbol.theFirst,
-      //   theLeast: symbol.theLeast,
-      //   theMost: symbol.theMost,
-      //   demandVolume: symbol.demandVolume,
-      //   demandPrice: symbol.demandPrice,
-      //   offerPrice: symbol.offerPrice,
-      //   offerVolume: symbol.offerVolume,
       state: symbol.state === "ALLOWED" ? "مجاز" : "ممنوع",
     };
   });
@@ -101,13 +123,14 @@ export default function UserPropertyTable() {
   // this function is for finding the selected symbol and give it to the redux
   function handleRowSelectionClick(currentSymbolName: string) {
     // find the current-selected-symbol from the table and return it
-    const currentSelectedTableSymbol = userTradeAccount.userBoughtSymbols.find(
+    const currentSelectedTableSymbol = dataBaseSybmols!.find(
       (symbol: any) => {
         return symbol.symbolName === currentSymbolName;
       }
     );
     dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!));
   }
+
   return (
     <Box sx={{ height: 260, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
       <DataGrid
