@@ -8,6 +8,7 @@ import { AppDispatch, useAppSelectore } from "../../GlobalRedux/store";
 import { Symbols } from "@prisma/client";
 import { useDispatch } from "react-redux";
 import { updateCurrentSelectedTableSymbol } from "@/app/GlobalRedux/Features/tableSymbols/tableSymbols-slice";
+import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 
 const columns: GridColDef[] = [
   {
@@ -54,24 +55,11 @@ const columns: GridColDef[] = [
 export default function UserPropertyTable() {
   const dispatch = useDispatch<AppDispatch>();
 
-  // get the entire symbols from the db with react-query
-  const { isLoading, dataBaseSybmols, error } = useSymbols();
-
-  // get the selected-symbols-name that are selected by user from the watchTabsList
-  const reduxSymbols = useAppSelectore(
-    (state) => state.tableSymbolsReducer.reduxSymbols
-  );
-  // get the mainSearchBarSymbol from redux
-  const mainSearchBarSymbol = useAppSelectore(
-    (state) => state.tableSymbolsReducer.mainSearchBarSymbol
-  );
-  // get the current mode of showing whitch-symbols
-  const currentShowMode = useAppSelectore(
-    (state) => state.tableSymbolsReducer.currentShowMode
-  );
+  const { userTradeAccount, isLoadingTradeAccount, error } =
+    useUserTradeAccount();
 
   // if is loading return a skeleton
-  if (isLoading)
+  if (isLoadingTradeAccount)
     return (
       <Stack paddingTop={1} spacing={1}>
         <Skeleton animation="wave" variant="rounded" width="full" height={40} />
@@ -89,43 +77,23 @@ export default function UserPropertyTable() {
 
   // we want to filter throg the entire db-symbols and return the symbols that symbleName in in reduxSymbols
   // boom. the magic happen here
-  let dataGridSymbols: Symbols[] | undefined;
-  switch (currentShowMode) {
-    case "userWatchList":
-      dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
-        if (reduxSymbols.includes(symbol.symbolName)) {
-          return symbol;
-        }
-      });
-      break;
-    case "mainSearchBarSymbol":
-      dataGridSymbols = dataBaseSybmols?.filter((symbol) => {
-        return symbol.symbolName === mainSearchBarSymbol;
-      });
-      break;
-    case "techTraderWatchList":
-      dataGridSymbols = dataBaseSybmols;
-      break;
-    default:
-      break;
-  }
 
-  const rows = dataGridSymbols?.map((symbol) => {
+  const rows = userTradeAccount.userBoughtSymbols.map((symbol: any) => {
     return {
       id: symbol.id,
       symbolName: symbol.symbolName,
       volume: `${symbol.volume}`,
       //   lastDeal: symbol.lastDeal,
-    //   lastDealPercentage: `${symbol.lastDealPercentage}%`,
+      //   lastDealPercentage: `${symbol.lastDealPercentage}%`,
       lastPrice: symbol.lastPrice,
       lastPricePercentage: `${symbol.lastPricePercentage}%`,
-    //   theFirst: symbol.theFirst,
-    //   theLeast: symbol.theLeast,
-    //   theMost: symbol.theMost,
-    //   demandVolume: symbol.demandVolume,
-    //   demandPrice: symbol.demandPrice,
-    //   offerPrice: symbol.offerPrice,
-    //   offerVolume: symbol.offerVolume,
+      //   theFirst: symbol.theFirst,
+      //   theLeast: symbol.theLeast,
+      //   theMost: symbol.theMost,
+      //   demandVolume: symbol.demandVolume,
+      //   demandPrice: symbol.demandPrice,
+      //   offerPrice: symbol.offerPrice,
+      //   offerVolume: symbol.offerVolume,
       state: symbol.state === "ALLOWED" ? "مجاز" : "ممنوع",
     };
   });
@@ -133,15 +101,17 @@ export default function UserPropertyTable() {
   // this function is for finding the selected symbol and give it to the redux
   function handleRowSelectionClick(currentSymbolName: string) {
     // find the current-selected-symbol from the table and return it
-    const currentSelectedTableSymbol = dataGridSymbols?.find((symbol) => {
-      return symbol.symbolName === currentSymbolName;
-    });
+    const currentSelectedTableSymbol = userTradeAccount.userBoughtSymbols.find(
+      (symbol: any) => {
+        return symbol.symbolName === currentSymbolName;
+      }
+    );
     dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!));
   }
   return (
     <Box sx={{ height: 260, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
       <DataGrid
-        loading={isLoading}
+        loading={isLoadingTradeAccount}
         scrollbarSize={10}
         columnHeaderHeight={40}
         onRowClick={(event) => handleRowSelectionClick(event.row.symbolName)}

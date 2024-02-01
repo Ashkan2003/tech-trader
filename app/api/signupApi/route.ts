@@ -43,7 +43,9 @@ export async function POST(request: NextRequest) {
           create: {
             // these are the UserBoughtSymbol information
             userBoughtSymbols: {
-              create: [{ symbolName: "تابه",count:6000 }],
+              createMany: {
+                data:[{symbolName:"دارایکم",count:200},{symbolName:"شیران",count:600}]
+              },
             },
           },
         },

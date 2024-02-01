@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import { useAppSelectore } from "@/app/GlobalRedux/store";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,11 +44,35 @@ interface Props {
 
 export default function BuySaleTabList() {
   const [value, setValue] = useState(0);
-  const { isLoading, userTradeAccount } = useUserTradeAccount();
+  const { isLoadingTradeAccount, userTradeAccount } = useUserTradeAccount();
 
-  if (isLoading) return null;
-  const userPropery = userTradeAccount.at(0).tradeAccount.userProperty;
-  console.log(userPropery, "ddd");
+  //get the current-selected-symbol by user from redux
+  const currentSymbol = useAppSelectore(
+    (state) => state.tableSymbolsReducer.currentSelectedTableSymbol
+  );
+
+  if (isLoadingTradeAccount) return null;
+  // get the userProperty
+  const userPropery = userTradeAccount.userProperty;
+  // get the symbols that user bought
+  const userBoughtSymbols = userTradeAccount.userBoughtSymbols;
+
+  // explanation
+  // we have an currentSymbol that is the current-selected-symbol by user from the main col that is stored in redux
+  // in the other hand, we have a array of symbols that the user bought priviosily
+  // so for fatcing this symbol name and count i looped throug the userBoughtSymbols and find it
+  const userCurrentBoughtSymbol = userBoughtSymbols.find(
+    (boughtSymbol: { symbolName: string; count: number }) => {
+      if (boughtSymbol.symbolName === currentSymbol?.symbolName)
+        return boughtSymbol;
+    }
+  );
+
+  // get the currentBoughtSymbol count.if its undfind it means that the user dont bought this symbol-previosly,so set it 0
+  const currentBoughtSymbolCount = userCurrentBoughtSymbol
+    ? userCurrentBoughtSymbol.count
+    : 0;
+
   // get todey-date in farsi-date
   let todayDate = new Date().toLocaleDateString("fa-IR");
 
@@ -99,7 +124,7 @@ export default function BuySaleTabList() {
               color="info"
               id="filled-read-only-input"
               label="دارایی سپرده گزاری"
-              defaultValue="66778"
+              value={currentBoughtSymbolCount}
               InputProps={{
                 readOnly: true,
               }}
