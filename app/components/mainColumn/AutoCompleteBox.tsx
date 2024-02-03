@@ -26,12 +26,12 @@ export default function AutoCompleteBox() {
   });
 
   return (
-    <div className="ps-4 ">
+    <div>
       <Autocomplete
         onChange={(event, value: any) => {
           dispatch(updateMainSearchBarSymbol(value));
         }}
-        className="bg-[#ffff] dark:bg-[#39566b]"
+        className="xl:ms-2 bg-[#ffff] dark:bg-[#39566b]"
         disablePortal
         id="combo-box-demo"
         size="small"
@@ -39,8 +39,8 @@ export default function AutoCompleteBox() {
         sx={{
           color: "secondary",
           borderRadius: "5px",
-          width: { md: "230px", lg: "400px" },
-          display: { xs: "none", md: "block" },
+          width: { xs:"280",md: "230px", lg: "400px" },
+          display: {  sm: "none",md:"block" },
         }}
         renderInput={(params) => (
           <TextField color="info" {...params} label="جستجوی نماد" />
@@ -50,13 +50,3 @@ export default function AutoCompleteBox() {
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];

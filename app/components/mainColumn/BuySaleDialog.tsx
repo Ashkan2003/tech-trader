@@ -67,7 +67,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
   return (
     <>
       <Button
-        sx={{ margin: "0.5rem", width: { xs: "80px", md: "100px" } }}
+        sx={{ margin: "0.5rem", width: { xs: "130px", md: "100px" } }}
         // size="large"
         variant="outlined"
         color="warning"
@@ -79,7 +79,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
       <Button
         color="warning"
         variant="outlined"
-        sx={{ width: { xs: "80px", md: "100px" } }}
+        sx={{ width: { xs: "130px", md: "100px" } }}
         startIcon={<ShoppingCartIcon className="text-red-600" />}
         onClick={handleClickOpen}
       >
