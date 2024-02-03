@@ -85,21 +85,21 @@ function BuySaleDialog({ currentSymbol }: Props) {
   //
   const handleFinalBuy = (userCurrentBoughtSymbol: UserBoughtSymbol) => {
 
-
-
     const userCurrentProperty = userTradeAccount?.userProperty;
     if (userCurrentProperty! < finalOrderPrice) {
       toast.error("موجودی حساب شما کافی نمی باشد.");
       return null;
     }
+    // calc the user new property
     const userNewProperty = userCurrentProperty! - finalOrderPrice;
 
+    // update the bought-symbol
     mutate({
       currentTradeAccountId: userTradeAccount?.id!,
       currentBoughtSymbol: userCurrentBoughtSymbol,
-      boughtSymbolName: currentSymbol.symbolName,
-      boughtSymbolCount: volumeInputValue,
-      newUserProperty: userNewProperty,
+      newboughtSymbolName: currentSymbol.symbolName,
+      newboughtSymbolCount: volumeInputValue,
+      userNewProperty: userNewProperty,
     });
 
     // close the model

@@ -11,15 +11,16 @@ export const useUpdateUserTradeAccount = () => {
     mutationFn: (data: {
       currentTradeAccountId: number;
       currentBoughtSymbol: UserBoughtSymbol;
-      boughtSymbolName: string;
-      boughtSymbolCount: number;
-      newUserProperty: number;
+      newboughtSymbolName: string;
+      newboughtSymbolCount: number;
+      userNewProperty: number;
     }) => {
       return axios.post("/api/currentUserTradeAccount", data);
     },
     onSuccess: () => {
       toast.success("سفارش شما با موفقیت ثبت شد.");
       queryClient.invalidateQueries({ queryKey: ["userTradeAccount"] });
+      queryClient.invalidateQueries({ queryKey: ["symbols"] });
     },
     onError: (error) => {
       toast.error("در ثبت سفارش خطایی رخ داد.");

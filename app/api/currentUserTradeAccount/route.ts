@@ -3,6 +3,7 @@ import prisma from "@/prisma/db";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import { UserBoughtSymbol } from "@prisma/client";
+import toast from "react-hot-toast";
 
 export async function GET(request: NextRequest) {
   //this is the way of geetting the user authState in server components
@@ -35,65 +36,79 @@ export async function GET(request: NextRequest) {
 type customType = {
   currentTradeAccountId: number;
   currentBoughtSymbol: UserBoughtSymbol;
-  boughtSymbolName: string;
-  boughtSymbolCount: number;
-  newUserProperty: number;
+  newboughtSymbolName: string;
+  newboughtSymbolCount: number;
+  userNewProperty: number;
 };
 
 export async function POST(request: NextRequest) {
-  //
+  // get the body
   const body = await request.json();
 
+  // destructure the body
   const {
     currentTradeAccountId,
     currentBoughtSymbol,
-    boughtSymbolName,
-    boughtSymbolCount,
-    newUserProperty,
+    newboughtSymbolName,
+    newboughtSymbolCount,
+    userNewProperty,
   } = body as customType;
 
-  // console.log(currentTradeAccountId, "ooooooooooooooo");
-  // console.log(currentBoughtSymbol, "llllllllllllll");
-  // console.log(boughtSymbolName, "ppppppppppppppp");
-  // console.log(boughtSymbolCount, "pimmmmmmmmmmmm");
+  const currentBoughtSymbolId = currentBoughtSymbol?.id
+    ? currentBoughtSymbol.id
+    : 0;
+  const currentBoughtSymbolCount = currentBoughtSymbol?.count
+    ? currentBoughtSymbol.count
+    : 0;
 
-  const currentBoughtSymbolId = currentBoughtSymbol?.id ? currentBoughtSymbol.id : 0
-  const currentBoughtSymbolCount = currentBoughtSymbol?.count ? currentBoughtSymbol.count : 0
- 
-  // upsert : if where true => update the current record. if where false => create new record
-  const res = await prisma.userBoughtSymbol.upsert({
+  //1: update or create a boughtSymbol   // upsert : if where true => update the current record. if where false => create new record
+  const res1 = await prisma.userBoughtSymbol.upsert({
     where: {
       id: currentBoughtSymbolId,
     },
     // if the where condition true// if the prisma find a boughtSymbol with the givin id in where so its exist so update it
     update: {
-      count: currentBoughtSymbolCount + boughtSymbolCount,
+      count: currentBoughtSymbolCount + newboughtSymbolCount,
     },
     // if the where condition false // if the the prisma can not find boughtSymbol with the givin id in where so it is not exist so create it
     create: {
-      symbolName: boughtSymbolName,
-      count: boughtSymbolCount,
+      symbolName: newboughtSymbolName,
+      count: newboughtSymbolCount,
       tradeAccountId: currentTradeAccountId,
     },
   });
 
-  // const res = await prisma.user.update({
-  //   where: { email: currentUserEmail! },
-  //   data: {
-  //     tradeAccount: {
-  //       update: {
-  //         userProperty: newUserProperty,
+  // if res null
+  if (!res1)
+    return NextResponse.json({ error: "error on api" }, { status: 400 });
 
-  //         userBoughtSymbols: {
-  //           create: {
-  //             symbolName: boughtSymbolName,
-  //             count: boughtSymbolCount,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
+  //2: update the user-property
+  const res2 = await prisma.tradeAccount.update({
+    where: { id: currentTradeAccountId },
+    data: {
+      userProperty: userNewProperty,
+    },
+  });
 
-  return NextResponse.json(res);
+  if (!res2)
+    return NextResponse.json({ error: "error on api" }, { status: 400 });
+
+  // fetch the current-symbol that user is buying from it
+  const symbol = await prisma.symbols.findUnique({
+    where: { symbolName: newboughtSymbolName },
+  });
+
+  if(symbol?.volume! < newboughtSymbolCount){
+    toast.error("لطفا مقدار حجم خریداری شده را کاهش دهید.")
+  }
+
+  //3: update(decrice volume) the symbol that user bought
+  const res3 = await prisma.symbols.update({
+    where: { symbolName: newboughtSymbolName },
+    data: {
+      volume: symbol?.volume! - newboughtSymbolCount,
+    },
+  });
+
+  return NextResponse.json(res3);
 }
