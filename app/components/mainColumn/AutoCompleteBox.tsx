@@ -31,7 +31,7 @@ export default function AutoCompleteBox() {
         onChange={(event, value: any) => {
           dispatch(updateMainSearchBarSymbol(value));
         }}
-        className="xl:ms-2 bg-[#ffff] dark:bg-[#39566b]"
+        className=" bg-[#ffff] dark:bg-[#39566b]"
         disablePortal
         id="combo-box-demo"
         size="small"

@@ -79,6 +79,7 @@ export default function BuySaleTabList({
     }
   );
 
+
   // get the currentBoughtSymbol count.if its undfind it means that the user dont bought this symbol-previosly,so set it 0
   const currentBoughtSymbolCount = userCurrentBoughtSymbol
     ? userCurrentBoughtSymbol.count
@@ -176,7 +177,7 @@ export default function BuySaleTabList({
               variant="outlined"
               color="warning"
               startIcon={<ShoppingCartIcon className="text-green-600" />}
-              onClick={handleFinalBuy}
+              onClick={()=>handleFinalBuy(userCurrentBoughtSymbol)}
             >
               <Typography className="text-green-600">خرید</Typography>
             </Button>

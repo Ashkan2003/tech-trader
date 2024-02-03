@@ -11,11 +11,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Symbols } from "@prisma/client";
+import { Symbols, UserBoughtSymbol } from "@prisma/client";
 import { useState } from "react";
 import BuySaleDialogTitle from "./BuySaleDialogTitle";
 import BuySaleTabList from "./BuySaleTabList";
 import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import { useUpdateUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUpdateUserTradeAccount";
+import toast from "react-hot-toast";
 
 interface Props {
   currentSymbol: Symbols;
@@ -30,6 +32,8 @@ function BuySaleDialog({ currentSymbol }: Props) {
   // react-query // fetch the userTradeAccount from the db
   const { userTradeAccount, isLoadingTradeAccount, error } =
     useUserTradeAccount();
+  //react-query // update
+  const { mutate } = useUpdateUserTradeAccount();
 
   // calc the
   const finalOrderPrice = priceInputValue * volumeInputValue;
@@ -79,9 +83,27 @@ function BuySaleDialog({ currentSymbol }: Props) {
   };
 
   //
-  const handleFinalBuy = () => {
-    console.log(userTradeAccount?.userBoughtSymbols.at(0)?.symbolName);
-    console.log(finalOrderPrice);
+  const handleFinalBuy = (userCurrentBoughtSymbol: UserBoughtSymbol) => {
+
+
+
+    const userCurrentProperty = userTradeAccount?.userProperty;
+    if (userCurrentProperty! < finalOrderPrice) {
+      toast.error("موجودی حساب شما کافی نمی باشد.");
+      return null;
+    }
+    const userNewProperty = userCurrentProperty! - finalOrderPrice;
+
+    mutate({
+      currentTradeAccountId: userTradeAccount?.id!,
+      currentBoughtSymbol: userCurrentBoughtSymbol,
+      boughtSymbolName: currentSymbol.symbolName,
+      boughtSymbolCount: volumeInputValue,
+      newUserProperty: userNewProperty,
+    });
+
+    // close the model
+    handleClose();
   };
 
   return (
@@ -208,8 +230,6 @@ function BuySaleDialog({ currentSymbol }: Props) {
             بستن
           </Button>
           <Button
-            // type="submit"
-            // onClick={() => handleUpdateWatch(watchId, inputValue, newSymbols)}
             variant="contained"
             startIcon={<SaveOutlinedIcon color="secondary" />}
           >

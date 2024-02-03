@@ -21,7 +21,7 @@ export default async function Home() {
             <MainColHeader />
             <MainTable />
           </div>
-          <div className="col-span-12 sm:col-span-9 row-span-2 bg-gray-400">
+          <div className="col-span-12 sm:col-span-9 row-span-2 ">
             <UserPropertyTable />
           </div>
         </div>

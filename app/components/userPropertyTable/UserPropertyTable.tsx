@@ -74,12 +74,11 @@ export default function UserPropertyTable() {
   if (isLoadingTradeAccount || isLoading)
     return (
       <Stack paddingTop={1} spacing={1}>
-        <Skeleton animation="wave" variant="rounded" width="full" height={40} />
         <Skeleton
           animation="wave"
           variant="rounded"
           width="full"
-          height={400}
+          height={140}
         />
       </Stack>
     );
@@ -90,7 +89,7 @@ export default function UserPropertyTable() {
   let dataGridRows: datagridRowType[] = [];
   // i want more information to put in data-grid-table about a symbol, but i only stored "symbolName" and "count" in the userBoughtSymbol
   // so i loop throgh the dataBaseSymbols and find the userBoughtSymbols and push a new obj with a combine-information of bgsymbol and userBoughtSymbol
-  userTradeAccount.userBoughtSymbols.map(
+  userTradeAccount!.userBoughtSymbols.map(
     (boughtSymbol: { id: number; symbolName: string; count: number }) => {
       dataBaseSybmols?.map((dbSymbol) => {
         if (dbSymbol.symbolName === boughtSymbol.symbolName) {

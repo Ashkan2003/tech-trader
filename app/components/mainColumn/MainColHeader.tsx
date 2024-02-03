@@ -26,10 +26,10 @@ const MainColHeader = () => {
       : currentReduxSymbol.theFirst.toString();
   /////////////////////////////
   return (
-    <div className="md:flex md:items-center md:justify-between   bg-[#D3D9DF] dark:bg-[#324045] ">
+    <div className="md:flex md:items-center md:justify-between sm:px-2   bg-[#D3D9DF] dark:bg-[#324045] ">
       {/* the main search-bar */}
       <AutoCompleteBox />
-      <div className="grid grid-cols-2 gap-x-4 sm:gap-0 sm:flex sm:pt-0 sm:me-0 me-2 pt-2  items-center ">
+      <div className="grid grid-cols-2 gap-x-4 sm:gap-0 sm:flex sm:pt-0 pt-2  items-center ">
         {/* the selected symbol title */}
         <Button
           color="info"
