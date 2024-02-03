@@ -1,5 +1,5 @@
-import { Symbols, WatchList } from "@prisma/client";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {  WatchList } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 // this is a custom-hook for fetching the current-user-watchLists from db with reactQuery and axios

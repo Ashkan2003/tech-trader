@@ -15,6 +15,7 @@ import { Symbols } from "@prisma/client";
 import { useState } from "react";
 import BuySaleDialogTitle from "./BuySaleDialogTitle";
 import BuySaleTabList from "./BuySaleTabList";
+import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 
 interface Props {
   currentSymbol: Symbols;
@@ -26,8 +27,18 @@ function BuySaleDialog({ currentSymbol }: Props) {
   const [priceInputValue, setPriceInputValue] = useState(0);
   const [volumeInputValue, setVolumeInputValue] = useState(0);
 
+  // react-query // fetch the userTradeAccount from the db
+  const { userTradeAccount, isLoadingTradeAccount, error } =
+    useUserTradeAccount();
+
+  // calc the
+  const finalOrderPrice = priceInputValue * volumeInputValue;
+
   // if the currentSymbol was null dont render this component
   if (currentSymbol == null) return null;
+
+  //
+  if (isLoadingTradeAccount) return null;
 
   // this is for opening the dialog
   const handleClickOpen = () => {
@@ -59,9 +70,18 @@ function BuySaleDialog({ currentSymbol }: Props) {
     setVolumeInputValue(100);
   };
 
+  // this is for setting the current-symbol-count to the volume-imput
+  const handleSetUserBoughtSymbolCountToVulomeInput = (
+    event: any,
+    userProperty: string
+  ) => {
+    setVolumeInputValue(parseInt(userProperty));
+  };
+
   //
-  const handleSetUserPropertyToVulomeInput = (userProperty:number) => {
-    setVolumeInputValue(userProperty)
+  const handleFinalBuy = () => {
+    console.log(userTradeAccount?.userBoughtSymbols.at(0)?.symbolName);
+    console.log(finalOrderPrice);
   };
 
   return (
@@ -167,7 +187,14 @@ function BuySaleDialog({ currentSymbol }: Props) {
           </div>
           {/* buySale-tabList */}
           <Divider variant="fullWidth" sx={{ py: "20px" }} />
-          <BuySaleTabList />
+          <BuySaleTabList
+            userTradeAccount={userTradeAccount!}
+            finalOrderPrice={finalOrderPrice}
+            handleFinalBuy={handleFinalBuy}
+            handleSetUserBoughtSymbolCountToVulomeInput={
+              handleSetUserBoughtSymbolCountToVulomeInput
+            }
+          />
         </DialogContent>
 
         <DialogActions>

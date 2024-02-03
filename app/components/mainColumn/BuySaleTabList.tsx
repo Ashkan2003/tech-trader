@@ -4,9 +4,12 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { Button, TextField } from "@mui/material";
-import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import {
+  useUserTradeAccount,
+  userTradeAccountType,
+} from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 import { useAppSelectore } from "@/app/GlobalRedux/store";
 
 interface TabPanelProps {
@@ -39,19 +42,27 @@ function a11yProps(index: number) {
 }
 
 interface Props {
-  handleSetUserPropertyToVulomeInput: any;
+  userTradeAccount: userTradeAccountType;
+  finalOrderPrice: number;
+  handleFinalBuy: any;
+  handleSetUserBoughtSymbolCountToVulomeInput: any;
 }
 
-export default function BuySaleTabList() {
+export default function BuySaleTabList({
+  userTradeAccount,
+  finalOrderPrice,
+  handleFinalBuy,
+  handleSetUserBoughtSymbolCountToVulomeInput,
+}: Props) {
   const [value, setValue] = useState(0);
-  const { isLoadingTradeAccount, userTradeAccount } = useUserTradeAccount();
+  // const { isLoadingTradeAccount, userTradeAccount } = useUserTradeAccount();
 
   //get the current-selected-symbol by user from redux
   const currentSymbol = useAppSelectore(
     (state) => state.tableSymbolsReducer.currentSelectedTableSymbol
   );
 
-  if (isLoadingTradeAccount) return null;
+  // if (isLoadingTradeAccount) return null;
   // get the userProperty
   const userPropery = userTradeAccount.userProperty;
   // get the symbols that user bought
@@ -80,7 +91,6 @@ export default function BuySaleTabList() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
   return (
     <Box
       sx={{
@@ -113,7 +123,6 @@ export default function BuySaleTabList() {
               id="filled-read-only-input"
               label="مانده"
               value={userPropery}
-              // onClick={}
               InputProps={{
                 readOnly: true,
               }}
@@ -125,6 +134,9 @@ export default function BuySaleTabList() {
               id="filled-read-only-input"
               label="دارایی سپرده گزاری"
               value={currentBoughtSymbolCount}
+              onClick={(event: any) =>
+                handleSetUserBoughtSymbolCountToVulomeInput(event, value)
+              }
               InputProps={{
                 readOnly: true,
               }}
@@ -144,11 +156,11 @@ export default function BuySaleTabList() {
           </div>
           <div className="flex items-center  mt-11">
             <TextField
+              value={finalOrderPrice}
               color="warning"
               focused
               label="ارزش ناخالص سفارش"
               id="outlined-size-small"
-              defaultValue="Small"
               size="small"
               InputProps={{
                 readOnly: true,
@@ -164,7 +176,7 @@ export default function BuySaleTabList() {
               variant="outlined"
               color="warning"
               startIcon={<ShoppingCartIcon className="text-green-600" />}
-              // onClick={handleClickOpen}
+              onClick={handleFinalBuy}
             >
               <Typography className="text-green-600">خرید</Typography>
             </Button>

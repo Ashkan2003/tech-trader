@@ -1,14 +1,13 @@
 "use client";
+import { updateCurrentSelectedTableSymbol } from "@/app/GlobalRedux/Features/tableSymbols/tableSymbols-slice";
+import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 import { Skeleton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import toast from "react-hot-toast";
-import { useSymbols } from "../../features/reactQuerySymbols/useSymbols";
-import { AppDispatch, useAppSelectore } from "../../GlobalRedux/store";
-import { Symbols } from "@prisma/client";
 import { useDispatch } from "react-redux";
-import { updateCurrentSelectedTableSymbol } from "@/app/GlobalRedux/Features/tableSymbols/tableSymbols-slice";
-import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import { AppDispatch } from "../../GlobalRedux/store";
+import { useSymbols } from "../../features/reactQuerySymbols/useSymbols";
 
 const columns: GridColDef[] = [
   {
