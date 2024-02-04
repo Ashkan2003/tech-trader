@@ -1,16 +1,13 @@
 "use client";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { MouseEventHandler, useState } from "react";
-import { Button, TextField } from "@mui/material";
-import {
-  useUserTradeAccount,
-  userTradeAccountType,
-} from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 import { useAppSelectore } from "@/app/GlobalRedux/store";
+import {
+  useUserTradeAccount
+} from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import { useState } from "react";
+import BuyTab from "./BuyTab";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,43 +39,50 @@ function a11yProps(index: number) {
 }
 
 interface Props {
-  userTradeAccount: userTradeAccountType;
-  finalOrderPrice: number;
-  handleFinalBuy: any;
+  priceInputValue: number;
+  volumeInputValue: number;
+  setPriceInputValue: React.Dispatch<React.SetStateAction<number>>;
+  setVolumeInputValue: React.Dispatch<React.SetStateAction<number>>;
   handleSetUserBoughtSymbolCountToVulomeInput: any;
+  handleClose: any;
 }
 
 export default function BuySaleTabList({
-  userTradeAccount,
-  finalOrderPrice,
-  handleFinalBuy,
+  priceInputValue,
+  volumeInputValue,
+  setPriceInputValue,
+  setVolumeInputValue,
   handleSetUserBoughtSymbolCountToVulomeInput,
+  handleClose
 }: Props) {
   const [value, setValue] = useState(0);
-  // const { isLoadingTradeAccount, userTradeAccount } = useUserTradeAccount();
 
   //get the current-selected-symbol by user from redux
   const currentSymbol = useAppSelectore(
     (state) => state.tableSymbolsReducer.currentSelectedTableSymbol
   );
 
-  // if (isLoadingTradeAccount) return null;
+  // react-query // fetch the userTradeAccount from the db
+  const { userTradeAccount, isLoadingTradeAccount, error } =
+    useUserTradeAccount();
+  
+  if (isLoadingTradeAccount) return null;
+
   // get the userProperty
-  const userPropery = userTradeAccount.userProperty;
+  const userPropery = userTradeAccount?.userProperty;
   // get the symbols that user bought
-  const userBoughtSymbols = userTradeAccount.userBoughtSymbols;
+  const userBoughtSymbols = userTradeAccount?.userBoughtSymbols;
 
   // explanation
   // we have an currentSymbol that is the current-selected-symbol by user from the main col that is stored in redux
   // in the other hand, we have a array of symbols that the user bought priviosily
   // so for fatcing this symbol name and count i looped throug the userBoughtSymbols and find it
-  const userCurrentBoughtSymbol = userBoughtSymbols.find(
+  const userCurrentBoughtSymbol = userBoughtSymbols!.find(
     (boughtSymbol: { symbolName: string; count: number }) => {
       if (boughtSymbol.symbolName === currentSymbol?.symbolName)
         return boughtSymbol;
     }
   );
-
 
   // get the currentBoughtSymbol count.if its undfind it means that the user dont bought this symbol-previosly,so set it 0
   const currentBoughtSymbolCount = userCurrentBoughtSymbol
@@ -115,74 +119,19 @@ export default function BuySaleTabList({
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className="flex-col justify-between">
-          <div className="grid grid-cols-2 gap-2">
-            {/* user property */}
-            <TextField
-              focused
-              color="info"
-              id="filled-read-only-input"
-              label="مانده"
-              value={userPropery}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="filled"
-            />
-            <TextField
-              focused
-              color="info"
-              id="filled-read-only-input"
-              label="دارایی سپرده گزاری"
-              value={currentBoughtSymbolCount}
-              onClick={(event: any) =>
-                handleSetUserBoughtSymbolCountToVulomeInput(event, value)
-              }
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="filled"
-            />
-            <TextField
-              focused
-              color="info"
-              id="filled-read-only-input"
-              label="اعتبار تا تاریخ:"
-              defaultValue={todayDate}
-              InputProps={{
-                readOnly: true,
-              }}
-              variant="filled"
-            />
-          </div>
-          <div className="flex items-center  mt-11">
-            <TextField
-              value={finalOrderPrice}
-              color="warning"
-              focused
-              label="ارزش ناخالص سفارش"
-              id="outlined-size-small"
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-            <Button
-              sx={{
-                width: { xs: "90px", md: "100px" },
-                height: "41px",
-                ml: "10px",
-              }}
-              size="large"
-              variant="outlined"
-              color="warning"
-              startIcon={<ShoppingCartIcon className="text-green-600" />}
-              onClick={()=>handleFinalBuy(userCurrentBoughtSymbol)}
-            >
-              <Typography className="text-green-600">خرید</Typography>
-            </Button>
-          </div>
-        </div>
+        <BuyTab
+          currentSymbol={currentSymbol!}
+          currentBoughtSymbolCount={currentBoughtSymbolCount}
+          priceInputValue={priceInputValue}
+          volumeInputValue={volumeInputValue}
+          todayDate={todayDate}
+          userCurrentBoughtSymbol={userCurrentBoughtSymbol!}
+          setPriceInputValue={setPriceInputValue}
+          setVolumeInputValue={setVolumeInputValue}
+          userTradeAccount={userTradeAccount!}
+          handleClose={handleClose}
+          handleSetUserBoughtSymbolCountToVulomeInput={handleSetUserBoughtSymbolCountToVulomeInput}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two

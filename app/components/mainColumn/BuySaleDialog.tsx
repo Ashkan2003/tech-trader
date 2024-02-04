@@ -11,13 +11,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Symbols, UserBoughtSymbol } from "@prisma/client";
+import { Symbols } from "@prisma/client";
 import { useState } from "react";
 import BuySaleDialogTitle from "./BuySaleDialogTitle";
 import BuySaleTabList from "./BuySaleTabList";
-import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
-import { useUpdateUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUpdateUserTradeAccount";
-import toast from "react-hot-toast";
 
 interface Props {
   currentSymbol: Symbols;
@@ -29,20 +26,8 @@ function BuySaleDialog({ currentSymbol }: Props) {
   const [priceInputValue, setPriceInputValue] = useState(0);
   const [volumeInputValue, setVolumeInputValue] = useState(0);
 
-  // react-query // fetch the userTradeAccount from the db
-  const { userTradeAccount, isLoadingTradeAccount, error } =
-    useUserTradeAccount();
-  //react-query // update
-  const { mutate } = useUpdateUserTradeAccount();
-
-  // calc the
-  const finalOrderPrice = priceInputValue * volumeInputValue;
-
   // if the currentSymbol was null dont render this component
   if (currentSymbol == null) return null;
-
-  //
-  if (isLoadingTradeAccount) return null;
 
   // this is for opening the dialog
   const handleClickOpen = () => {
@@ -80,50 +65,6 @@ function BuySaleDialog({ currentSymbol }: Props) {
     userProperty: string
   ) => {
     setVolumeInputValue(parseInt(userProperty));
-  };
-
-  //
-  const handleFinalBuy = (userCurrentBoughtSymbol: UserBoughtSymbol) => {
-    // this condition is for checking the renge of price that user entried
-    if (
-      priceInputValue > currentSymbol.lastPrice ||
-      priceInputValue < currentSymbol.theLeast
-    ) {
-      toast.error("لطفا قیمت پیشنهادی خود را بین رنج قیمتی وارد کنید.");
-      return null;
-    }
-
-    // this condition is for checking the renge of volume that user entried
-    if (volumeInputValue > 100 || volumeInputValue < 10) {
-      toast.error("لطفا حجم پیشنهادی خود را بین رنج حجمی وارد کنید.");
-      return null;
-    }
-
-    const userCurrentProperty = userTradeAccount?.userProperty;
-    // this condition is for when the user-property if not sufficent to buy the current symbol
-    if (userCurrentProperty! < finalOrderPrice) {
-      toast.error("موجودی حساب شما کافی نمی باشد.");
-      return null;
-    }
-
-    // calc the user new property
-    const userNewProperty = userCurrentProperty! - finalOrderPrice;
-
-    // update the bought-symbol
-    mutate({
-      currentTradeAccountId: userTradeAccount?.id!,
-      currentBoughtSymbol: userCurrentBoughtSymbol,
-      newboughtSymbolName: currentSymbol.symbolName,
-      newboughtSymbolCount: volumeInputValue,
-      userNewProperty: userNewProperty,
-    });
-
-    // close the model
-    handleClose();
-
-    // set to 0
-    setPriceInputValue(0)
-    setVolumeInputValue(0)
   };
 
   return (
@@ -227,18 +168,19 @@ function BuySaleDialog({ currentSymbol }: Props) {
               </Button>
             </ButtonGroup>
           </div>
-          {/* buySale-tabList */}
           <Divider variant="fullWidth" sx={{ py: "20px" }} />
+          {/* buySale-tabList */}
           <BuySaleTabList
-            userTradeAccount={userTradeAccount!}
-            finalOrderPrice={finalOrderPrice}
-            handleFinalBuy={handleFinalBuy}
+            priceInputValue={priceInputValue}
+            volumeInputValue={volumeInputValue}
+            setPriceInputValue={setPriceInputValue}
+            setVolumeInputValue={setVolumeInputValue}
             handleSetUserBoughtSymbolCountToVulomeInput={
               handleSetUserBoughtSymbolCountToVulomeInput
             }
+            handleClose={handleClose}
           />
         </DialogContent>
-
         <DialogActions>
           <Button
             variant="contained"
