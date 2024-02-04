@@ -2,8 +2,8 @@ import { TextField, Button, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Symbols, UserBoughtSymbol } from "@prisma/client";
 import toast from "react-hot-toast";
-import { useUpdateUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUpdateUserTradeAccount";
 import { userTradeAccountType } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import { useBuySymbol } from "@/app/features/reactQueryTradeAccount/useBuySymbol";
 
 interface Props {
   currentSymbol: Symbols;
@@ -37,7 +37,7 @@ const BuyTab = ({
   const finalOrderPrice = priceInputValue * volumeInputValue;
 
   //react-query // update
-  const { mutate } = useUpdateUserTradeAccount();
+  const { mutate } = useBuySymbol();
 
   //
   const userCurrentProperty = userTradeAccount?.userProperty;

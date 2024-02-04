@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 // this is a custom-hook for setting up react-query for deleting a single-watchList
-export const useUpdateUserTradeAccount = () => {
+export const useBuySymbol = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -15,10 +15,11 @@ export const useUpdateUserTradeAccount = () => {
       newboughtSymbolCount: number;
       userNewProperty: number;
     }) => {
-      return axios.post("/api/currentUserTradeAccount", data);
+      // becuse the endpoint-request is "upsert" so we used "put" inisted of the "patch"
+      return axios.put("/api/currentUserTradeAccount", data);
     },
     onSuccess: () => {
-      toast.success("سفارش شما با موفقیت ثبت شد.");
+      toast.success("سفارش خرید شما با موفقیت ثبت شد.");
       queryClient.invalidateQueries({ queryKey: ["userTradeAccount"] });
       queryClient.invalidateQueries({ queryKey: ["symbols"] });
     },

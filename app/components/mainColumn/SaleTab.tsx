@@ -2,8 +2,8 @@ import { TextField, Button, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Symbols, UserBoughtSymbol } from "@prisma/client";
 import toast from "react-hot-toast";
-import { useUpdateUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUpdateUserTradeAccount";
 import { userTradeAccountType } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import { useSaleSymbol } from "@/app/features/reactQueryTradeAccount/useSaleSymbol";
 
 interface Props {
   currentSymbol: Symbols;
@@ -36,13 +36,27 @@ const SaleTab = ({
   // calc the
   const finalOrderPrice = priceInputValue * volumeInputValue;
 
-  //react-query // update
-  const { mutate } = useUpdateUserTradeAccount();
+  //react-query// delete or update
+  const { mutate } = useSaleSymbol();
 
-  //
+  // get the userProperty from userTradeAccount
   const userCurrentProperty = userTradeAccount?.userProperty;
-  //
+
+  //when the user clicks on the buy btn run this...
   const handleFinalBuy = (userCurrentBoughtSymbol: UserBoughtSymbol) => {
+
+    // we want to prevent the user from saling the symbols that he dont have any count of it// so if the userCurrentBoughtSymbol was null render nothing
+    if (!userCurrentBoughtSymbol){
+      toast.error("شما در این نماد دارایی ندارید");
+      return null 
+    }
+
+    // the user canot sale more that its bought-symbol-count
+    if(volumeInputValue > userCurrentBoughtSymbol?.count  ){
+      toast.error("شما نمی توانید بیشتر از دارایی خود حجم به فروش برسانید");
+      return null;
+    }
+
     // this condition is for checking the renge of price that user entried
     if (
       priceInputValue > currentSymbol.lastPrice ||
@@ -58,22 +72,18 @@ const SaleTab = ({
       return null;
     }
 
-    // this condition is for when the user-property if not sufficent to buy the current symbol
-    if (userCurrentProperty! < finalOrderPrice) {
-      toast.error("موجودی حساب شما کافی نمی باشد.");
-      return null;
-    }
+    // calc the user new property // add the finalOrderPrice to userCurrentProperty
+    const userNewProperty = userCurrentProperty! + finalOrderPrice;
 
-    // calc the user new property
-    const userNewProperty = userCurrentProperty! - finalOrderPrice;
+
 
     // update the bought-symbol
     mutate({
-      currentTradeAccountId: userTradeAccount?.id!,
-      currentBoughtSymbol: userCurrentBoughtSymbol,
-      newboughtSymbolName: currentSymbol.symbolName,
-      newboughtSymbolCount: volumeInputValue,
       userNewProperty: userNewProperty,
+      symbolSaleCount: volumeInputValue,
+      saledSymbolName: currentSymbol.symbolName,
+      currentTradeAccountId: userTradeAccount?.id!,
+      currentSaledSymbol: userCurrentBoughtSymbol,
     });
 
     // close the model
@@ -148,11 +158,11 @@ const SaleTab = ({
           }}
           size="large"
           variant="outlined"
-          color="warning"
-          startIcon={<ShoppingCartIcon className="text-green-600" />}
+          color="error"
+          startIcon={<ShoppingCartIcon className="text-red-600" />}
           onClick={() => handleFinalBuy(userCurrentBoughtSymbol)}
         >
-          <Typography className="text-green-600">خرید</Typography>
+          <Typography className="text-red-600">فروش</Typography>
         </Button>
       </div>
     </div>

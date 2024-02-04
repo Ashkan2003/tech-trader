@@ -5,6 +5,29 @@ import authOptions from "@/app/auth/authOptions";
 import { UserBoughtSymbol } from "@prisma/client";
 import toast from "react-hot-toast";
 
+//GET => read data from db
+//DELETE => delete data from db
+//POST =>  create data in db
+//PATCH => update data in the db
+//PUT => update or create data in upsert sitution
+
+type customBuyType = {
+  currentTradeAccountId: number;
+  currentBoughtSymbol: UserBoughtSymbol;
+  newboughtSymbolName: string;
+  newboughtSymbolCount: number;
+  userNewProperty: number;
+};
+
+type customSaleType = {
+  userNewProperty: number;
+  symbolSaleCount: number;
+  saledSymbolName: string;
+  currentTradeAccountId: number;
+  currentSaledSymbol: UserBoughtSymbol;
+};
+
+// get the current userTradeAccount from db
 export async function GET(request: NextRequest) {
   //this is the way of geetting the user authState in server components
   const session = await getServerSession(authOptions);
@@ -32,16 +55,7 @@ export async function GET(request: NextRequest) {
 // create a new userBoughtSymbol
 // decrice from user property
 // decrise from the main symbol-volume
-
-type customType = {
-  currentTradeAccountId: number;
-  currentBoughtSymbol: UserBoughtSymbol;
-  newboughtSymbolName: string;
-  newboughtSymbolCount: number;
-  userNewProperty: number;
-};
-
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   // get the body
   const body = await request.json();
 
@@ -52,7 +66,7 @@ export async function POST(request: NextRequest) {
     newboughtSymbolName,
     newboughtSymbolCount,
     userNewProperty,
-  } = body as customType;
+  } = body as customBuyType;
 
   const currentBoughtSymbolId = currentBoughtSymbol?.id
     ? currentBoughtSymbol.id
@@ -98,8 +112,8 @@ export async function POST(request: NextRequest) {
     where: { symbolName: newboughtSymbolName },
   });
 
-  if(symbol?.volume! < newboughtSymbolCount){
-    toast.error("لطفا مقدار حجم خریداری شده را کاهش دهید.")
+  if (symbol?.volume! < newboughtSymbolCount) {
+    toast.error("لطفا مقدار حجم خریداری شده را کاهش دهید.");
   }
 
   //3: update(decrice volume) the symbol that user bought
@@ -107,6 +121,61 @@ export async function POST(request: NextRequest) {
     where: { symbolName: newboughtSymbolName },
     data: {
       volume: symbol?.volume! - newboughtSymbolCount,
+    },
+  });
+
+  return NextResponse.json(res3);
+}
+
+export async function DELETE(request: NextRequest) {
+  // get the body
+  const body = await request.json();
+
+  // destructure the body
+  const {
+    userNewProperty,
+    symbolSaleCount,
+    saledSymbolName,
+    currentTradeAccountId,
+    currentSaledSymbol,
+  } = body as customSaleType;
+
+  //1: set a condition
+  if (symbolSaleCount == currentSaledSymbol.count) {
+    //
+    const res = await prisma.userBoughtSymbol.delete({
+      where: { id: currentSaledSymbol.id },
+    });
+  } else if (symbolSaleCount < currentSaledSymbol.count) {
+    const res = await prisma.userBoughtSymbol.update({
+      where: { id: currentSaledSymbol.id },
+      data: {
+        count: currentSaledSymbol.count - symbolSaleCount,
+      },
+    });
+  }
+
+  //2: update the user-property after sale of the bought-symbol
+  const res2 = await prisma.tradeAccount.update({
+    where: { id: currentTradeAccountId },
+    data: {
+      userProperty: userNewProperty,
+    },
+  });
+
+  if (!res2)
+    return NextResponse.json({ error: "error on api" }, { status: 400 });
+
+  // fetch the current-symbol from db that user is saling from it
+  const symbol = await prisma.symbols.findUnique({
+    where: { symbolName: saledSymbolName },
+  });
+
+  //3: update(increase volume) the symbol that user sale
+  const res3 = await prisma.symbols.update({
+    where: { symbolName: saledSymbolName },
+    data: {
+      volume: symbol?.volume! + symbolSaleCount,
     },
   });
 
