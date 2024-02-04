@@ -66,12 +66,12 @@ function BuySaleDialog({ currentSymbol }: Props) {
 
   // this is for the set the max-volume to the volume-price
   const handleSetMaxVolume = () => {
-    setVolumeInputValue(200);
+    setVolumeInputValue(100);
   };
 
   // this is for the set the least-volume to the volume-price
   const handleSetLeastVolume = () => {
-    setVolumeInputValue(100);
+    setVolumeInputValue(10);
   };
 
   // this is for setting the current-symbol-count to the volume-imput
@@ -84,12 +84,28 @@ function BuySaleDialog({ currentSymbol }: Props) {
 
   //
   const handleFinalBuy = (userCurrentBoughtSymbol: UserBoughtSymbol) => {
+    // this condition is for checking the renge of price that user entried
+    if (
+      priceInputValue > currentSymbol.lastPrice ||
+      priceInputValue < currentSymbol.theLeast
+    ) {
+      toast.error("لطفا قیمت پیشنهادی خود را بین رنج قیمتی وارد کنید.");
+      return null;
+    }
+
+    // this condition is for checking the renge of volume that user entried
+    if (volumeInputValue > 100 || volumeInputValue < 10) {
+      toast.error("لطفا حجم پیشنهادی خود را بین رنج حجمی وارد کنید.");
+      return null;
+    }
 
     const userCurrentProperty = userTradeAccount?.userProperty;
+    // this condition is for when the user-property if not sufficent to buy the current symbol
     if (userCurrentProperty! < finalOrderPrice) {
       toast.error("موجودی حساب شما کافی نمی باشد.");
       return null;
     }
+
     // calc the user new property
     const userNewProperty = userCurrentProperty! - finalOrderPrice;
 
@@ -104,6 +120,10 @@ function BuySaleDialog({ currentSymbol }: Props) {
 
     // close the model
     handleClose();
+
+    // set to 0
+    setPriceInputValue(0)
+    setVolumeInputValue(0)
   };
 
   return (
@@ -195,7 +215,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
                 color="info"
                 key="one"
               >
-                200
+                100
               </Button>
               <Button
                 onClick={handleSetLeastVolume}
@@ -203,7 +223,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
                 color="info"
                 key="two"
               >
-                100
+                10
               </Button>
             </ButtonGroup>
           </div>
