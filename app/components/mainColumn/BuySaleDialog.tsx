@@ -25,12 +25,20 @@ function BuySaleDialog({ currentSymbol }: Props) {
   const [open, setOpen] = useState(false);
   const [priceInputValue, setPriceInputValue] = useState(0);
   const [volumeInputValue, setVolumeInputValue] = useState(0);
+  const [tabListIndexvalue, setTabListIndexvalue] = useState(0);
 
   // if the currentSymbol was null dont render this component
   if (currentSymbol == null) return null;
 
-  // this is for opening the dialog
-  const handleClickOpen = () => {
+  // this is for opening the dialog // and open the buyTab
+  const handleClickOpenBuyDialog = () => {
+    setTabListIndexvalue(0);
+    setOpen(true);
+  };
+
+  // this is for opening the dialog // and open the saleTab
+  const handleClickOpenSaleDialog = () => {
+    setTabListIndexvalue(1);
     setOpen(true);
   };
 
@@ -75,7 +83,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
         variant="outlined"
         color="warning"
         startIcon={<ShoppingCartIcon className="text-green-600" />}
-        onClick={handleClickOpen}
+        onClick={handleClickOpenBuyDialog}
       >
         <Typography className="text-green-600">خرید</Typography>
       </Button>
@@ -84,7 +92,7 @@ function BuySaleDialog({ currentSymbol }: Props) {
         variant="outlined"
         sx={{ width: { xs: "130px", md: "100px" } }}
         startIcon={<ShoppingCartIcon className="text-red-600" />}
-        onClick={handleClickOpen}
+        onClick={handleClickOpenSaleDialog}
       >
         <Typography className="text-red-600">فروش</Typography>
       </Button>
@@ -173,8 +181,10 @@ function BuySaleDialog({ currentSymbol }: Props) {
           <BuySaleTabList
             priceInputValue={priceInputValue}
             volumeInputValue={volumeInputValue}
+            tabListIndexvalue={tabListIndexvalue}
             setPriceInputValue={setPriceInputValue}
             setVolumeInputValue={setVolumeInputValue}
+            setTabListIndexvalue={setTabListIndexvalue}
             handleSetUserBoughtSymbolCountToVulomeInput={
               handleSetUserBoughtSymbolCountToVulomeInput
             }

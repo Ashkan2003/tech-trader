@@ -1,13 +1,12 @@
 "use client";
 import { useAppSelectore } from "@/app/GlobalRedux/store";
-import {
-  useUserTradeAccount
-} from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
+import { useUserTradeAccount } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 import BuyTab from "./BuyTab";
+import SaleTab from "./SaleTab";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,8 +40,10 @@ function a11yProps(index: number) {
 interface Props {
   priceInputValue: number;
   volumeInputValue: number;
+  tabListIndexvalue: number;
   setPriceInputValue: React.Dispatch<React.SetStateAction<number>>;
   setVolumeInputValue: React.Dispatch<React.SetStateAction<number>>;
+  setTabListIndexvalue: React.Dispatch<React.SetStateAction<number>>;
   handleSetUserBoughtSymbolCountToVulomeInput: any;
   handleClose: any;
 }
@@ -50,13 +51,13 @@ interface Props {
 export default function BuySaleTabList({
   priceInputValue,
   volumeInputValue,
+  tabListIndexvalue,
   setPriceInputValue,
   setVolumeInputValue,
+  setTabListIndexvalue,
   handleSetUserBoughtSymbolCountToVulomeInput,
-  handleClose
+  handleClose,
 }: Props) {
-  const [value, setValue] = useState(0);
-
   //get the current-selected-symbol by user from redux
   const currentSymbol = useAppSelectore(
     (state) => state.tableSymbolsReducer.currentSelectedTableSymbol
@@ -65,7 +66,7 @@ export default function BuySaleTabList({
   // react-query // fetch the userTradeAccount from the db
   const { userTradeAccount, isLoadingTradeAccount, error } =
     useUserTradeAccount();
-  
+
   if (isLoadingTradeAccount) return null;
 
   // get the userProperty
@@ -94,7 +95,7 @@ export default function BuySaleTabList({
 
   // this function is for the selection of the tab
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTabListIndexvalue(newValue);
   };
   return (
     <Box
@@ -111,14 +112,14 @@ export default function BuySaleTabList({
           indicatorColor="secondary"
           variant="fullWidth"
           centered
-          value={value}
+          value={tabListIndexvalue}
           onChange={handleChange}
         >
           <Tab label="خرید" sx={{ fontSize: "20px" }} {...a11yProps(0)} />
           <Tab label="فروش" sx={{ fontSize: "20px" }} {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={tabListIndexvalue} index={0}>
         <BuyTab
           currentSymbol={currentSymbol!}
           currentBoughtSymbolCount={currentBoughtSymbolCount}
@@ -130,11 +131,27 @@ export default function BuySaleTabList({
           setVolumeInputValue={setVolumeInputValue}
           userTradeAccount={userTradeAccount!}
           handleClose={handleClose}
-          handleSetUserBoughtSymbolCountToVulomeInput={handleSetUserBoughtSymbolCountToVulomeInput}
+          handleSetUserBoughtSymbolCountToVulomeInput={
+            handleSetUserBoughtSymbolCountToVulomeInput
+          }
         />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Item Two
+      <CustomTabPanel value={tabListIndexvalue} index={1}>
+        <SaleTab
+          currentSymbol={currentSymbol!}
+          currentBoughtSymbolCount={currentBoughtSymbolCount}
+          priceInputValue={priceInputValue}
+          volumeInputValue={volumeInputValue}
+          todayDate={todayDate}
+          userCurrentBoughtSymbol={userCurrentBoughtSymbol!}
+          setPriceInputValue={setPriceInputValue}
+          setVolumeInputValue={setVolumeInputValue}
+          userTradeAccount={userTradeAccount!}
+          handleClose={handleClose}
+          handleSetUserBoughtSymbolCountToVulomeInput={
+            handleSetUserBoughtSymbolCountToVulomeInput
+          }
+        />
       </CustomTabPanel>
     </Box>
   );
