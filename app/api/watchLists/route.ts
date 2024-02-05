@@ -57,7 +57,7 @@ export async function DELETE(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   //
   const body = await request.json();
-  
+
   const res = await prisma.watchList.update({
     where: { id: body.id },
     data: {

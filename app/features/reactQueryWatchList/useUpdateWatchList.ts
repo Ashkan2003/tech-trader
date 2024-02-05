@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export const useUpdateWatchList = () => {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate:updateWatchListMutate } = useMutation({
     mutationFn: (data: { id: number; title: string; symbols: string }) => {
       return axios.patch("/api/watchLists", data);
     },
@@ -19,5 +19,5 @@ export const useUpdateWatchList = () => {
       console.log(error);
     },
   });
-  return { mutate };
+  return { updateWatchListMutate };
 };

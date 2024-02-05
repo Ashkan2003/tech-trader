@@ -35,7 +35,7 @@ function WatchListFormDialog({ watchId, watchTitle, watchSymbols }: Props) {
   const [newSymbols, setNewSymbols] = useState(defaultSymbols);
   // these are from react-query
   const { dataBaseSybmols, isLoading } = useSymbols();
-  const { mutate } = useUpdateWatchList();
+  const { updateWatchListMutate } = useUpdateWatchList();
 
   if (isLoading) return null;
 
@@ -54,7 +54,7 @@ function WatchListFormDialog({ watchId, watchTitle, watchSymbols }: Props) {
     const stringfyNewSymbolsArray = newSymbols.toString();
 
     // update the watch
-    mutate({
+    updateWatchListMutate({
       id: currentId,
       title: currentTitle,
       symbols: stringfyNewSymbolsArray,

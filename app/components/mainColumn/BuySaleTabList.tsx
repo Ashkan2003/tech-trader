@@ -7,6 +7,7 @@ import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 import BuyTab from "./BuyTab";
 import SaleTab from "./SaleTab";
+import { useUserWatchLists } from "@/app/features/reactQueryWatchList/useUserWatchLists";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,10 +68,16 @@ export default function BuySaleTabList({
   const { userTradeAccount, isLoadingTradeAccount, error } =
     useUserTradeAccount();
 
-  if (isLoadingTradeAccount) return null;
+  // react-query // get user watchLists
+  const { watchLists, isLoading } = useUserWatchLists();
 
-  // get the userProperty
-  const userPropery = userTradeAccount?.userProperty;
+  if (isLoadingTradeAccount || isLoading) return null;
+
+  //get the "دارایی های من"-watchList from db
+  const userProperyWatchList = watchLists?.find((item) => {
+    return item.title === "دارایی های من";
+  });
+
   // get the symbols that user bought
   const userBoughtSymbols = userTradeAccount?.userBoughtSymbols;
 
@@ -122,6 +129,7 @@ export default function BuySaleTabList({
       <CustomTabPanel value={tabListIndexvalue} index={0}>
         <BuyTab
           currentSymbol={currentSymbol!}
+          userProperyWatchList={userProperyWatchList!}
           currentBoughtSymbolCount={currentBoughtSymbolCount}
           priceInputValue={priceInputValue}
           volumeInputValue={volumeInputValue}
@@ -139,6 +147,7 @@ export default function BuySaleTabList({
       <CustomTabPanel value={tabListIndexvalue} index={1}>
         <SaleTab
           currentSymbol={currentSymbol!}
+          userProperyWatchList={userProperyWatchList!}
           currentBoughtSymbolCount={currentBoughtSymbolCount}
           priceInputValue={priceInputValue}
           volumeInputValue={volumeInputValue}

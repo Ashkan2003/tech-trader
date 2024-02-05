@@ -51,18 +51,18 @@ export default function Form() {
         password: data.password,
       });
 
-      setLoading(false);
-
       if (!res?.error) {
         toast.success("ورود با موفقیت انجام شد.");
         router.push("/");
+        setLoading(false);
       } else if (res.status == 401) {
         toast.error("نام کاربری یا رمز عبور اشتباه");
+        setLoading(false);
       }
     } catch (error: any) {
-      setLoading(false);
       toast.error("ورود ناموفق");
       console.log(error);
+      setLoading(false);
     }
   };
 

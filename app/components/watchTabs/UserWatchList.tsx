@@ -8,8 +8,6 @@ import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
 import { useUserWatchLists } from "../../features/reactQueryWatchList/useUserWatchLists";
 import WatchListDeleteBtn from "./WatchListDeleteBtn";
-import WatchTabInput from "./UserWatchInput";
-
 import WatchListFormDialog from "./WatchListFormDialog";
 import { AppDispatch } from "../../GlobalRedux/store";
 import { useDispatch } from "react-redux";

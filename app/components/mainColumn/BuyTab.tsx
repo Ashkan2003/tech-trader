@@ -1,12 +1,14 @@
 import { TextField, Button, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Symbols, UserBoughtSymbol } from "@prisma/client";
+import { Symbols, UserBoughtSymbol, WatchList } from "@prisma/client";
 import toast from "react-hot-toast";
 import { userTradeAccountType } from "@/app/features/reactQueryTradeAccount/useUserTradeAccount";
 import { useBuySymbol } from "@/app/features/reactQueryTradeAccount/useBuySymbol";
+import { useUpdateWatchList } from "@/app/features/reactQueryWatchList/useUpdateWatchList";
 
 interface Props {
   currentSymbol: Symbols;
+  userProperyWatchList: WatchList;
   currentBoughtSymbolCount: number;
   priceInputValue: number;
   volumeInputValue: number;
@@ -22,6 +24,7 @@ interface Props {
 
 const BuyTab = ({
   currentSymbol,
+  userProperyWatchList,
   currentBoughtSymbolCount,
   priceInputValue,
   volumeInputValue,
@@ -39,10 +42,20 @@ const BuyTab = ({
   //react-query // update
   const { mutate } = useBuySymbol();
 
+  //react-qury // update user-watch-list
+  const { updateWatchListMutate } = useUpdateWatchList();
+
   //
   const userCurrentProperty = userTradeAccount?.userProperty;
-  //
+
+  //when the user clicks on the buy btn run this...
   const handleFinalBuy = (userCurrentBoughtSymbol: UserBoughtSymbol) => {
+    // if the state was notAllowed so dont let the user buy or sale it
+    if (currentSymbol.state == "NOTALLOWED") {
+      toast.error("وضعیت نماد درحالت ممنوع معامله قرار دارد.");
+      return null;
+    }
+
     // this condition is for checking the renge of price that user entried
     if (
       priceInputValue > currentSymbol.lastPrice ||
@@ -68,13 +81,26 @@ const BuyTab = ({
     const userNewProperty = userCurrentProperty! - finalOrderPrice;
 
     // update the bought-symbol
-    mutate({
-      currentTradeAccountId: userTradeAccount?.id!,
-      currentBoughtSymbol: userCurrentBoughtSymbol,
-      newboughtSymbolName: currentSymbol.symbolName,
-      newboughtSymbolCount: volumeInputValue,
-      userNewProperty: userNewProperty,
-    });
+    mutate(
+      {
+        currentTradeAccountId: userTradeAccount?.id!,
+        currentBoughtSymbol: userCurrentBoughtSymbol,
+        newboughtSymbolName: currentSymbol.symbolName,
+        newboughtSymbolCount: volumeInputValue,
+        userNewProperty: userNewProperty,
+      },
+      {
+        onSuccess: () => {
+          // when the update-mutate of the saling a symbol was successfull update the watch
+          updateWatchListMutate({
+            id: userProperyWatchList.id,
+            title: "دارایی های من",
+            symbols:
+              userProperyWatchList.symbols + "," + currentSymbol.symbolName,
+          });
+        },
+      }
+    );
 
     // close the model
     handleClose();

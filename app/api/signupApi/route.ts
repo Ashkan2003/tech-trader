@@ -42,13 +42,14 @@ export async function POST(request: NextRequest) {
         tradeAccount: {
           create: {
             // these are the UserBoughtSymbol information
-            userBoughtSymbols: {
-              createMany: {
-                data:[{symbolName:"دارایکم",count:200},{symbolName:"شیران",count:600}]
-              },
-            },
+            // userBoughtSymbols: {
+            //   createMany: {
+            //     data:[{symbolName:"دارایکم",count:200},{symbolName:"شیران",count:600}]
+            //   },
+            // },
           },
         },
+
       },
     });
 

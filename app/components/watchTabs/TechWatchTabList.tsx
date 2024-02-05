@@ -14,11 +14,10 @@ import { updateCurrentShowedMode } from "../../GlobalRedux/Features/tableSymbols
 
 const TechWatchTabList = () => {
   const watchList: { id: number; title: string; symbols: string[] }[] = [
-    { id: 1, title: "سهام اصلی", symbols: [] },
-    { id: 2, title: "سهام ایبیی", symbols: [] },
+    { id: 0, title: "همه نمادها", symbols: [] },
   ];
 
-  const [selectedIndex, setSelectedIndex] = useState(1); // the current selected watch from the list
+  const [selectedIndex, setSelectedIndex] = useState(0); // the current selected watch from the list
   const dispatch = useDispatch<AppDispatch>();
 
   // this function is for activating the selected watch by adding some style
