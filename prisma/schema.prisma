@@ -87,7 +87,7 @@ model UserBoughtSymbol {
 // the relation bettven TradeAccount and UserBoughtSymbols  is 1 to many, becus 1 tradeAccount can have many UserBoughtSymbols
 model TradeAccount {
   id                Int                @id @default(autoincrement())
-  userProperty      Int                @default(4000)
+  userProperty      Int                @default(400000)
   userBoughtSymbols UserBoughtSymbol[]
 
   //these fields are for making relating with the User-model

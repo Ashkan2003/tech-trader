@@ -9,7 +9,6 @@ import NavClock from "./NavClock";
 import NavAuthState from "./NavAuthState";
 import UserProperty from "./UserProperty";
 export default function Navbar() {
-
   return (
     <header className="bg-[#5D6E88] dark:bg-[#2D3E4A]  h-13">
       <nav className="flex  items-center justify-between  ">

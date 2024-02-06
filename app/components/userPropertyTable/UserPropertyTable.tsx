@@ -22,7 +22,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    width: 70,
+    width: 100,
   },
 
   {
@@ -31,7 +31,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    width: 70,
+    width: 100,
   },
   {
     field: "lastPricePercentage",
@@ -39,7 +39,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    width: 70,
+    width: 100,
   },
   {
     field: "state",
@@ -47,7 +47,7 @@ const columns: GridColDef[] = [
     type: "number",
     align: "left",
     headerAlign: "left",
-    width: 70,
+    width: 100,
   },
 ];
 

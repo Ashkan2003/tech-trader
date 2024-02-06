@@ -3,8 +3,6 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
-import WatchTabsList from "./UserWatchList";
 import TechWatchTabList from "./TechWatchTabList";
 import UserWatchList from "./UserWatchList";
 
@@ -17,6 +15,7 @@ interface TabPanelProps {
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
+ 
   return (
     <div
       role="tabpanel"

@@ -1,15 +1,16 @@
 import { Box } from "@mui/material";
 import DashbordVerticalList from "./ui/DashbordVerticalList";
+import dynamic from "next/dynamic";
+import SymbolInfo from "./components/symbolInfo/SymbolInfo";
+
 import MainTable from "./components/mainColumn/MainTable";
 import Navbar from "./components/navBar/Navbar";
 import WatchTabs from "./components/watchTabs/WatchTabs";
-import SymbolInfo from "./components/symbolInfo/SymbolInfo";
 import MainColHeader from "./components/mainColumn/MainColHeader";
 import UserPropertyTable from "./components/userPropertyTable/UserPropertyTable";
 import { headers } from "next/headers";
-import MobileRootLayout from "./mobile/layout";
-import MobileHomePage from "./mobile/mobileMainTable/page";
 import LabelBottomNavigation from "./mobile/LabelBottomNavigation";
+
 
 export default async function Home() {
   //get the user dvice size from user-agent// it work only in server components
@@ -56,7 +57,6 @@ export default async function Home() {
           <MainColHeader />
           <MainTable />
         </Box>
-
         <LabelBottomNavigation />
       </>
     );

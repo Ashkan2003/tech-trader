@@ -40,19 +40,10 @@ export async function POST(request: NextRequest) {
         },
         // these are the TradeAccount-mode information
         tradeAccount: {
-          create: {
-            // these are the UserBoughtSymbol information
-            // userBoughtSymbols: {
-            //   createMany: {
-            //     data:[{symbolName:"دارایکم",count:200},{symbolName:"شیران",count:600}]
-            //   },
-            // },
-          },
+          create: {},
         },
-
       },
     });
-
 
     return NextResponse.json({ email: newUser.email });
   } catch (error: any) {
