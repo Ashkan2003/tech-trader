@@ -106,7 +106,6 @@ export default function UserPropertyTable() {
     }
   );
 
-
   const rows = dataGridRows.map((symbol) => {
     return {
       id: symbol.id,
@@ -121,17 +120,22 @@ export default function UserPropertyTable() {
   // this function is for finding the selected symbol and give it to the redux
   function handleRowSelectionClick(currentSymbolName: string) {
     // find the current-selected-symbol from the table and return it
-    const currentSelectedTableSymbol = dataBaseSybmols!.find(
-      (symbol: any) => {
-        return symbol.symbolName === currentSymbolName;
-      }
-    );
+    const currentSelectedTableSymbol = dataBaseSybmols!.find((symbol: any) => {
+      return symbol.symbolName === currentSymbolName;
+    });
     dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!));
   }
 
   return (
-    <Box sx={{ height: 260, bgcolor: "ternery.main", scrollbarColor: "blue" }}>
+    <Box
+      sx={{
+        height: { xs: 360, md: 260 },
+        bgcolor: "ternery.main",
+        scrollbarColor: "blue",
+      }}
+    >
       <DataGrid
+        sx={{ height: { xs: 260, md: 260 } }}
         loading={isLoadingTradeAccount}
         scrollbarSize={10}
         columnHeaderHeight={40}

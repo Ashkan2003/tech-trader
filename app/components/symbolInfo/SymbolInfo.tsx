@@ -9,6 +9,7 @@ import SymbolChart from "./SymbolChart";
 import { useAppSelectore } from "@/app/GlobalRedux/store";
 import { useSymbols } from "@/app/features/reactQuerySymbols/useSymbols";
 import SymbolPieChart from "./SymbolPieChart";
+import { Stack, Skeleton } from "@mui/material";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,7 +48,20 @@ export default function SymbolInfo() {
     (state) => state.tableSymbolsReducer.currentSelectedTableSymbol
   );
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <Stack paddingTop={2} paddingX={1} spacing={1}>
+        <Stack gap={1} justifyContent="center" flexDirection="row">
+          <Skeleton animation="wave" variant="rounded" width={73} height={50} />
+          <Skeleton animation="wave" variant="rounded" width={73} height={50} />
+          <Skeleton animation="wave" variant="rounded" width={73} height={50} />
+          <Skeleton animation="wave" variant="rounded" width={73} height={50} />
+        </Stack>
+        <Skeleton animation="wave" variant="rounded" width="full" height={35} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={55} />
+        <Skeleton animation="wave" variant="rounded" width="full" height={165} />
+      </Stack>
+    );
 
   // in the first enter of user the currentReduxSymbol is null.so render the first item of db
   const currentSymbol =
@@ -95,16 +109,19 @@ export default function SymbolInfo() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <SupplyDemandTab currentSymbol={currentSymbol!}/>
+        <SupplyDemandTab currentSymbol={currentSymbol!} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <SymbolInfoBox  currentSymbol={currentSymbol!}/>
+        <SymbolInfoBox currentSymbol={currentSymbol!} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <SymbolChart data={currentSymbol!.chartNumber}/>
+        <SymbolChart data={currentSymbol!.chartNumber} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <SymbolPieChart offerVolume={currentSymbol?.offerVolume!} demandVolume={currentSymbol?.demandVolume!}/>
+        <SymbolPieChart
+          offerVolume={currentSymbol?.offerVolume!}
+          demandVolume={currentSymbol?.demandVolume!}
+        />
       </CustomTabPanel>
     </Box>
   );

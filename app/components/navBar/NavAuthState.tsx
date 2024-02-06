@@ -22,7 +22,7 @@ const NavAuthState = () => {
   if (status == "loading")
     return (
       <div className="flex items-center ps-3">
-        <Skeleton variant="rounded" width={120} height={40} />
+        <Skeleton variant="rounded" sx={{display:{xs:"none",md:"block"}}} width={120} height={40} />
         <Skeleton variant="circular" width={35} height={35} />
       </div>
     );

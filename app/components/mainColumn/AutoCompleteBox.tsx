@@ -14,8 +14,8 @@ export default function AutoCompleteBox() {
 
   if (isLoading)
     return (
-      <Stack paddingLeft={2}>
-        <Skeleton width="30rem" height="50px" />
+      <Stack paddingX={2}>
+        <Skeleton sx={{width:{sx:3,md:300}}}  height="50px" />
       </Stack>
     );
 
