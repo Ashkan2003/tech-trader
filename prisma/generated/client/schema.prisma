@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// write npx prisma format to format(prettier) the code
+// write npx prisma migrate dev to create and save chages to db
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  //  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shadow
+}
+
+enum Status {
+  ALLOWED
+  NOTALLOWED
+}
+
+model Symbols {
+  id                  Int    @id @default(autoincrement())
+  symbolName          String @unique
+  volume              Int
+  lastDeal            Int
+  lastDealPercentage  Float
+  lastPrice           Int
+  lastPricePercentage Int
+  theFirst            Int
+  theLeast            Int
+  theMost             Int
+  demandVolume        Int
+  demandPrice         Int
+  offerPrice          Int
+  offerVolume         Int
+  state               Status @default(NOTALLOWED)
+  chartNumber         Json?
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WatchList {
+  id      Int    @id @default(autoincrement())
+  title   String
+  symbols String
+
+  //these fiels are for making relating with the User-model
+  relatedUser User?   @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+model UserBoughtSymbol {
+  id         Int    @id @default(autoincrement())
+  symbolName String
+  count      Int
+
+  //these fields are for making relating with the TradeAccount-model
+  relatedTradeAccount TradeAccount @relation(fields: [tradeAccountId], references: [id])
+  tradeAccountId      Int
+}
+
+// the relation bettven TradeAccount and UserBoughtSymbols  is 1 to many, becus 1 tradeAccount can have many UserBoughtSymbols
+model TradeAccount {
+  id                Int                @id @default(autoincrement())
+  userProperty      Int                @default(400000)
+  userBoughtSymbols UserBoughtSymbol[]
+
+  //these fields are for making relating with the User-model
+  relatedUser User   @relation(fields: [userId], references: [id])
+  userId      String @unique
+}
+
+// the relation bettven User and WatchList is 1 to many, becus 1 user can have many watchList
+// the relation bettven User and TradeAccount is 1 to 1, becus 1 user can have 1 tradeAccount
+model User {
+  id             String        @id @default(cuid())
+  name           String?
+  lastName       String?
+  email          String?       @unique
+  emailVerified  DateTime?
+  hashedPassword String?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  watchLists     WatchList[]
+  tradeAccount   TradeAccount?
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
