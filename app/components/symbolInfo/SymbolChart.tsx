@@ -16,6 +16,7 @@ interface Props {
 }
 
 const SymbolChart = ({ data}: Props) => {
+  if(!data) return null
   // convert data to json
   const jsonData = JSON.stringify(data);
   // conver data from json to string

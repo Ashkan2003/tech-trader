@@ -115,7 +115,7 @@ export default function SymbolInfo() {
         <SymbolInfoBox currentSymbol={currentSymbol!} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <SymbolChart data={currentSymbol!.chartNumber} />
+        <SymbolChart data={currentSymbol!.chartNumber!} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <SymbolPieChart
