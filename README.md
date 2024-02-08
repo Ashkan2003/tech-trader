@@ -1,7 +1,7 @@
 # Tech-trader
 A fullStack web app for trading, view symbols from dataBase, buy theme, sale theme, see symbols info from logical charts<br><br>
 # visit here on versel: 
-tech-trader.vercel.app <br>
+https://tech-trader.vercel.app <br>
 
 # app capability
 user signup and login capability with next-auth<br>
