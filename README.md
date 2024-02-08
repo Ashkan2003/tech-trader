@@ -45,5 +45,5 @@ nextjs, typeScript, prisma, postgresql, mui5
  zod<br>
 
  ## deploy 
- project : vercel
+ project : vercel<br>
  dataBase : ElephantSQL
