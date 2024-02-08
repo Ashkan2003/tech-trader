@@ -43,3 +43,7 @@ nextjs, typeScript, prisma, postgresql, mui5
  axios<br>
  bcrypt<br>
  zod<br>
+
+ ## deploy 
+ project : vercel
+ dataBase : ElephantSQL
