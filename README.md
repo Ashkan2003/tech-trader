@@ -15,7 +15,7 @@ perfect error handling<br>
 
 
 # some imgs from site
-![img-1](https://github.com/Ashkan2003/react-WTech/assets/125794999/1f20f282-be58-45bf-9f66-42904c484061)<hr>
+![pg1](https://github.com/Ashkan2003/tech-trader/assets/125794999/44860f41-25f1-4732-bab1-7623ddeab6c1)hr>
 ![img-2](https://github.com/Ashkan2003/react-WTech/assets/125794999/c47027d6-f04c-44ca-bb3c-e3164b7065c5)
 
 
