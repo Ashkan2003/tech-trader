@@ -11,9 +11,7 @@ module.exports = nextConfig
 const { withSentryConfig } = require("@sentry/nextjs");
 
 module.exports = withSentryConfig(
-  module.exports = {
-    output: "standalone"
-  },
+  module.exports,
   {
 
     // For all available options, see:
