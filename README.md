@@ -17,12 +17,14 @@ perfect error handling<br>
 
 # some imgs from site
 ![pg1](https://github.com/Ashkan2003/tech-trader/assets/125794999/44860f41-25f1-4732-bab1-7623ddeab6c1)<hr>
+![pg8](https://github.com/Ashkan2003/tech-trader/assets/125794999/1e6c13e1-fd16-4b3c-b6ce-075e230aaf4e)
 
-
+## mobile size:
+<div  display="flex">
+ 
 ![pg5](https://github.com/Ashkan2003/tech-trader/assets/125794999/35df57a1-baa1-4d8b-bb66-037317d90960)
 ![pg7](https://github.com/Ashkan2003/tech-trader/assets/125794999/15826068-446a-4dc7-9874-ef659f13e646)
-
-![pg3](https://github.com/Ashkan2003/tech-trader/assets/125794999/ff5a1d2c-93fd-4604-943b-dd9f442bd99b)
+</div>
 
 
 ## Technologies:
