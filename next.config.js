@@ -11,8 +11,11 @@ module.exports = nextConfig
 const { withSentryConfig } = require("@sentry/nextjs");
 
 module.exports = withSentryConfig(
-  module.exports,
+  module.exports = {
+    output: "standalone"
+  },
   {
+
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
 
