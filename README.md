@@ -17,9 +17,13 @@ perfect error handling<br>
 
 # some imgs from site
 ![pg1](https://github.com/Ashkan2003/tech-trader/assets/125794999/44860f41-25f1-4732-bab1-7623ddeab6c1)<hr>
-![pg4](https://github.com/Ashkan2003/tech-trader/assets/125794999/0f937176-874f-46af-a2e2-5ef5cd0b60a6)
-![pg2](https://github.com/Ashkan2003/tech-trader/assets/125794999/947f219d-706a-414a-97cf-5e2a9942fa5c)
+
+
+![pg5](https://github.com/Ashkan2003/tech-trader/assets/125794999/35df57a1-baa1-4d8b-bb66-037317d90960)
+![pg7](https://github.com/Ashkan2003/tech-trader/assets/125794999/15826068-446a-4dc7-9874-ef659f13e646)
+
 ![pg3](https://github.com/Ashkan2003/tech-trader/assets/125794999/ff5a1d2c-93fd-4604-943b-dd9f442bd99b)
+
 
 ## Technologies:
 nextjs, typeScript, prisma, postgresql, mui5
