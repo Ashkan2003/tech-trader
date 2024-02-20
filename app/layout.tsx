@@ -1,5 +1,6 @@
 // npm i @mui/icons-material
 // npm install @mui/material @emotion/react @emotion/styled for stylign
+// npm install @mui/material-nextjs // this is for the ssr rendering // to fix the css preload issue
 // npm i react-redux @reduxjs/toolkit
 // npm install @mui/x-data-grid for data-grid-tables
 // npm install prisma --save-dev // npx prisma init for the first-time
@@ -15,16 +16,16 @@
 // npm i @tanstack/react-query
 // npm i @tanstack/react-query-devtools
 // npm install recharts
+
 import type { Metadata } from "next";
-import "./globals.css";
-import { MaterialRTLProvider } from "./MaterialUiRTL";
 import localFont from "next/font/local";
-import CustomThemeProvider from "./MaterialUiThemeProvider";
-import { ReduxProvider } from "./GlobalRedux/provider";
-import AuthProvider from "./auth/Provider";
 import { Toaster } from "react-hot-toast";
+import { ReduxProvider } from "./GlobalRedux/provider";
+import { MaterialRTLProvider } from "./MaterialUiRTL";
+import CustomThemeProvider from "./MaterialUiThemeProvider";
 import QueryClientProvider from "./QueryClientProvider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import AuthProvider from "./auth/Provider";
+import "./globals.css";
 // const inter = Inter({ subsets: ["latin"] });
 
 // this is the way of importing a local font
@@ -49,8 +50,9 @@ export default function RootLayout({
         <link rel="icon" href="/trade-logo-brad.png" />
       </head>
       {/* this MaterialRTLProvider is a context that provides the functionality of right to left   */}
-      <MaterialRTLProvider>
-        <body className={`${IranSansWeb.variable} dark:bg-slate-900`}>
+      <body className={`${IranSansWeb.variable} dark:bg-slate-900`}>
+        {/* this is for the ssr rendering of the mui // to fix the css preload issue */}
+        <MaterialRTLProvider>
           {/* this is the provider of the react-query */}
           <QueryClientProvider>
             {/* this is the provider of the next-Auth */}
@@ -91,8 +93,8 @@ export default function RootLayout({
             {/* this is not the part of app,its the react-query-dev-tools */}
             {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           </QueryClientProvider>
-        </body>
-      </MaterialRTLProvider>
+        </MaterialRTLProvider>
+      </body>
     </html>
   );
 }
