@@ -91,7 +91,7 @@ export default function RootLayout({
               }}
             />
             {/* this is not the part of app,its the react-query-dev-tools */}
-            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          {/* <ReactQueryDevtools initialIsOpen={false} />  */}
           </QueryClientProvider>
         </MaterialRTLProvider>
       </body>
