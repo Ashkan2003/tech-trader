@@ -45,6 +45,6 @@ export const {
   updateReduxSymbols,
   updateMainSearchBarSymbol,
   updateCurrentShowedMode,
-  updateCurrentSelectedTableSymbol
+  updateCurrentSelectedTableSymbol,
 } = tableSymbols.actions;
 export default tableSymbols.reducer;
