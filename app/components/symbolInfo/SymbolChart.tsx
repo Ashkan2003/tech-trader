@@ -12,7 +12,7 @@ import {
 
 
 interface Props {
-  data: Symbols["chartNumber"];
+  data?: Symbols["chartNumber"];
 }
 
 const SymbolChart = ({ data}: Props) => {
