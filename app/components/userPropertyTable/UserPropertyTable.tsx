@@ -126,7 +126,6 @@ export default function UserPropertyTable() {
     dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!));
   }
 
-  console.log(rows, "sssssss");
 
   return (
     <Box

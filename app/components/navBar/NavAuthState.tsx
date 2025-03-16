@@ -18,7 +18,6 @@ const NavAuthState = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // this is for the menu-component
   const { status, data: session } = useSession(); // the useSession hook is for geting user  authstatus in the client
 
-  // console.log(session,"ggg")
   if (status == "loading")
     return (
       <div className="flex items-center ps-3">

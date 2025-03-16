@@ -29,8 +29,6 @@ interface Props {
 }
 
 const SupplyDemandTab = ({ currentSymbol }: Props) => {
-  console.log(currentSymbol, "sss");
-
   // if (!currentSymbol) return null;
 
   return (

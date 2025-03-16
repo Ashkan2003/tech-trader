@@ -63,7 +63,6 @@ const SymbolChart = ({ data }: Props) => {
   } else {
     lineChartDate = sampleData;
   }
-  console.log(lineChartDate, "pp");
   return (
     <div className="h-80">
       <ResponsiveContainer width="110%" height="100%">
