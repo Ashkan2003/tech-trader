@@ -80,7 +80,7 @@ export default function UserWatchList() {
             // "& ul": { padding: 0 },
           }}
         >
-          {watchLists!.map((item, index) => (
+          {watchLists?.map((item, index) => (
             <div
               className={`flex ${
                 selectedIndex === index && "bg-[#e6e8ea] dark:bg-[#212121]"

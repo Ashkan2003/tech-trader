@@ -119,8 +119,8 @@ export default function SymbolInfo() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <SymbolPieChart
-          offerVolume={currentSymbol?.offerVolume!}
-          demandVolume={currentSymbol?.demandVolume!}
+          offerVolume={currentSymbol?.offerVolume}
+          demandVolume={currentSymbol?.demandVolume}
         />
       </CustomTabPanel>
     </Box>

@@ -82,11 +82,11 @@ const renderActiveShape = (props: any) => {
 };
 
 interface Props {
-  demandVolume: number;
-  offerVolume: number;
+  demandVolume?: number;
+  offerVolume?: number;
 }
 
-export default function SymbolPieChart({ demandVolume, offerVolume }: Props) {
+export default function SymbolPieChart({ demandVolume=20, offerVolume=30 }: Props) {
   const data = [
     { name: "حجم تقاظا", value: demandVolume, color: "#1966cb" },
     { name: "حجم عرضه", value: offerVolume, color: "#d35452" },

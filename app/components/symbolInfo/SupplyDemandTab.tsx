@@ -29,10 +29,16 @@ interface Props {
 }
 
 const SupplyDemandTab = ({ currentSymbol }: Props) => {
+  console.log(currentSymbol, "sss");
+
+  // if (!currentSymbol) return null;
+
   return (
     <div className="space-y-5">
       {/* symbol title */}
-      <Typography textAlign="center">نام نماد: {currentSymbol.symbolName}</Typography>
+      <Typography textAlign="center">
+        نام نماد: {currentSymbol?.symbolName}
+      </Typography>
       {/* symbol price */}
       <div className="flex justify-around">
         <div className="flex flex-col items-center space-y-1">
@@ -40,10 +46,20 @@ const SupplyDemandTab = ({ currentSymbol }: Props) => {
             قیمت پایانی
           </Typography>
           <div className="flex items-center">
-            <Typography variant="h5">{currentSymbol.lastPrice}</Typography>
+            <Typography variant="h5">{currentSymbol?.lastPrice}</Typography>
             <div className="flex flex-col space-y-1 ">
-              <Badge title={currentSymbol.theFirst.toString()} color="ternery" />
-              <Badge title={`${currentSymbol.lastPricePercentage.toString()}%`} color="ternery" />
+              <Badge
+                title={currentSymbol?.theFirst?.toString()}
+                color="ternery"
+              />
+              <Badge
+                title={
+                  currentSymbol?.lastPricePercentage
+                    ? currentSymbol?.lastPricePercentage.toString() + "%"
+                    : "00:00"
+                }
+                color="ternery"
+              />
             </div>
           </div>
         </div>
@@ -52,10 +68,20 @@ const SupplyDemandTab = ({ currentSymbol }: Props) => {
             قیمت آخرین معامله
           </Typography>
           <div className="flex items-center">
-            <Typography variant="h5">{currentSymbol.lastDeal}</Typography>
+            <Typography variant="h5">{currentSymbol?.lastDeal}</Typography>
             <div className="flex flex-col space-y-1 ">
-              <Badge title={currentSymbol.theMost.toString()} color="ternery" />
-              <Badge title={`${currentSymbol.lastDealPercentage.toString()}%`} color="ternery" />
+              <Badge
+                title={currentSymbol?.theMost?.toString()}
+                color="ternery"
+              />
+              <Badge
+                title={
+                  currentSymbol?.lastDealPercentage
+                    ? currentSymbol?.lastDealPercentage.toString() + "%"
+                    : "00.00"
+                }
+                color="ternery"
+              />
             </div>
           </div>
         </div>

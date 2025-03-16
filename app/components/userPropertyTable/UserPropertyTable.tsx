@@ -84,12 +84,12 @@ export default function UserPropertyTable() {
     );
 
   // if there was an error then retune a toast
-  if (error) return toast.error("اخطار.لطفا اتصال اینترنت خود را چک کنید.");
+  if (error) toast.error("اخطار.لطفا اتصال اینترنت خود را چک کنید.");
 
   let dataGridRows: datagridRowType[] = [];
   // i want more information to put in data-grid-table about a symbol, but i only stored "symbolName" and "count" in the userBoughtSymbol
   // so i loop throgh the dataBaseSymbols and find the userBoughtSymbols and push a new obj with a combine-information of bgsymbol and userBoughtSymbol
-  userTradeAccount!.userBoughtSymbols.map(
+  userTradeAccount?.userBoughtSymbols.map(
     (boughtSymbol: { id: number; symbolName: string; count: number }) => {
       dataBaseSybmols?.map((dbSymbol) => {
         if (dbSymbol.symbolName === boughtSymbol.symbolName) {
@@ -106,7 +106,7 @@ export default function UserPropertyTable() {
     }
   );
 
-  const rows = dataGridRows.map((symbol) => {
+  const rows = dataGridRows?.map((symbol) => {
     return {
       id: symbol.id,
       symbolName: symbol.symbolName,
@@ -126,6 +126,8 @@ export default function UserPropertyTable() {
     dispatch(updateCurrentSelectedTableSymbol(currentSelectedTableSymbol!));
   }
 
+  console.log(rows, "sssssss");
+
   return (
     <Box
       sx={{
@@ -141,7 +143,7 @@ export default function UserPropertyTable() {
         columnHeaderHeight={40}
         onRowClick={(event) => handleRowSelectionClick(event.row.symbolName)}
         rowHeight={35}
-        rows={rows!}
+        rows={rows}
         columns={columns}
         initialState={{
           pagination: {
